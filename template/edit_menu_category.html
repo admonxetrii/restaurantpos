@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+{% block 'title' %} Add Category {% endblock %}
+
+{% block 'body' %}
+<div class="container-fluid">
+    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+        <h3 class="text-dark mb-0">Edit Menu Category - {{cate}}</h3>
+<!--        <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>-->
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <form method="post" enctype="multipart/form-data">
+                {{form.as_p}}
+                {% csrf_token %}
+                <button class="btn btn-primary" type="submit" onclick="return confirm('Are you sure want to edit this category?');"><i class="fa fa-edit"></i>Edit Category</button>
+            </form>
+            <br>
+                <a href="{% url 'dashboard' %}"><button class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button></a>
+        </div>
+    </div>
+</div>
+{% endblock %}

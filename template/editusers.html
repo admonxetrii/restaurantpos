@@ -1,0 +1,114 @@
+{% extends 'base/base.html' %}
+{% block 'title' %} Edit Users {% endblock %}
+{% load static %}
+{% block 'body' %}
+<div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-1 font-weight-bolder">All Users:</h1>
+                    {% include 'component/message.html' %}
+                    <div class="table-responsive ">
+                        <table id="myTable" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Sn.</th>
+                        <th>Username:</th>
+                        <th>Full Name</th>
+                        <th>Staff Status</th>
+                        <th>Admin Status</th>
+                        <th>Active Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        {{forloop.counter}}
+                        <script type="text/javascript"> var total = 0; </script>
+                        {% for u in users %}
+                        <td>{{forloop.counter}}</td>
+                        <td>{{u.username}}</td>
+                        <td>{{u.first_name}} {{u.last_name}}</td>
+                        <td>
+                        <div>
+                            {% if u.id == request.user.id %}
+                            <input type="checkbox" id="staff{{u.id}}" onclick="changes{{u.id}}()" disabled>
+                            {% else %}
+                            <input type="checkbox"  id="staff{{u.id}}" onclick="changes{{u.id}}()">
+                            {% endif %}
+                        </div>
+                            {% if u.is_staff %}
+                            <script type="text/javascript">
+                                document.getElementById("staff{{u.id}}").checked = true;
+                            </script>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if u.id == request.user.id %}
+                            <input type="checkbox"  id="admin{{u.id}}" onclick="changes{{u.id}}()" disabled>
+                            {% else %}
+                            <input type="checkbox" id="admin{{u.id}}" onclick="changes{{u.id}}()">
+                            {% endif %}
+                            {% if u.is_superuser %}
+                            <script type="text/javascript">
+                                document.getElementById("admin{{u.id}}").checked = true;
+                            </script>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if u.id == request.user.id %}
+                            <input type="checkbox" id="active{{u.id}}" onclick="changes{{u.id}}()" disabled>
+                            {% else %}
+                            <input type="checkbox" id="active{{u.id}}" onclick="changes{{u.id}}()">
+                            {% endif %}
+                            {% if u.is_active %}
+                            <script type="text/javascript">
+                                document.getElementById("active{{u.id}}").checked = true;
+                            </script>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+    <form method="post" action="{% url 'edited_users' %}">
+        {% for u in users %}
+        <input type="text" id="stf{{u.id}}" name="stf_{{u.id}}" hidden>
+        <input type="text" id="adm{{u.id}}" name="adm_{{u.id}}" hidden>
+        <input type="text" id="act{{u.id}}" name="act_{{u.id}}" hidden>
+        <script>
+        function changes{{u.id}}(load) {
+
+            var s = document.getElementById('staff{{u.id}}').checked;
+            var a = document.getElementById('admin{{u.id}}').checked;
+            var ac = document.getElementById('active{{u.id}}').checked;
+            if (s) {
+                document.getElementById('stf{{u.id}}').value = 1;
+            } else {
+                document.getElementById('stf{{u.id}}').value = 0;
+            }
+            if (a) {
+                document.getElementById('adm{{u.id}}').value = 1;
+            } else {
+                document.getElementById('adm{{u.id}}').value = 0;
+            }
+            if (ac) {
+                document.getElementById('act{{u.id}}').value = 1;
+            } else {
+                document.getElementById('act{{u.id}}').value = 0;
+            }
+        }
+        </script>
+
+        {% endfor %}
+        {% csrf_token %}
+    <button class="btn btn-success d-inline-block" type="submit" onclick="return confirm('Are you sure?')">Save</button>
+    <a href="{% url 'users' %}" class="btn btn-danger" >Cancel</a>
+    </form>
+                </div></div></div></div>
+{% for u in users %}
+<script>changes{{u.id}}();</script>
+{% endfor %}
+
+{% endblock %}

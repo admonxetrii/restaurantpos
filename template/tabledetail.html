@@ -1,0 +1,158 @@
+{% extends 'base/base.html' %}
+{% load mathfilters %}
+{% block 'title' %} Orders {% endblock %}
+
+{% block 'body' %}
+<div class="container-fluid">
+{% include 'component/message.html' %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-1 font-weight-bolder">Table - <b class="text-danger">{% for t in table1 %}{{t.title}},{% endfor %}</b></h1>
+                    <h4 class="text-dark mb-1 font-weight-bolder">Current Orders</h4>
+                    <p><br></p>
+                    <div class="table-responsive ">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>SN.</th>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Actions</th>
+                                <th>Printed?</th>
+                                {% if request.user.is_staff %}
+                                    <th>Total</th>
+                                    <th>Ordered by</th>
+                                {% endif %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{ forloop.counter }}
+                            <script type="text/javascript"> var total = 0; var prtsts = 1;</script>
+                            {% for o in order %}
+                            {% if o.printsts == 0 %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{o.menu.title}}</td>
+                                <td>{{o.quantity}} | <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#editqty{{ o.id }}"><i class="fa fa-edit"></i></button></td>
+                                <td><a href="{% url 'delitem' o.id %}" onclick="return confirm('Are you sure?');"  style="color: #ff032d;"><button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Remove</button></a></td>
+                                <td>
+                                    <span style="color: red;"><i class="fa fa-times"></i> No</span>
+                                </td>
+                                {% if request.user.is_staff %}
+                                    <td>
+                                        {{o.quantity}} * {{o.menu.price}} = {{o.quantity|mul:o.menu.price}}
+                                    </td>
+                                    <td>
+                                        @{{ o.orderedby.username }}
+                                    </td>
+                                {% endif %}
+                                <script type="text/javascript"> var total = total + {{o.quantity|mul:o.menu.price}}; prtsts = 0; </script>
+
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{o.menu.title}}</td>
+                                <td>{{o.quantity}}</td>
+                                <td><button class="btn btn-danger btn-sm" disabled><i class="fa fa-trash"></i> Remove</button></td>
+                                <td>
+                                    <span style="color: green;"><i class="fa fa-check"></i> Yes</span>
+                                </td>
+                                {% if request.user.is_staff %}
+                                    <td>
+                                        {{o.quantity}} * {{o.menu.price}} = {{o.quantity|mul:o.menu.price}}
+                                    </td>
+                                    <td>
+                                        @{{ o.orderedby.username }}
+                                    </td>
+                                {% endif %}
+                                <script type="text/javascript"> var total = total + {{o.quantity|mul:o.menu.price}}; prtsts = 1; </script>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                            <tr>
+                                <td colspan="2"><a href="{% url 'additem' table.id  %}"><button class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add more items</button></a></td>
+                                <td></td>
+                                <td></td>
+                            {% if request.user.is_staff %}
+                                <td><b>Total</b></td>
+                                <td><b class="text-success">Rs. <script> document.write(total);</script>/-</b></td>
+                            {% endif %}
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                <div class="divider"><br></div>
+                    {% if request.user.is_staff %}
+                    <a href="{% url 'genbill' table.id %}"><button id="billbtn" class="btn btn-danger btn-xl" type="submit"><i class="ti ti-money"></i> Generate Bill</button></a>
+                    {% endif %}
+                    <a href="{% url 'closeTable' table.id %}"><button id="closeTable" class="btn btn-success btn-xl" type="submit"><i class="fa fa-check"></i> Close Table</button></a>
+                    <a href="{% url 'printOrd' table.id %}"><button id="btnPrint" class="btn btn-outline-success"><i class="fa fa-print"></i> Print Orders</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+        <script type="text/javascript" src="/static/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript">
+                if (total===0){
+                    $('#closeTable').show();
+                    $('#billbtn').hide();
+                    $('#btnPrint').hide();
+                }
+                else {
+                    $('#closeTable').hide();
+                    if(prtsts===0){
+                        $('#billbtn').hide();
+                        $('#btnPrint').show()
+                    }
+                    else {
+                        $('#billbtn').show();
+                        $('#btnPrint').hide();
+                    }
+                }
+
+
+        </script>
+</div>
+
+{#href="{% url 'editqty' o.id %}"#}
+
+      {% for o in order %}
+
+<div class="modal fade" id="editqty{{ o.id }}" tabindex="-1" role="dialog" aria-labelledby="mergeTable"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Quantity - <b class="text-danger">{{o.menu.title}}</b> in Table <b class="text-danger">{{ o.table.title }}</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'editqty' o.id %}" novalidate>
+                    <div class="form-group">
+                        <h5>Enter New quantity: <span class="text-danger">*</span></h5>
+                        <div class="controls">
+                            <input type="number" min="1" max="10" id="title" name="qty" value="{{ o.quantity }}" required data-validation-required-message="This field is required"  class="form-control" >
+                        </div>
+                    </div>
+                    {% csrf_token %}
+                    <button class="btn btn-info btn-block" type="submit" onsubmit="return confirm('Are you sure want to change quantity?')"><i class="fa fa-edit"></i> Edit Quantity</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{% block 'title' %} {% endblock %} - Tropical Rest</title>
+  <!-- base:css -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'login/vendors/mdi/css/materialdesignicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'login/vendors/feather/feather.css' %}">
+  <link rel="stylesheet" href="{% static 'login/vendors/base/vendor.bundle.base.css' %}">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{% static 'login/css/style.css' %}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{% static 'assets/images/tropical_ico.png' %}" />
+</head>
+
+<body>
+{% block 'body' %}
+{% endblock %}
+
+<script src="{% static 'login/vendors/base/vendor.bundle.base.js' %}"></script>
+  <!-- endinject -->
+  <!-- inject:js -->
+  <script src="{% static 'login/js/off-canvas.js' %}"></script>
+  <script src="{% static 'login/js/hoverable-collapse.js' %}"></script>
+  <script src="{% static 'login/js/template.js' %}"></script>
+  <!-- endinject -->
+</body>
+
+</html>

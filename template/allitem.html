@@ -1,0 +1,84 @@
+{% extends 'base/base.html' %}
+{% block 'title' %} Menu Items {% endblock %}
+
+{% block 'body' %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-1 font-weight-bolder">Add Item in - <b class="text-danger">{{table.title}}</b></h1>
+                    <a href="{% url 'tableorder' table.id %}"><button class="btn btn-danger "><i class="fa fa-times"></i> Cancel</button></a>
+                    <div class="clear"></div>
+                    {% include 'component/message.html' %}
+                    <p><br></p>
+                    <div class="table-responsive ">
+                        <table class="table table-bordered" id="myTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{ forloop.counter }}
+                                {% for m in menu %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td><b class="text-dark font-bold">{{m.title}}</b></td>
+                                    <td>{{ m.category.title }}</td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#order{{m.id}}"><i
+                                                class="fa fa-plus"></i>Order
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!--model-->
+{% for m in menu %}
+
+<div class="modal fade" id="order{{m.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Order - <b class="text-danger">{{m.title}}</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'additem' table.id %}" novalidate>
+
+                    <input type="number" name="menu" value="{{ m.id }}" hidden />
+
+                    <div class="form-group">
+                        <h5>Enter quantity: <span class="text-danger">*</span></h5>
+                        <div class="controls">
+                            <input type="number"  id="qty" name="qty" required data-validation-required-message="This field is required" data-validation-max-message="Must be lower than or equal to 10." data-validation-min-message="Must be higher than or equal to 1" class="form-control" min="1" max="10">
+                        </div>
+                    </div>
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                <button type="submit" class="btn btn-info btn-block waves-effect waves-light">Order</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+{% endblock %}

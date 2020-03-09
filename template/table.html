@@ -1,0 +1,348 @@
+{% extends 'base/base.html' %}
+{% block 'title' %} Tables {% endblock %}
+{% load static %}
+{% block 'script' %}
+     <script type="text/javascript">
+    function populate(s1,s2) {
+        var sel1 = document.getElementById(s1);
+        var sel2 = document.getElementById(s2);
+        sel2.innerHTML = "Select Table 2";
+        var optionArray = [{% for t in table %}{% if t.reserved == 0 and t.merged == 0 %}"{{ t.id }}|{{ t.title }}",{% endif %}{% endfor %}];
+        for (var option in optionArray) {
+            var pair = optionArray[option].split("|");
+            var newOption = document.createElement("option");
+            if (pair[0]==sel1.value) {
+                pair[0] = "";
+                pair[1] = "--------";
+                newOption.setAttribute('selected',"");
+            }
+            newOption.value = pair[0];
+            newOption.innerHTML = pair[1];
+            sel2.options.add(newOption);
+        }
+    }
+    function validateSel(s1,s2) {
+        var s1 = document.getElementById(s1).value;
+        var s2 = document.getElementById(s2).value;
+        var err = true;
+        if(s1==""){
+            document.getElementById('msgSel1').innerHTML = "Please Select Table";
+            err = false;
+        }
+        if(s2==""){
+            document.getElementById('msgSel2').innerHTML = "Please Select Table";
+            err = false;
+        }
+        return err;
+    }
+</script>
+
+{% endblock %}
+{% block 'body' %}
+<div class="container-fluid">
+    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+        <h3 class="text-dark mb-0">Tables</h3>
+        {% include 'component/message.html' %}
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <div class="text-dark font-weight-bold h3 mb-0">Total Tables <br> <span  id="ttbl" style="color: #2e59d9"></span></div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-dark font-weight-bold h3 mb-0">Occupied Tables <br><span id="otbl" style="color: #e74a3b"></span></div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-dark font-weight-bold h3 mb-0">Available Tables <br> <span id="atbl" style="color: #1cc88a"></span></div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-dark font-weight-bold h3 mb-0">Reserved Tables <br> <span id="rtbl" class="text-warning"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p><br><br></p>
+    <hr>
+    <p><br><br></p>
+    <div class="row">
+        <script> var ttbl=0; var atbl=0; var otbl=0; var rtbl=0;</script>
+{% for t in table %}
+        <script> ttbl = ttbl + 1 ;</script>
+    {% if t.merged == 0 %}
+        {% if t.reserved == 0 %}
+        <div class="col-md-3 col-xl-2 mb-2">
+            {% if t.occupied == 1 %}
+            <script>otbl=otbl+1;</script>
+                <div class="card">
+                    <div class="card-header bg-danger">
+                        <h4 class="m-b-0 text-white"></h4></div>
+                    <div class="card-body" >
+                        <div class="row align-items-center no-gutters">
+                            <div class="col mr-2">
+    <!--                            <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>{{i.title}}</span></div>-->
+                                <a href="{% url 'tableorder' t.id %}" class="col-md-6 col-xl-3 mb-4" >
+                                     <div class="text-dark font-weight-bold h2 mb-0"><span>{{t.title}} </span></div>
+                                </a>
+                                {% if request.user.is_superuser %}
+                                <div class=" h6 mb-0">
+                                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#editTable{{ t.id }}"><i class="fa fa-edit"></i> Edit</button>
+                                    |
+                                    <a href="{% url 'deleteTable' t.id %}"><button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure want to delete this category?');"><i class="fa fa-trash"></i> Delete</button></a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#change{{t.id}}"><i class="fa fa-edit"></i> Change</button>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+            <script>atbl+=1;</script>
+                        <div class="card border-success">
+                            <div class="card-header bg-success">
+                                <h4 class="m-b-0 text-white"></h4></div>
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+            <!--                            <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>{{i.title}}</span></div>-->
+                                        <a href="#" class="col-md-6 col-xl-3 mb-4" disabled="true">
+                                             <div class="text-dark font-weight-bold h2 mb-0"><span>{{t.title}}</span></div>
+                                        </a>
+                                        {% if request.user.is_superuser %}
+                                        <div class=" h6 mb-0">
+                                            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#editTable{{ t.id }}"><i class="fa fa-edit"></i> Edit</button>
+                                            |
+                                            <a href="{% url 'deleteTable' t.id %}"><button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure want to delete this category?');"><i class="fa fa-trash"></i> Delete</button></a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            {% endif %}
+            {% else %}
+                <script>rtbl=rtbl+1;</script>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endfor %}
+{% for mt in merge %}
+    <div class="col-md-3 col-xl-2 ">
+
+            <div class="card">
+                <div class="card-header bg-info">
+                    <h4 class="m-b-0 text-white"></h4></div>
+                <div class="card-body" >
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+<!--                            <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>{{i.title}}</span></div>-->
+                            <a href="{% url 'tableorder' mt.table1.id %}" class="col-md-6 col-xl-3 mb-4" >
+                                 <div class="text-dark font-weight-bold h2 mb-0"><span>{{mt.table1.title}}, {{mt.table2.title}} </span></div>
+                            </a>
+                        </div>
+                        <div class=" h6 mb-0">
+                            <a href="{% url 'unmerge_table' mt.id %}"><button class="btn btn-info btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-edit"></i> Unmerge</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+{% endfor %}
+        <script>
+            document.getElementById('ttbl').innerHTML = ttbl;
+            document.getElementById('otbl').innerHTML = otbl;
+            document.getElementById('atbl').innerHTML = atbl;
+            document.getElementById('rtbl').innerHTML = rtbl;
+        </script>
+        {% if request.user.is_superuser %}
+        <div class="col-md-3 col-xl-2 mb-2">
+            <div class="card shadow border-left-info py-2">
+                <div class="card-body" data-toggle="modal" data-target="#addTable">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <a href="#" class="col-md-6 col-xl-3 mb-4">
+                                <div class="text-dark font-weight-bold h3 mb-0">
+                                    <span><i class="fa fa-table"></i> Add Table</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<hr>
+    <div class="container-fluid">
+        <button class="btn btn-danger" data-toggle="modal" data-target="#merge"><i class="fas fa-handshake"></i> Merge Table</button>
+        <a href="{% url 'reservedTable' %}"><button class="btn btn-info"><i class="fa fa-exclamation-triangle"></i> Reserved Table</button></a>
+    </div>
+
+<!--model for changing table-->
+{% for t in table %}
+
+<div class="modal fade" id="change{{t.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Change Table <b class="text-danger">{{t.title}}</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'changetable' t.id %}" novalidate>
+                    <div class="form-group">
+                        <h5>Select Table To Order: <span class="text-danger">*</span></h5>
+                        <div class="controls">
+                            <select name="newTable" id="select" required data-validation-required-message="Please Select Table" class="form-control">
+                                <option value="" selected>---------</option>
+                                {% for t in table %}
+                                {% if t.occupied == 0 %}
+                                    <option value="{{t.id}}">{{t.title}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-danger btn-block waves-effect waves-light" onsubmit="return confirm('Are you sure want to change this table?')"><i class="fa fa-chain"></i> Change Table</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+<!--model for add table-->
+
+<div class="modal fade" id="addTable" tabindex="-1" role="dialog" aria-labelledby="mergeTable"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add New <b class="text-danger">Table</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'addTables' %}" novalidate>
+                    <div class="form-group">
+                        <h5>Enter Title: <span class="text-danger">*</span></h5>
+                        <div class="controls">
+                            <input type="text"  id="title" name="title" required data-validation-required-message="This field is required"  class="form-control" >
+                        </div>
+                    </div>
+                    {% csrf_token %}
+                    <button class="btn btn-info btn-block" type="submit"><i class="fa fa-plus"></i> Add Table</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--model for edit table-->
+
+    {% for t in table %}
+
+<div class="modal fade" id="editTable{{ t.id }}" tabindex="-1" role="dialog" aria-labelledby="mergeTable"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Table - <b class="text-danger">{{t.title}}</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'editTable' t.id %}" novalidate>
+                    <div class="form-group">
+                        <h5>Enter New Title: <span class="text-danger">*</span></h5>
+                        <div class="controls">
+                            <input type="text"  id="title" name="newtitle" value="{{ t.title }}" required data-validation-required-message="This field is required"  class="form-control" >
+                        </div>
+                    </div>
+                    {% csrf_token %}
+                    <button class="btn btn-info btn-block" type="submit"><i class="fa fa-edit"></i> Edit Table</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+    {% endfor %}
+
+    <!--model for merge table-->
+
+<div class="modal fade" id="merge" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Merge <b class="text-danger">Tables</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'merge_table' %}" >
+                    <div class="form-group">
+                        <h5>Select Table To Merge: <span class="text-danger">*</span></h5>
+                        <div class="controls">
+                            <select name="tbl1" id="tbl1" class="form-control" onchange="populate('tbl1','tbl2')">
+                                <option value="" selected>--------</option>
+                                {% for t in table %}
+                                {% if t.reserved == 0 and t.merged == 0%}
+                                    <option value="{{t.id}}">{{t.title}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                            <p id="msgSel1" class="text-danger"></p>
+                        </div>
+                        <br>
+                        <h5>Select Table To Merge with: <span class="text-danger">*</span></h5>
+                        <div class="controls">
+                            <select name="tbl2" id="tbl2" class="form-control">
+                            </select>
+                            <p id="msgSel2" class="text-danger"></p>
+                        </div>
+                    </div>
+
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-danger btn-block waves-effect waves-light" onclick="return validateSel('tbl1','tbl2');"><i class="fa fa-handshake" ></i> Merge Table</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+ <p><br><br></p> <p><br><br></p>
+
+{% endblock %}
+

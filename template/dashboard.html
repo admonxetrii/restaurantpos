@@ -1,0 +1,94 @@
+{% extends 'base/base.html' %}
+{% block 'title' %} POS {% endblock %}
+{% load static %}
+{% block 'body' %}
+
+<div class="container-fluid">
+    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-dark mb-0">Menu Categories</h1>
+        <p></p>
+        {% include 'component/message.html' %}
+        <!--        <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>-->
+    </div>
+    <div class="row">
+        {% for c in category %}
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-left-success py-2">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <!--                            <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>{{i.title}}</span></div>-->
+                            <a href="{% url 'menu' c.id %}" class="col-md-6 col-xl-3 mb-4">
+                                <div class="text-dark font-weight-bold h4 mb-0">
+                                    <span>{{c.title}}</span>
+                                </div>
+                            </a>
+                            {% if request.user.is_superuser %}
+                            <div class=" h6 mb-0">
+                                <a href="{% url 'editMenuCategory' c.id %}"><button class="btn btn-info btn-sm"><i class="fa fa-edit"></i> Edit</button></a>
+                                |
+                                <a href="{% url 'delmenucat' c.id %}"><button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure want to delete this category?');"><i class="fa fa-trash"></i> Delete</button></a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <a href="{% url 'menu' c.id %}">
+                        <div class="col-auto">
+                        {% if c.image %}
+                            <img src="{{c.image.url}}" height="100px" alt="">
+                        {% else %}
+                            <img src="{% static 'assets/images/default.png' %}" height="100px" alt="">
+                        {% endif %}
+                        </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% if request.user.is_superuser %}
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-left-info py-2">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <a class="col-md-6 col-xl-3 mb-4" data-toggle="modal" data-target="#addMenuCategory">
+                                <div class="text-dark font-weight-bold h1 mb-0">
+                                    <span><i class="fa fa-plus"></i>Add Category</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+       <!-- Start Popup Model -->
+<div class="modal fade" id="addMenuCategory" tabindex="-1" role="dialog" aria-labelledby="editor-title">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Menu <b class="text-danger">Categories</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'dashboard'%}" enctype="multipart/form-data">
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                    <button class="btn btn-info btn-block" type="submit"><i class="fa fa-plus"></i>Add Menu Categories</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Popup Model -->
+
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends 'base/base.html' %}
+{% block 'title' %} Edit Table {% endblock %}
+{% load static %}
+{% block 'body' %}
+<div class="container-fluid">
+    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+        <h3 class="text-dark mb-0">Tables</h3>
+        {% include 'component/message.html' %}
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-12">
+            <div class="text-dark font-weight-bold h3 mb-0">Reserved Tables <br> <span id="rtbl" class="text-warning"></span></div>
+        </div>
+    </div>
+    <p><br><br></p>
+    <hr>
+    <p><br><br></p>
+    <div class="row">
+        <script> var rtbl=0;</script>
+    {% for t in table %}
+        {% if t.reserved == 1 %}
+        <script> rtbl = rtbl+1;</script>
+        <div class="col-md-3 col-xl-2 mb-2">
+        <div class="card">
+            <div class="card-header bg-warning">
+                <h4 class="m-b-0 text-white"></h4></div>
+            <div class="card-body" >
+                <div class="row align-items-center no-gutters">
+                    <div class="col mr-2">
+<!--                            <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>{{i.title}}</span></div>-->
+                        <a href="#" class="col-md-6 col-xl-3 mb-4" >
+                             <div class="text-dark font-weight-bold h2 mb-0"><span>{{t.title}} </span></div>
+                        </a>
+                    </div>
+                    <form method="post">
+                        <input type="number" name="tblid" value="{{ t.id }}" hidden />
+                        {% csrf_token %}
+                        <button class="btn btn-outline-danger btn-sm" type="submit" onclick="return confirm('Are you sure want to cancel the reservation?');"><i class="fa fa-times"></i> Cancel Reservation</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+    <div class="col-md-3 col-xl-2 mb-2">
+            <div class="card shadow border-left-info py-2">
+                <div class="card-body" data-toggle="modal" data-target="#addTable">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <a href="#" class="col-md-6 col-xl-3 mb-4">
+                                <div class="text-dark font-weight-bold h3 mb-0">
+                                    <span><i class="fa fa-table"></i> Add Reservation</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<p><br><br></p>
+    <hr>
+    <a href="{% url 'table' %}"><button class="btn btn-info btn-lg"><i class="fa fa-arrow-circle-left"> Back to all Tables</i></button></a>
+</div>
+<script> document.getElementById('rtbl').innerHTML = rtbl ;</script>
+
+<div class="modal fade" id="addTable" tabindex="-1" role="dialog" aria-labelledby="editor-title">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Reservation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'addReservation' %}" novalidate>
+                    <div class="form-group">
+                        <h5>Select Table to Reserve: <span class="text-danger">*</span></h5>
+                        <div class="controls">
+                            <select name="table" id="select" required data-validation-required-message="Please Select Table" class="form-control">
+                                <option value="" selected>---------</option>
+                                {% for t in table %}
+                                    {% if t.occupied == 0 and t.reserved == 0 %}
+                                        <option value="{{t.id}}">{{t.title}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    {% csrf_token %}
+                    <button class="btn btn-info btn-block" type="submit"><i class="fa fa-plus"></i>Add Reservation</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+ <p><br><br></p>
+{% endblock %}

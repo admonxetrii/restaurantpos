@@ -1,0 +1,61 @@
+{% extends 'base/base2.html' %}
+{% block 'title' %} POS {% endblock %}
+{% load static %}
+{% block 'body' %}
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
+        <div class="row flex-grow">
+          <div class="col-lg-6 d-flex align-items-center justify-content-center">
+            <div class="auth-form-transparent text-left p-3">
+              <div class="brand-logo text-center">
+                <img src="{% static 'assets/images/tropical_ico.png' %}" alt="logo" >
+                  <span style="font-family: 'Open Sans', sans-serif; font-size: 60px; display: block;" >Tropical Rest</span>
+              </div>
+                {% include 'component/message.html' %}
+              <h4 class="font-weight-bold" style="color: red">Enter New password for: <span class="text-success">{{ user }}</span></h4>
+              <h6 class="font-weight-light">Just a piece of cake!!</h6>
+              <form class="pt-3" method="post" action="{% url 'resetcomplete' user.id  %}">
+                <div class="form-group row">
+                  <div class="input-group col-sm-6 mb-3 mb-sm-0">
+                    <div class="input-group-prepend bg-transparent">
+                      <span class="input-group-text bg-transparent border-right-0">
+                        <i class="mdi mdi-lock-outline text-primary"></i>
+                      </span>
+                    </div>
+                    <input type="password" class="form-control form-control-lg border-left-0" required id="exampleInputPassword" name="pass1" placeholder="Password">
+                  </div>
+                  <div class="input-group col-sm-6">
+                    <div class="input-group-prepend bg-transparent">
+                      <span class="input-group-text bg-transparent border-right-0">
+                        <i class="mdi mdi-lock-outline text-primary"></i>
+                      </span>
+                    </div>
+                    <input type="password" class="form-control form-control-lg border-left-0" required id="exampleInputPassword" name="pass2" placeholder="Confirm Password">
+                  </div>
+                </div>
+                  <div class="text-center mt-4 font-weight-light">
+                  <a href="{% url 'signin' %}" class="text-primary">Want to Login instead?</a>
+                </div>
+                  {% csrf_token %}
+                <div class="mt-3">
+                  <button class="btn btn-block btn-danger btn-lg font-weight-medium auth-form-btn" type="submit">Change Password</button>
+                </div>
+                <div class="text-center mt-4 font-weight-light">
+                  Want to have an account? <a href="{% url 'signin' %}" class="text-primary">Sign Up!</a>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-lg-6 register-half-bg d-flex flex-row">
+            <p class="text-white font-weight-medium text-center flex-grow align-self-end">Copyright &copy; 2020 Tropical Rest -  All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- base:js -->
+{% endblock %}

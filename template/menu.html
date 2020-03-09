@@ -1,0 +1,231 @@
+{% extends 'base/base.html' %}
+{% block 'title' %} Menu Items {% endblock %}
+
+{% block 'body' %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-1 font-weight-bolder">{{cate.title}}</h1>
+                    {% include 'component/message.html' %}
+                    <div class="table-responsive ">
+                        <table id="myTable" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>SN.</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Action</th>
+                                    {% if request.user.is_superuser %}
+                                    <th>Edit/Delete</th>
+                                    <th>Change Category</th>
+                                    {% endif %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{ forloop.counter }}
+                                {% for m in menu %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td><b class="text-dark font-bold">{{m.title}}</b></td>
+                                    <td>Rs. {{m.price}}-/</td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#order{{m.id}}"><i
+                                                class="fa fa-plus"></i>Order
+                                        </button>
+                                    </td>
+                                    {% if request.user.is_superuser %}
+{#                                        {% url 'editMenu' m.id %}#}
+                                    <td><button class="btn btn-info btn-sm" data-toggle="modal" data-target="#editor-modal{{ m.id }}"><i class="fa fa-edit"></i> Edit</button>
+                                        | <a href="{% url 'delmenu' m.id %}"><button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure want to delete this item?');"><i class="fa fa-trash"></i> Delete</button></a></td>
+                                        <td>
+                                            <button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#changer-modal{{ m.id }}"><i class="fa fa-edit"></i> Change</button>
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    <div>
+                        {% if request.user.is_superuser %}
+                        <button class="btn btn-info" data-toggle="modal" data-target="#addMenu"><i class="fa fa-plus"></i> Add Menu Items</button>
+                        {% endif %}
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!--model-->
+{% for m in menu %}
+
+<div class="modal fade" id="order{{m.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Order - <b class="text-danger">{{m.title}}</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'order' %}" novalidate>
+                    <div class="form-group">
+                        <h5>Select Table To Order: <span class="text-danger">*</span></h5>
+                        <div class="controls">
+                            <select name="table" id="select" required data-validation-required-message="Please Select Table" class="form-control">
+                                <option value="" selected>---------</option>
+                                {% for t in table %}
+                                <option value="{{t.id}}">{{t.title}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <select name="menu" required  id="id_menu" hidden class="form-control">
+                        <option value="{{m.id}}" selected="">{{m.title}}</option>
+                    </select>
+
+                    <div class="form-group">
+                        <h5>Enter quantity: <span class="text-danger">*</span></h5>
+                        <div class="controls">
+                            <input type="number"  id="qty" name="qty" required data-validation-required-message="This field is required" data-validation-max-message="Must be lower than or equal to 10." data-validation-min-message="Must be higher than or equal to 1" class="form-control" min="1" max="10">
+                        </div>
+                    </div>
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                <button type="submit" class="btn btn-info btn-block waves-effect waves-light">Order</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+{% for m in menu %}
+
+
+<!-- Start Popup Model -->
+<div class="modal fade" id="editor-modal{{ m.id }}" tabindex="-1" role="dialog" aria-labelledby="editor-title">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit - <b class="text-danger">{{m.title}}</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'editMenu' m.id %}" novalidate>
+                    <div class="form-group required row">
+                        <label for="title" class="col-sm-3 control-label">Title:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="title" required data-validation-required-message="This field is required" name="title" value="{{ m.title }}">
+                        </div>
+                    </div>
+                    <div class="form-group required row">
+                        <label for="price" class="col-sm-3 control-label">Price:</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" min="1" data-validation-required-message="This field is required" id="price" name="price" value="{{ m.price }}" required>
+                        </div>
+                    </div>
+                    {% csrf_token %}
+                    <button class="btn btn-info btn-block" type="submit"><i class="fa fa-edit"></i>Edit Item</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Popup Model -->
+
+{% endfor %}
+
+{% for m in menu %}
+<!-- Start Popup Model -->
+<div class="modal fade" id="changer-modal{{ m.id }}" tabindex="-1" role="dialog" aria-labelledby="editor-title">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Change Category - <b class="text-danger">{{m.title}}</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'changeMenuCate' m.id %}" novalidate>
+                    <div class="form-group">
+                        <h5>Select New Category: <span class="text-danger">*</span></h5>
+                        <div class="controls">
+                            <select name="newCategory" id="select" required data-validation-required-message="Please Select Category" class="form-control">
+                                <option value="{{ m.category.id }}" selected>{{ m.category.title }}</option>
+                                {% for c in allCate %}
+                                    {% if c.id == m.category.id %}
+                                    {% else %}
+                                    <option value="{{c.id}}">{{c.title}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    {% csrf_token %}
+                    <button class="btn btn-info btn-block" type="submit"><i class="fa fa-edit"></i>Change Category</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Popup Model -->
+
+{% endfor %}
+
+    <!-- Start Popup Model -->
+<div class="modal fade" id="addMenu" tabindex="-1" role="dialog" aria-labelledby="editor-title">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Items in <b class="text-danger">{{cate.title}}</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+{#            <a href="">#}
+                <form method="post" action="{% url 'addMenu' cate.id %}" novalidate>
+                    <div class="form-group">
+                        <h5>Enter Title: <span class="text-danger">*</span></h5>
+                        <div class="controls">
+                            <input type="text"  id="title" name="title" required data-validation-required-message="This field is required"  class="form-control" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h5>Enter price: <span class="text-danger">*</span></h5>
+                        <div class="controls">
+                            <input type="number"  id="price" name="price" required data-validation-required-message="This field is required" data-validation-min-message="Must be higher than or equal to 1" class="form-control" min="1">
+                        </div>
+                    </div>
+                    {% csrf_token %}
+                    <button class="btn btn-info btn-block" type="submit"><i class="fa fa-plus"></i>Add Menu Items</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Popup Model -->
+
+{% endblock %}

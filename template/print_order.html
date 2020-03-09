@@ -1,0 +1,77 @@
+{% extends 'base/base.html' %}
+{% load mathfilters %}
+{% block 'title' %} Print Order {% endblock %}
+
+{% block 'body' %}
+<div class="container-fluid">
+    <div id="receipt">
+        <h2 class="text-center mb-1 text-dark font-weight-bolder" style="position: center;">K.O.T</h2>
+        <h3 class="text-dark mb-1 font-weight-bolder">Order of Table - {{t.title}}</h3>
+        <h5 class="text-dark mb-1 font-weight-bold">Ordered by: {{ request.user }}</h5>
+        <!--    <h4 class="text-dark mb-1 font-weight-bolder">Print K.O.T.</h4>-->
+        {% include 'component/message.html' %}
+        <div class="divider"><p></p></div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" border="1px;">
+                        <thead>
+                        <tr>
+                            <th>SN.</th>
+                            <th>Item</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{ forloop.counter }}
+                        <script type="text/javascript"> var total = 0; </script>
+                        {% for o in order %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{o.menu.title}}</td>
+                            <td>{{o.menu.category.title}}</td>
+                            <td>{{o.quantity}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p><br></p>
+<br>
+
+<div class="container-fluid">
+    <a href="{% url 'printit' t.id %}" class="btn btn-success" onclick="return CallPrint('receipt')"><i class="fa fa-print"></i> Print</a>
+    <a href="{% url 'tableorder' t.id %}" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
+    <div class="divider"></div>
+</div>
+<script type="text/javascript">
+    function printContent(el) {
+        var restorepage = document.body.innerHTML;
+        var printcontent = document.getElementById(el).innerHTML;
+        document.body.innerHTML = printcontent;
+        window.print();
+        document.body.innerHTML = restorepage;
+    }
+     function CallPrint(strid) {
+            var restorepage = document.body.innerHTML;
+            var prtContent = document.getElementById(strid);
+            var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=400,toolbar=1,scrollbars=1,status=0');
+            WinPrint.document.write('<html><head><title></title></head>');
+            WinPrint.document.write('<body style="font-family:verdana; font-size:14px;width:250px;height:200px; position: center;"  >');
+            WinPrint.document.write(prtContent.innerHTML);
+            WinPrint.document.write('</body></html>');
+            WinPrint.document.close();
+            WinPrint.focus();
+            WinPrint.print();
+            // WinPrint.close();
+            prtContent.innerHTML = "";
+            document.body.innerHTML = restorepage;
+    }
+
+</script>
+{% endblock %}

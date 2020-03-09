@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+{% block 'title' %} Users {% endblock %}
+{% load static %}
+{% block 'body' %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-1 font-weight-bolder">All Users:</h1>
+                    {% include 'component/message.html' %}
+                    <div class="table-responsive ">
+                        <table id="myTable" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Sn.</th>
+                                    <th>Username:</th>
+                                    <th>Full Name</th>
+                                    <th>Date Joined</th>
+                                    <th>Cashier</th>
+                                    <th>Admin Status</th>
+                                    <th>Active Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                  {{forloop.counter}}
+                                  <script type="text/javascript"> var total = 0; </script>
+                                  {% for u in users %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>
+                                        <div class="user-img">
+                                            {% if request.user.profilepic.image %}
+                                                <img src="{{ MEDIA_URL }}{{ u.profilepic.image.url }}" alt="{{u.username}}" class="img-circle" height="30" width="30">
+                                            {% else %}
+                                                <img src="{% static 'assets/images/default-pro-pic.jpg' %}" alt="{{u.username}}" class="img-circle" width="60">
+                                            {% endif %}
+                                            <span class="mdi-format-font-size-increase"> {{u.username}}</span>
+                                        </div>
+                                    </td>
+                                    <td>{{u.first_name}} {{u.last_name}}</td>
+                                    <td>{{u.date_joined}}</td>
+                                    <td>{% if u.is_staff %} <i class="fa fa-check-circle" style="color: green; font-size: x-large"></i> {% else %} <i class="fa fa-times-circle" style="color: red; font-size: x-large"></i> {% endif %} </td>
+                                    <td>{% if u.is_superuser %} <i class="fa fa-check-circle" style="color: green; font-size: x-large"></i> {% else %} <i class="fa fa-times-circle" style="color: red; font-size: x-large"></i> {% endif %}</td>
+                                    <td>{% if u.is_active %} <i class="fa fa-check-circle" style="color: green; font-size: x-large"></i> {% else %} <i class="fa fa-times-circle" style="color: red; font-size: x-large"></i> {% endif %}</td>
+                                </tr>
+                                    {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                <div>
+                    <a href="{% url 'edit_users' %}"><button class="btn btn-info"><i class="fa fa-edit"></i> Edit Users</button></a>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

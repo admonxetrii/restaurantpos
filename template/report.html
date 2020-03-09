@@ -1,0 +1,58 @@
+{% extends 'base/base.html' %}
+{% block 'title' %} Reports {% endblock %}
+{% load static %}
+{% block 'body' %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Reports</h2>
+                    <h6 class="card-subtitle">Export data to Copy, CSV, Excel, PDF & Print</h6>
+                    <div class="table-responsive m-t-40">
+                        <table id="example23"
+                            class="display nowrap table table-hover table-striped table-bordered"
+                            cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Sn.</th>
+                                    <th>Bill No.</th>
+                                    <th>Table Name</th>
+                                    <th>Cashier</th>
+                                    <th>Bill Date</th>
+                                    <th>Total Amount</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Sn.</th>
+                                    <th>Bill No.</th>
+                                    <th>Table Name</th>
+                                    <th>Cashier</th>
+                                    <th>Bill Date</th>
+                                    <th>Total Amount</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                 {{forloop.counter}}
+                                 <script type="text/javascript"> var total = 0; </script>
+                                 {% for b in bill %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{b.billnum}}</td>
+                                    <td>{{b.table.title}}</td>
+                                    <td>{{b.billuser}}</td>
+                                    <td>{{b.bill_date}}</td>
+                                    <td>{{b.total}}</td>
+                                    <script type="text/javascript"> var total = total + {{b.total}};  </script>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
