@@ -30,10 +30,10 @@
                                     <td>{{forloop.counter}}</td>
                                     <td>
                                         <div class="user-img">
-                                            {% if request.user.profilepic.image %}
+                                            {% if u.profilepic.image %}
                                                 <img src="{{ MEDIA_URL }}{{ u.profilepic.image.url }}" alt="{{u.username}}" class="img-circle" height="30" width="30">
                                             {% else %}
-                                                <img src="{% static 'assets/images/default-pro-pic.jpg' %}" alt="{{u.username}}" class="img-circle" width="60">
+                                                <img src="{% static 'assets/images/default-pro-pic.jpg' %}" alt="{{u.username}}" class="img-circle" width="30" height="30">
                                             {% endif %}
                                             <span class="mdi-format-font-size-increase"> {{u.username}}</span>
                                         </div>

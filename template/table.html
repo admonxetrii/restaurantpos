@@ -105,7 +105,7 @@
                                 <div class="row align-items-center no-gutters">
                                     <div class="col mr-2">
             <!--                            <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>{{i.title}}</span></div>-->
-                                        <a href="#" class="col-md-6 col-xl-3 mb-4" disabled="true">
+                                        <a href="{% url 'tableorder' t.id %}" class="col-md-6 col-xl-3 mb-4" disabled="true">
                                              <div class="text-dark font-weight-bold h2 mb-0"><span>{{t.title}}</span></div>
                                         </a>
                                         {% if request.user.is_superuser %}
@@ -120,17 +120,18 @@
                             </div>
                         </div>
             {% endif %}
-            {% else %}
-                <script>rtbl=rtbl+1;</script>
-            {% endif %}
         </div>
+        {% else %}
+                <script>rtbl=rtbl+1;</script>
+        {% endif %}
     {% endif %}
 {% endfor %}
 {% for mt in merge %}
+    <script>otbl=otbl+2;</script>
     <div class="col-md-3 col-xl-2 ">
 
             <div class="card">
-                <div class="card-header bg-info">
+                <div class="card-header bg-danger">
                     <h4 class="m-b-0 text-white"></h4></div>
                 <div class="card-body" >
                     <div class="row align-items-center no-gutters">
@@ -176,8 +177,10 @@
 </div>
 <hr>
     <div class="container-fluid">
+    {% if request.user.is_staff %}
         <button class="btn btn-danger" data-toggle="modal" data-target="#merge"><i class="fas fa-handshake"></i> Merge Table</button>
         <a href="{% url 'reservedTable' %}"><button class="btn btn-info"><i class="fa fa-exclamation-triangle"></i> Reserved Table</button></a>
+    {% endif %}
     </div>
 
 <!--model for changing table-->
@@ -196,16 +199,20 @@
             <div class="modal-body">
                 <form method="post" action="{% url 'changetable' t.id %}" novalidate>
                     <div class="form-group">
-                        <h5>Select Table To Order: <span class="text-danger">*</span></h5>
+                        <h5>Select New Table: <span class="text-danger">*</span></h5>
                         <div class="controls">
-                            <select name="newTable" id="select" required data-validation-required-message="Please Select Table" class="form-control">
+                            <select name="newTable" id="cselect" required data-validation-required-message="Please Select Table" class="form-control" onchange="getVal{{ t.id }}(this.id);">
                                 <option value="" selected>---------</option>
                                 {% for t in table %}
                                 {% if t.occupied == 0 %}
                                     <option value="{{t.id}}">{{t.title}}</option>
                                 {% endif %}
+                                    <script>
+                                        var newt{{ t.id }} = {{t.title}};
+                                    </script>
                                 {% endfor %}
                             </select>
+
                         </div>
                     </div>
 
@@ -339,9 +346,6 @@
         </div>
     </div>
 </div>
-
-
-
  <p><br><br></p> <p><br><br></p>
 
 {% endblock %}

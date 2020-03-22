@@ -18,9 +18,9 @@
                         <thead>
                         <tr>
                             <th>SN.</th>
-                            <th>Item</th>
                             <th>Category</th>
-                            <th>Quantity</th>
+                            <th>Item</th>
+                            <th>Qty</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -29,9 +29,9 @@
                         {% for o in order %}
                         <tr>
                             <td>{{forloop.counter}}</td>
-                            <td>{{o.menu.title}}</td>
                             <td>{{o.menu.category.title}}</td>
-                            <td>{{o.quantity}}</td>
+                            <td><b>{{o.menu.title}}</b></td>
+                            <td><b style="font-size: 20px;">{{o.quantity}}</b></td>
                         </tr>
                         {% endfor %}
                         </tbody>

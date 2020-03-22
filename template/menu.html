@@ -88,12 +88,41 @@
                     <select name="menu" required  id="id_menu" hidden class="form-control">
                         <option value="{{m.id}}" selected="">{{m.title}}</option>
                     </select>
-
+                    <input type="number" id="hrs" name="hrs" hidden />
+                    <input type="number" id="min" name="min" hidden />
+                    <script>
+                        var time = new Date()
+                        var hr = time.getHours()
+                        var mins = time.getMinutes()
+                        document.getElementById('hrs').value=hr;
+                        document.getElementById('min').value=mins;
+                    </script>
                     <div class="form-group">
                         <h5>Enter quantity: <span class="text-danger">*</span></h5>
-                        <div class="controls">
-                            <input type="number"  id="qty" name="qty" required data-validation-required-message="This field is required" data-validation-max-message="Must be lower than or equal to 10." data-validation-min-message="Must be higher than or equal to 1" class="form-control" min="1" max="10">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger" type="button" onclick="decrementValue{{ m.id }}();"><b> - </b></button>
+                            </div>
+                            <input type="number" name="qty" class="form-control" id="ordervalue{{ m.id }}" value="1" required min="1" max="10">
+                            <div class="input-group-append">
+                                <button class="btn btn-success" type="button" onclick="incrementValue{{ m.id }}();"><b> + </b></button>
+                            </div>
                         </div>
+                        <br>
+                        <script type="text/javascript">
+                        function incrementValue{{ m.id }}()
+                        {
+                            var value = parseInt(document.getElementById('ordervalue{{ m.id }}').value);
+                            value++;
+                            document.getElementById('ordervalue{{ m.id }}').value = value;
+                        }
+                        function decrementValue{{ m.id }}()
+                        {
+                            var value = parseInt(document.getElementById('ordervalue{{ m.id }}').value);
+                            value--;
+                            document.getElementById('ordervalue{{ m.id }}').value = value;
+                        }
+                        </script>
                     </div>
                     {{ form.as_p }}
                     {% csrf_token %}

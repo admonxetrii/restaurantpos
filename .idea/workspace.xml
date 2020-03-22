@@ -1,7 +1,393 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="" />
+    <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0019_auto_20200310_1238.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0020_table_occhrs.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0021_table_occmin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0022_auto_20200322_1744.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0023_auto_20200322_2113.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0024_auto_20200322_2127.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/CategoryMenu/sisha.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/CategoryMenu/wine.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/User/20191115_120528.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/User/9A988640-24DC-42CA-9CD3-3357F5089CDC.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/User/IMG_20191222_172409_259.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/User/bsal.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Restaurant/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/Restaurant/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Restaurant/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Restaurant/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rms/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rms/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rms/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/.bmp.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/.circleci/config.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/.github/ISSUE_TEMPLATE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/.jshintrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/.travis.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/CONTRIBUTING.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/bower.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/c3.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/c3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/c3.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/c3.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/codecov.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/component.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/extensions/chart-bubble/bubble.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/extensions/chart-bubble/c3.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/extensions/chart-bubble/c3.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/extensions/chart-bubble/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/extensions/exporter/config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/extensions/exporter/phantom-exporter.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/extensions/exporter/test.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/extensions/js/c3ext.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/css/bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/css/c3.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/css/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/data/c3_test.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/data/c3_test.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/data/c3_test.tsv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/data/c3_test2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/data/c3_test2_ts.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/data/c3_test3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/data/c3_test_2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/data/c3_test_3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/data/c3_test_ts.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/js/c3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/js/c3.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/js/extensions" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/js/require.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/js/samples/plugin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/js/samples/requirejs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/js/samples/zoom_reduction.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/api_axis_label.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/api_axis_range.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/api_category.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/api_data_colors.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/api_flow.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/api_flow_timeseries.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/api_legend.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/api_tooltip_show.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/api_transform.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/api_xgrid_lines.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/api_ygrid_lines.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/area_zerobased.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/axes_padding.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/axes_range.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/axes_x_extent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/axes_x_localtime.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/axes_x_range_timeseries.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/axes_x_tick_culling.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/axes_x_tick_fit.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/axes_x_tick_rotate.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/axes_x_tick_values.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/axes_y2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/axes_y_default.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/bar_zerobased.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/bindto.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/categorized.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_area.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_area_spline.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_area_spline_stacked.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_area_stacked.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_area_step.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_area_step_stacked.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_bar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_bar_space.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_bar_stacked.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_combination.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_donut.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_gauge.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_pie.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_pie_sort.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_scatter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_spline.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_step.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/chart_step_category.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/custom_x_categorized.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/custom_x_scale.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/custom_xs_scale.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/data_columned.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/data_hide.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/data_json.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/data_label.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/data_label_format.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/data_load.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/data_load_timeseries.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/data_region.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/data_region_timeseries.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/data_rowed.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/data_url.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/different_category_datasets.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/domain_y.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/element.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/emptydata.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/grid_focus.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/grid_x_lines.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/grid_x_lines_timeseries.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/grids.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/grids_timeseries.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/interaction_enabled.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/legend.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/padding.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/padding_update.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/plugin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/point_r.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/point_show.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/regions.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/regions_timeseries.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/requirejs.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/selection.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/simple.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/subchart.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/subchart_onbrush.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/timeseries.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/timeseries_date.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/timeseries_descendent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/timeseries_raw.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/tooltip_grouped.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/tooltip_show.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/zoom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/zoom_category.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/zoom_onzoom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/htdocs/samples/zoom_reduction.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/karma.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/rollup.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/api.axis-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/api.data-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/api.focus-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/api.grid-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/api.load-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/api.region-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/api.zoom-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/arc-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/axis-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/c3-helper.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/c3-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/class-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/core-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/data-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/data.convert.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/domain-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/grid-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/interaction-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/legend-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/shape.bar-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/shape.line-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/svg-helper.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/title-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/tooltip-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/type-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/spec/zoom-spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.axis.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.category.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.chart.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.color.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.data.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.flow.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.focus.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.grid.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.group.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.legend.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.load.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.region.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.selection.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.show.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.tooltip.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.transform.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.x.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/api.zoom.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/arc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/axis.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/cache.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/category.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/class-utils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/class.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/clip.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/color.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/core.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/data.convert.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/data.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/data.load.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/domain.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/drag.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/format.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/grid.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/interaction.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/legend.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/polyfill.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/region.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scale.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/arc.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/area.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/axis.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/bar.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/brush.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/chart.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/focus.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/grid.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/legend.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/line.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/main.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/point.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/region.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/select_drag.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/text.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/title.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/scss/tooltip.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/selection.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/shape.bar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/shape.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/shape.line.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/size.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/subchart.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/text.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/title.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/tooltip.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/type.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/ua.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/util.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/c3-master/src/zoom.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/d3/API.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/d3/CHANGES.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/d3/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/d3/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/d3/d3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/d3/d3.min-v4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/d3/d3.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/gmaps.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/gmaps.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/gmaps.min.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/jquery.gmaps.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/lib/gmaps.controls.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/lib/gmaps.core.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/lib/gmaps.events.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/lib/gmaps.geofences.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/lib/gmaps.geometry.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/lib/gmaps.layers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/lib/gmaps.map_types.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/lib/gmaps.markers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/lib/gmaps.native_extensions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/lib/gmaps.overlays.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/lib/gmaps.routes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/lib/gmaps.static.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/lib/gmaps.streetview.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/lib/gmaps.styles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/gmaps/lib/gmaps.utils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/jquery-sparkline/jquery.charts-sparkline.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/jquery-sparkline/jquery.sparkline.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/jquery/jquery-3.2.1.min - Copy.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/.bower.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/.travis.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/Gruntfile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/bower.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/bower.travis.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/_template.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/area-as-line.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/area.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/bar-colors.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/bar-no-axes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/bar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/days.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/decimal-custom-hover.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/diagonal-xlabels-bar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/diagonal-xlabels.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/donut-colors.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/donut-formatter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/donut.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/dst.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/events.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/goals.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/lib/example.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/lib/example.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/months-no-smooth.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/negative.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/no-grid.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/non-continuous.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/non-date.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/quarters.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/resize.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/stacked_bars.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/timestamps.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/updating.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/weeks.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/examples/years.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/less/morris.core.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/lib/morris.area.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/lib/morris.bar.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/lib/morris.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/lib/morris.donut.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/lib/morris.grid.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/lib/morris.hover.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/lib/morris.line.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/morris.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/morris.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/morris.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/lib/area/area_spec.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/lib/bar/bar_spec.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/lib/bar/colours.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/lib/commas_spec.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/lib/donut/donut_spec.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/lib/grid/auto_grid_lines_spec.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/lib/grid/set_data_spec.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/lib/grid/y_label_format_spec.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/lib/hover_spec.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/lib/label_series_spec.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/lib/line/line_spec.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/lib/pad_spec.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/lib/parse_time_spec.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/specs.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/support/placeholder.coffee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/viz/examples.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/viz/exemplary/area0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/viz/exemplary/bar0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/viz/exemplary/line0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/viz/exemplary/stacked_bar0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/viz/run.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/viz/test.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/morrisjs/spec/viz/visual_specs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/perfect-scrollbar/css/perfect-scrollbar.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/perfect-scrollbar/css/perfect-scrollbar.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/perfect-scrollbar/js/perfect-scrollbar.jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/perfect-scrollbar/js/perfect-scrollbar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/perfect-scrollbar/js/perfect-scrollbar.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/raphael/.bower.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/raphael/bower.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/raphael/dev/amdDev.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/raphael/dev/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/raphael/dev/require.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/raphael/license.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/raphael/raphael-min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/raphael/raphael.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/node_modules/switchery/dist/switchery.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/allitem.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/allitem.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/base/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/base/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/editusers.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/editusers.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/finalprt.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/gen_bill.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/gen_bill.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/menu.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/print_order.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/print_order.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/report.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/reserved.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/reserved.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/table.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/table.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/tabledetail.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/tabledetail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/users.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/users.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,17 +403,25 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1YfFdOvlxMtd1OEdpyNGzM3s9IR" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Restaurant/migrations" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -130,11 +524,23 @@
       <workItem from="1583729221986" duration="198000" />
       <workItem from="1583736161097" duration="885000" />
       <workItem from="1583738435107" duration="939000" />
+      <workItem from="1583816457495" duration="14262000" />
+      <workItem from="1583833881213" duration="2885000" />
+      <workItem from="1583839364092" duration="18194000" />
+      <workItem from="1584110282823" duration="10861000" />
+      <workItem from="1584168867360" duration="2998000" />
+      <workItem from="1584660170917" duration="4662000" />
+      <workItem from="1584851826265" duration="523000" />
+      <workItem from="1584853808200" duration="11022000" />
+      <workItem from="1584879473980" duration="12159000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="198" key="#Notifications" timestamp="1583331902810">
@@ -153,6 +559,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="690" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1583512279501" />
+    <state x="740" y="295" key="FileChooserDialogImpl" timestamp="1584852124700">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="740" y="295" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1584852124700" />
     <state width="1877" height="295" key="GridCell.Tab.0.bottom" timestamp="1583500304973">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -169,14 +579,14 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1877" height="295" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1583500304973" />
-    <state x="656" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1583738441799">
+    <state x="656" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1584879483626">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="656" y="364" key="com.intellij.ide.util.TipDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1583738441799" />
-    <state x="623" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1583505452068">
+    <state x="656" y="364" key="com.intellij.ide.util.TipDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1584879483626" />
+    <state x="623" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1584890408154">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="623" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1583505452068" />
+    <state x="623" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1584890408154" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/rms$manage.coverage" NAME="manage Coverage Results" MODIFIED="1583500292974" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

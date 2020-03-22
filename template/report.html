@@ -5,6 +5,7 @@
 
     <div class="row">
         <div class="col-12">
+            {% include 'component/message.html' %}
             <div class="card">
                 <div class="card-body">
                     <h2 class="card-title">Reports</h2>
@@ -18,9 +19,16 @@
                                     <th>Sn.</th>
                                     <th>Bill No.</th>
                                     <th>Table Name</th>
+                                    <th>Net Amount</th>
+                                    <th>Discount</th>
+                                    <th>Taxable Amount</th>
+                                    <th>Vat Amount</th>
+                                    <th>Total</th>
+                                    <th>Payment Method</th>
                                     <th>Cashier</th>
-                                    <th>Bill Date</th>
-                                    <th>Total Amount</th>
+                                    <th>Bill Date & Time</th>
+                                    <th>Printed?</th>
+                                    <th>Sync</th>
                                 </tr>
                             </thead>
                             <tfoot>
@@ -28,9 +36,16 @@
                                     <th>Sn.</th>
                                     <th>Bill No.</th>
                                     <th>Table Name</th>
+                                    <th>Net Amount</th>
+                                    <th>Discount</th>
+                                    <th>Taxable Amount</th>
+                                    <th>Vat Amount</th>
+                                    <th>Total</th>
+                                    <th>Payment Method</th>
                                     <th>Cashier</th>
-                                    <th>Bill Date</th>
-                                    <th>Total Amount</th>
+                                    <th>Bill Date & Time</th>
+                                    <th>Printed?</th>
+                                    <th>Sync</th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -41,14 +56,28 @@
                                     <td>{{forloop.counter}}</td>
                                     <td>{{b.billnum}}</td>
                                     <td>{{b.table.title}}</td>
+                                    <td>{{b.amnt}}</td>
+                                    <td>{{b.discount}}</td>
+                                    <td>{{b.taxable_amnt}}</td>
+                                    <td>{{b.tax_amnt}}</td>
+                                    <td>{{b.total_amnt}}</td>
+                                    <td>{{b.payment_method}}</td>
                                     <td>{{b.billuser}}</td>
-                                    <td>{{b.bill_date}}</td>
-                                    <td>{{b.total}}</td>
+                                    <td>{{b.bill_date}} {{ b.bill_time }}</td>
+                                    <td>{{b.billprt}}</td>
+                                    <td>
+                                        {% if b.sync_ird == 1 %}
+                                            <span class=" text-success"><i class="fa fa-check"></i> Synced</span>
+                                        {% else %}
+                                            <a href="{% url 'cbms' b.id %}"><button class="btn btn-danger">Sync</button></a>
+                                        {% endif %}
+                                    </td>
                                     <script type="text/javascript"> var total = total + {{b.total}};  </script>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
+                        <a hidden href="#"><button class="btn btn-danger"><i class="fa fa-arrow-circle-right"></i> Send Report to CBMS</button></a>
                     </div>
                 </div>
             </div>

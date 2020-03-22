@@ -29,9 +29,35 @@
                             </thead>
                             <tbody>
                             {{ forloop.counter }}
-                            <script type="text/javascript"> var total = 0; var prtsts = 1;</script>
+                            <script type="text/javascript"> var total = 0; var prtsts = 0; var count = 0;</script>
                             {% for o in order %}
-                            {% if o.printsts == 0 %}
+                               <script type="text/javascript"> count = {{ forloop.counter }};</script>
+                            {% if o.printsts == 1 %}
+                                <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{o.menu.title}}</td>
+                                <td>{{o.quantity}}</td>
+                                <td>
+                                {% if request.user.is_staff %}
+                                    <a href="{% url 'delitem' o.id %}" onclick="return confirm('Are you sure?');"  style="color: #ff032d;"><button class="btn btn-secondary btn-sm"><i class="fa fa-trash"></i> Remove</button></a>
+                                {% else %}
+                                    <button class="btn btn-danger btn-sm" disabled><i class="fa fa-trash"></i> Remove</button>
+                                {% endif %}
+                                </td>
+                                <td>
+                                    <span style="color: green;"><i class="fa fa-check"></i> Yes</span>
+                                </td>
+                                {% if request.user.is_staff %}
+                                    <td>
+                                        {{o.quantity}} * {{o.menu.price}} = {{o.quantity|mul:o.menu.price}}
+                                    </td>
+                                    <td>
+                                        @{{ o.orderedby.username }}
+                                    </td>
+                                {% endif %}
+                                <script type="text/javascript"> var total = total + {{o.quantity|mul:o.menu.price}}; prtsts += 1; </script>
+                            </tr>
+                            {% else %}
                             <tr>
                                 <td>{{forloop.counter}}</td>
                                 <td>{{o.menu.title}}</td>
@@ -48,32 +74,13 @@
                                         @{{ o.orderedby.username }}
                                     </td>
                                 {% endif %}
-                                <script type="text/javascript"> var total = total + {{o.quantity|mul:o.menu.price}}; prtsts = 0; </script>
+                                <script type="text/javascript"> var total = total + {{o.quantity|mul:o.menu.price}}; </script>
 
-                            </tr>
-                            {% else %}
-                            <tr>
-                                <td>{{forloop.counter}}</td>
-                                <td>{{o.menu.title}}</td>
-                                <td>{{o.quantity}}</td>
-                                <td><button class="btn btn-danger btn-sm" disabled><i class="fa fa-trash"></i> Remove</button></td>
-                                <td>
-                                    <span style="color: green;"><i class="fa fa-check"></i> Yes</span>
-                                </td>
-                                {% if request.user.is_staff %}
-                                    <td>
-                                        {{o.quantity}} * {{o.menu.price}} = {{o.quantity|mul:o.menu.price}}
-                                    </td>
-                                    <td>
-                                        @{{ o.orderedby.username }}
-                                    </td>
-                                {% endif %}
-                                <script type="text/javascript"> var total = total + {{o.quantity|mul:o.menu.price}}; prtsts = 1; </script>
                             </tr>
                             {% endif %}
                             {% endfor %}
                             <tr>
-                                <td colspan="2"><a href="{% url 'additem' table.id  %}"><button class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add more items</button></a></td>
+                                <td colspan="2"><a href="{% url 'addmoreitems' table.id  %}"><button class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add more items</button></a></td>
                                 <td></td>
                                 <td></td>
                             {% if request.user.is_staff %}
@@ -108,7 +115,8 @@
                 }
                 else {
                     $('#closeTable').hide();
-                    if(prtsts===0){
+                    if(prtsts!=count){
+                        console.log(prtsts,count)
                         $('#billbtn').hide();
                         $('#btnPrint').show()
                     }
@@ -140,9 +148,30 @@
                 <form method="post" action="{% url 'editqty' o.id %}" novalidate>
                     <div class="form-group">
                         <h5>Enter New quantity: <span class="text-danger">*</span></h5>
-                        <div class="controls">
-                            <input type="number" min="1" max="10" id="title" name="qty" value="{{ o.quantity }}" required data-validation-required-message="This field is required"  class="form-control" >
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger" type="button" onclick="decrementValue{{ o.id }}();"><b> - </b></button>
+                            </div>
+                            <input type="number" name="qty" class="form-control" id="ordervalue{{ o.id }}" value="{{o.quantity}}" required min="1" max="10">
+                            <div class="input-group-append">
+                                <button class="btn btn-success" type="button" onclick="incrementValue{{ o.id }}();"><b> + </b></button>
+                            </div>
                         </div>
+                        <br>
+                        <script type="text/javascript">
+                        function incrementValue{{ o.id }}()
+                        {
+                            var value = parseInt(document.getElementById('ordervalue{{ o.id }}').value);
+                            value++;
+                            document.getElementById('ordervalue{{ o.id }}').value = value;
+                        }
+                        function decrementValue{{ o.id }}()
+                        {
+                            var value = parseInt(document.getElementById('ordervalue{{ o.id }}').value);
+                            value--;
+                            document.getElementById('ordervalue{{ o.id }}').value = value;
+                        }
+                        </script>
                     </div>
                     {% csrf_token %}
                     <button class="btn btn-info btn-block" type="submit" onsubmit="return confirm('Are you sure want to change quantity?')"><i class="fa fa-edit"></i> Edit Quantity</button>

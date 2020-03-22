@@ -62,7 +62,7 @@
     </div>
 <p><br><br></p>
     <hr>
-    <a href="{% url 'table' %}"><button class="btn btn-info btn-lg"><i class="fa fa-arrow-circle-left"> Back to all Tables</i></button></a>
+    <a href="{% url 'table' %}"><button class="btn btn-info btn-lg"><i class="fa fa-arrow-circle-left"></i> Back to all Tables</button></a>
 </div>
 <script> document.getElementById('rtbl').innerHTML = rtbl ;</script>
 
@@ -83,7 +83,7 @@
                             <select name="table" id="select" required data-validation-required-message="Please Select Table" class="form-control">
                                 <option value="" selected>---------</option>
                                 {% for t in table %}
-                                    {% if t.occupied == 0 and t.reserved == 0 %}
+                                    {% if t.reserved == 0 %}
                                         <option value="{{t.id}}">{{t.title}}</option>
                                     {% endif %}
                                 {% endfor %}

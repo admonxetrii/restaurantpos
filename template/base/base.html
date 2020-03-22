@@ -23,7 +23,14 @@
     <!--[if lt IE 9]>-->
     <script src="{% static 'dist/js/html5shiv.js' %}"></script>
     <script src="{% static 'dist/js/respond.min.js' %}"></script>
-{% block 'script' %}{% endblock %}
+    <style>
+        .titlehovcustom{
+            color: black !important;
+        }
+        .titlehovcustom:hover{
+            color: red !important;
+        }
+    </style>
     <!-- Calendar CSS -->
 <![endif]-->
 </head>
@@ -243,13 +250,6 @@
     <!-- ============================================================== -->
     <!-- This page plugins -->
     <!-- ============================================================== -->
-    <!--morris JavaScript -->
-    <script src="{% static 'assets/node_modules/raphael/raphael-min.js' %}"></script>
-    <script src="{% static 'assets/node_modules/morrisjs/morris.min.js' %}"></script>
-    <script src="{% static 'assets/node_modules/jquery-sparkline/jquery.sparkline.min.js' %}"></script>
-    <!--c3 JavaScript -->
-    <script src="{% static 'assets/node_modules/d3/d3.min.js' %}"></script>
-    <script src="{% static 'assets/node_modules/c3-master/c3.min.js' %}"></script>
     <!-- Chart JS -->
     <script src="{% static 'dist/js/dashboard1.js' %}"></script>
 
@@ -266,19 +266,6 @@
     <script src="{% static 'assets/datatables/buttons.print.min.js' %}"></script>
     <!-- end - This is for export functionality only -->
     <script>
-        $(document).ready(function(){
-            $("#releaseTable").hide();
-            $("#btnPrint").click(function(){
-                $("#releaseTable").show();
-            });
-        });
-        $('form input').keydown(function (e) {
-            if (e.keyCode == 13) {
-                e.preventDefault();
-                return false;
-            }
-        });
-
         $(function () {
             $('#myTable').DataTable();
             var table = $('#example').DataTable({
@@ -341,7 +328,9 @@
     <script src="{% static 'assets/node_modules/sweetalert2/dist/sweetalert2.all.min.js' %}"></script>
     <script src="{% static 'assets/node_modules/sweetalert2/sweet-alert.init.js' %}"></script>
 
+{% block 'script' %}
 
+{% endblock %}
 </body>
 
 </html>

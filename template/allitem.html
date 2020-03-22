@@ -9,35 +9,62 @@
                     <h1 class="text-dark mb-1 font-weight-bolder">Add Item in - <b class="text-danger">{{table.title}}</b></h1>
                     <a href="{% url 'tableorder' table.id %}"><button class="btn btn-danger "><i class="fa fa-times"></i> Cancel</button></a>
                     <div class="clear"></div>
+                    <br>
                     {% include 'component/message.html' %}
                     <p><br></p>
-                    <div class="table-responsive ">
-                        <table class="table table-bordered" id="myTable" width="100%" cellspacing="0">
+                    <div class="table-responsive table-hover">
+                        <table class="table table-bordered" id="myTable"  cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>#</th>
                                     <th>Name</th>
+                                    {% if request.user.is_superuser %}
+                                        <th>Price</th>
+                                    {% endif %}
                                     <th>Category</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {{ forloop.counter }}
                                 {% for m in menu %}
-                                <tr>
-                                    <td>{{forloop.counter}}</td>
-                                    <td><b class="text-dark font-bold">{{m.title}}</b></td>
+                                <tr data-toggle="modal" data-target="#order{{m.id}}">
+                                    <td><b class="text-dark font-bold titlehovcustom" >{{m.title}}</b></td>
+                                    {% if request.user.is_superuser %}
+                                        <th>{{m.price}}</th>
+                                    {% endif %}
                                     <td>{{ m.category.title }}</td>
-                                    <td>
-                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#order{{m.id}}"><i
-                                                class="fa fa-plus"></i>Order
-                                        </button>
-                                    </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
                     </div>
+                        <form id="order_form" action="{% url 'additem' table.id %}" method="post">
+                            <br>
+                            <h5 class="text-danger font-weight-bolder">Order confirmation</h5>
+                            <input type="number" id="totalorders" name="totalordval" hidden>
+                            <div hidden>
+                                  <div class="orders" id="orderadd">
+
+                                  </div>
+                            </div>
+                            <ol id="totalord" class="form-group">
+
+                            </ol>
+                            {%csrf_token%}
+                            <input type="submit" value="Order" class="btn btn-success btn-lg" onclick="return validateord()"><br>
+                            <span id="msgOrd" class="text-danger"></span>
+                        </form>
+                    <script>
+                        function validateord() {
+                            var vali = document.getElementById('totalorders').value;
+                            if (vali==""){
+                                document.getElementById('msgOrd').innerHTML = "Please order atleast one item";
+                                return false;
+                            }
+                            else {
+                                return true;
+                            }
+                        }
+                    </script>
                 </div>
             </div>
         </div>
@@ -58,20 +85,75 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{% url 'additem' table.id %}" novalidate>
 
-                    <input type="number" name="menu" value="{{ m.id }}" hidden />
+                    <input type="number" id="menuid{{ m.id }}" name="menu" value="{{ m.id }}" hidden />
 
-                    <div class="form-group">
-                        <h5>Enter quantity: <span class="text-danger">*</span></h5>
-                        <div class="controls">
-                            <input type="number"  id="qty" name="qty" required data-validation-required-message="This field is required" data-validation-max-message="Must be lower than or equal to 10." data-validation-min-message="Must be higher than or equal to 1" class="form-control" min="1" max="10">
+                    <h5>Enter quantity: <span class="text-danger">*</span></h5>
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-danger" type="button" onclick="decrementValue{{ m.id }}();"><b> - </b></button>
+                        </div>
+                        <input type="number" name="qty" disabled class="form-control" id="ordervalue{{ m.id }}" value="1" required min="1" max="10">
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="button" onclick="incrementValue{{ m.id }}();"><b> + </b></button>
                         </div>
                     </div>
-                    {{ form.as_p }}
-                    {% csrf_token %}
-                <button type="submit" class="btn btn-info btn-block waves-effect waves-light">Order</button>
-                </form>
+                    <br>
+                    <script type="text/javascript">
+                    function incrementValue{{ m.id }}()
+                    {
+                        var value = parseInt(document.getElementById('ordervalue{{ m.id }}').value);
+                        value++;
+                        document.getElementById('ordervalue{{ m.id }}').value = value;
+                    }
+                    function decrementValue{{ m.id }}()
+                    {
+                        var value = parseInt(document.getElementById('ordervalue{{ m.id }}').value);
+                        value--;
+                        document.getElementById('ordervalue{{ m.id }}').value = value;
+                    }
+
+                    var totalorder=0;
+                    function addformelement{{ m.id }}(){
+                            totalorder++;
+                            a = document.getElementById('orderadd');
+                            b = document.getElementById('totalord');
+
+                            divx=document.createElement('div');
+                            divx.class='menuidno';
+
+                            divy=document.createElement('div');
+                            divy.class='orderqtys';
+
+                            divz=document.createElement('li');
+                            divz.class='orderqtys';
+
+                             x=document.createElement('input');
+                             x.type='number';
+                             x.name='orderid';
+                             x.value = document.getElementById('menuid{{ m.id }}').value;
+
+                             y=document.createElement('input');
+                             y.type = 'number';
+                             y.name = 'orderqty';
+                             y.value = document.getElementById('ordervalue{{ m.id }}').value;
+
+                             z = document.createElement('div');
+                             z.innerHTML = "{{ m.title }}" + "-----------Qty = "+document.getElementById('ordervalue{{ m.id }}').value;
+
+                             divx.appendChild(x);
+                             divy.appendChild(y);
+                             divz.appendChild(z);
+                             a.appendChild(divx) ;
+                             a.appendChild(divy) ;
+                             b.appendChild(divz) ;
+
+                             document.getElementById('totalorders').value = totalorder;
+                    }
+                    </script>
+
+                <button type="submit" class="btn btn-info btn-block waves-effect waves-light" onclick="addformelement{{ m.id }}()" data-dismiss="modal">Order</button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
@@ -79,6 +161,8 @@
         </div>
     </div>
 </div>
+
+
 
 {% endfor %}
 {% endblock %}

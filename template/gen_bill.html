@@ -21,7 +21,8 @@
                                     <div class="float-right text-right">
                                         <address>
                                             <h3>To,</h3>
-                                            <h4 class="font-bold">Table - {{table.title}}</h4>
+                                            <h4 class="font-bold">Table - <input type="text" id="tablename" value="{{ table.title }}" hidden>{{table.title}}</h4>
+                                            <p><b>Occupied Time :</b> <i class="fa fa-clock-o"></i><span id="diffhrs"></span> hrs, <span id="diffmin"></span> min.</p>
                                             <p class="text-muted m-l-30">Tropical Rest
                                             <p class="m-t-30"><b>Invoice Date :</b> <i class="fa fa-calendar"></i> <span id="todaydate"></span></p>
                                             <p><b>Invoice Time :</b> <i class="fa fa-clock-o"></i> <span id="currtime"></span></p>
@@ -36,13 +37,13 @@
                                                     <th class="item"><b>#</b></th>
                                                     <th class="item"><b>Item</b></th>
                                                     <th class="Hours"><b>Qty</b></th>
-                                                    <th class="Rate"><b>Unit Cost</b></th>
-                                                    <th class="Rate"><b>Sub Total</b></th>
+                                                    <th class="Rate"><b>Rate</b></th>
+                                                    <th class="Rate"><b>Total</b></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {{ forloop.counter }}
-                                                    <script type="text/javascript"> var total = 0; </script>
+                                                    <script type="text/javascript">  var total = 0; var count = 0;</script>
                                                     {% for o in order %}
                                                 <tr class="service">
                                                     <td class="tableitem"><p class="itemtext">{{forloop.counter}}</p></td>
@@ -53,15 +54,55 @@
                                                         <script type="text/javascript"> var total = total + {{o.quantity|mul:o.menu.price}};  </script>
                                                     </p></td>
                                                 </tr>
+                                                        <script>count++;</script>
                                                     {% endfor %}
+                                                    {% if table.title == 'Karaoke' %}
+                                                        <tr class="service">
+                                                            <td class="tableitem"><p class="itemtext">
+                                                                <script>document.write(count+1);</script></p></td>
+                                                            <td class="tableitem"><p class="itemtext">Karaoke</p></td>
+                                                            <td class="tableitem"><p class="itemtext"><span id="karunit"></span></p></td>
+                                                            <td class="tableitem"><p class="itemtext">Rs. 500/-</p></td>
+                                                            <td class="tableitem"><p class="itemtext">Rs. <span id="karmoney"></span>/-
+                                                            </p></td>
+                                                        </tr>
+                                                    {% endif %}
                                             </tbody>
                                             <tfoot>
+                                                <tr class="tabletitle h5">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>Net Total</td>
+                                                    <td>Rs. <span id="totalamt" ></span>/-</td>
+                                                </tr>
+                                                <tr class="tabletitle h5">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>Discount</td>
+                                                    <td><span id="discountper">0.0</span>%</td>
+                                                </tr>
+                                                <tr class="tabletitle h5">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>Taxable amount</td>
+                                                    <td>Rs. <span id="taxable" ></span>/-</td>
+                                                </tr>
+                                                <tr class="tabletitle h5">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>VAT (13%)</td>
+                                                    <td>Rs. <span id="vat" ></span>/-</td>
+                                                </tr>
                                                 <tr class="tabletitle font-weight-bold h4">
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
-                                                    <td id="distol">Net Total</td>
-                                                    <td id="disrs">Rs. <span id="totalamt" ></span>/-</td>
+                                                    <td>Grand Total</td>
+                                                    <td>Rs. <span id="grandttl" ></span>/-</td>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -76,12 +117,16 @@
                                     <hr>
                                     <div class="text-right">
                                         <form action="{% url 'releaseTable' table.id %}" method="post">
-                                            <input type="text" name="totalamount" id="finalamt" hidden />
-                                            <input type="text" name="billnum" value="TROP{{billno.number}}" hidden />
+                                            <input type="text" name="nettotal" id="nettotal" hidden />
+                                            <input type="text" name="disper" id="disper" hidden />
+                                            <input type="text" name="taxablettl" id="taxablettl" hidden />
+                                            <input type="text" name="vatamt" id="vatamt" hidden />
+                                            <input type="text" name="grdamnt" id="grdamnt" hidden />
+                                            <input type="text" name="billnum" value="TRP{{billno.number}}" hidden />
                                             {% csrf_token %}
                                            <input type="number" min="1" max="100" id="discount" style=" width: 200px !important; float: left; color: red; font-weight: bolder"  class="form-control" placeholder=" Enter Discount%...">
                                         <button class="btn btn-success" id="releaseTable" style="float: right;" type="submit" ><i class="fa fa-check" onclick="return confirm('Are you sure want to proceed?');"></i> Release Table </button>
-                                        <button id="btnPrint" class="btn btn-danger " type="button" onclick="CallPrint('receipt')"> <span><i class="fa fa-print"></i> Print Receipt</span> </button>
+                                        <button style="margin-right: 10px;" id="btnPrint" class="btn btn-danger " type="button" onclick="CallPrint('receipt')"> <span><i class="fa fa-print"></i> Print Receipt</span> </button>
                                         </form>
                                     </div>
                                 </div>
@@ -99,22 +144,24 @@
       <div class="info">
         <p ><span style="font-weight: bold; font-size: 30px">Tropical Rest</span><br>
             <b>Kathmandu, Nepal</b><br><br>
-            <span style="font-weight: bold; font-size: 20px">Table - {{table.title}}</span>
+            <span style="font-weight: bold; font-size: 20px">Tax Invoice</span>
+      <hr style="color: black;">
         </p>
       </div><!--End Info-->
     </div><!--End InvoiceTop-->
-      <hr style="color: black;">
     <div id="mid">
       <div class="info" style="text-align: left !important;">
         <p>
             <br><span style="font-weight: bold">Pan No    : 304231173</span>
-            <br>Bill No   : <span>#TROP{{billno.number}}</span>
+            <br>Bill No   : <span>#TRP{{billno.number}}</span>
             <br>Date      : <span id="todaydate1"></span>
             <br>Time      : <span id="currtime1"></span>
             <br>Cashier   : <span>@{{request.user}}</span>
         </p>
       </div>
     </div><!--End Invoice Mid-->
+      <hr style="color: black;">
+            <span style="font-weight: bold; font-size: 20px; text-align: center !important;">Table - {{table.title}}</span>
       <hr style="color: black;">
     <div id="bot">
 
@@ -137,6 +184,16 @@
                                 <td class="tableitem"><p class="itemtext">{{o.quantity|mul:o.menu.price}}</p></td>
                             </tr>
                                 {% endfor %}
+                            {% if table.title == 'Karaoke' %}
+                            <tr class="service">
+                                <td><p class="itemtext">
+                                    <script>document.write(count);</script></p></td>
+                                <td><p class="itemtext" style="font-weight: bold;">Karaoke</p></td>
+                                <td width="40px"><p class="itemtext"><span id="karunitbill"></span></p></td>
+                                <td class="tableitem"><p class="itemtext">500</p></td>
+                                <td class="tableitem"><p class="itemtext"><span id="karamtbill"></span></p></td>
+                            </tr>
+                            {% endif %}
 
 
 
@@ -144,11 +201,34 @@
 					</div><!--End Table-->
         <br>
                     <div style="float: right; width: 75mm !important;">
-                        <h4 style="text-align: right">Net Total = Rs. <span id="totalamt1"></span>/-</h4>
-                        <span id="discounted">
-                            <h4 style="text-align: right">Discount = <span id="disamt"></span>%</h4>
-                            <h3 style="text-align: right">Grand Total = Rs. <span id="grdttl"></span>/-</h3>
-                        </span>
+                        <table style="float: right; ">
+                            <tr>
+                                <td style="text-align: right;">Net Total</td>
+                                <td>=</td>
+                                <td>Rs. <span id="totalamt1"></span>/-</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">Discount</td>
+                                <td>=</td>
+                                <td><span id="disamt">0.0</span>%</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">Taxable amount</td>
+                                <td>=</td>
+                                <td>Rs. <span id="taxamt"></span>/-</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">Vat(13%)</td>
+                                <td>=</td>
+                                <td>Rs. <span id="tax"></span>/-</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;"><h3>Grand Total</h3></td>
+                                <td><h3>=</h3></td>
+                                <td><h3>Rs. <span id="grdttl"></span>/-</h3></td>
+                            </tr>
+
+                        </table>
                     </div>
         <br>
         <hr>
@@ -164,27 +244,101 @@
     </div>
 
 
+
 <script type="text/javascript">
 
+    var karmoney = 0;
+    var today = new Date();
+    var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    document.getElementById('todaydate').innerHTML = date;
+    document.getElementById('todaydate1').innerHTML = date;
+    document.getElementById('currtime').innerHTML = time;
+    document.getElementById('currtime1').innerHTML = time;
+    document.getElementById('curyrs').innerHTML = today.getFullYear();
+    var consumedhrs = today.getHours() - {{ table.occHrs }};
+    var consumedmin = today.getMinutes() - {{ table.occMin }};
+    if (consumedmin < 0 ){
+        consumedmin += 60;
+    }
+    if (consumedhrs < 0) {
+        consumedhrs += 24;
+    }
+    document.getElementById('diffhrs').innerHTML = consumedhrs;
+    document.getElementById('diffmin').innerHTML = consumedmin;
+    </script>
+        {% if table.title == 'Karaoke' %}
+            <script>
+                 if (consumedhrs == 0){
+                    karmoney = 500;
+                }
+                else if(consumedhrs == 1){
+                    if (consumedmin>15){
+                        karmoney = 1000;
+                    }
+                    else{
+                        karmoney = 500;
+                    }
+                }
+                else if(consumedhrs>1){
+                    if (consumedmin>15){
+                        karmoney = 500 + 500*consumedhrs;
+                    }
+                    else{
+                        karmoney = 500*consumedhrs;
+                    }
+                }
 
 
-    document.getElementById('finalamt').value = total;
-    var grdtotal;
+                document.getElementById('karmoney').innerHTML = karmoney;
+                document.getElementById('karamtbill').innerHTML = karmoney;
+                document.getElementById('karunit').innerHTML = consumedhrs+' hrs, '+consumedmin+' min.';
+                document.getElementById('karunitbill').innerHTML = consumedhrs+':'+consumedmin;
+                total = total + karmoney;
+            </script>
+
+        {% endif %}
+
+    <script>
+
+
+    document.getElementById('totalamt').innerHTML = total;
+    document.getElementById('totalamt1').innerHTML = total;
+    var taxableamnt = total;
+    var tax = (13/100)*taxableamnt;
+    var grandtotal = taxableamnt + tax;
+    document.getElementById('taxable').innerHTML = taxableamnt;
+    document.getElementById('taxamt').innerHTML = taxableamnt;
+    document.getElementById('vat').innerHTML = tax;
+    document.getElementById('tax').innerHTML = tax;
+    document.getElementById('grandttl').innerHTML = grandtotal;
+    document.getElementById('grdttl').innerHTML = grandtotal;
+    var disc = document.getElementById('discount').value;
+
+    document.getElementById('nettotal').value = total;
+    document.getElementById('disper').value = disc;
+    document.getElementById('taxablettl').value = taxableamnt;
+    document.getElementById('vatamt').value = tax;
+    document.getElementById('grdamnt').value = grandtotal;
+
     function CallPrint(strid) {
-        if (document.getElementById('discount').value != 0){
-            grdtotal = total-(document.getElementById('discount').value/100)*total;
-            grdtotal =Math.ceil(grdtotal);
-            document.getElementById('disamt').innerHTML = document.getElementById('discount').value;
-            document.getElementById('grdttl').innerHTML = grdtotal;
-            document.getElementById('distol').innerHTML = "Discounted Amount";
-            document.getElementById('disrs').innerHTML = "Rs. "+grdtotal+"/-";
-
+        disc = document.getElementById('discount').value;
+        if (disc != 0){
+            taxableamnt = total-(disc/100)*total;
+            tax = (13/100)*taxableamnt;
+            grandtotal = taxableamnt + tax;
+            grandtotal = grandtotal.toFixed(2);
+            document.getElementById('discountper').innerHTML = disc;
+            document.getElementById('disamt').innerHTML = disc;
+            document.getElementById('taxable').innerHTML = taxableamnt;
+            document.getElementById('taxamt').innerHTML = taxableamnt;
+            document.getElementById('vat').innerHTML = tax;
+            document.getElementById('tax').innerHTML = tax;
+            document.getElementById('grandttl').innerHTML = grandtotal;
+            document.getElementById('grdttl').innerHTML = grandtotal;
         }
-        else if(document.getElementById('discount').value == "") {
-            grdtotal = total;
-            document.getElementById('distol').innerHTML = "Net Total";
-            document.getElementById('disrs').innerHTML = "Rs. "+grdtotal+"/-";
-            document.getElementById('discounted').setAttribute('hidden',"true");
+        else{
+            disc = 0;
         }
 
 
@@ -241,24 +395,20 @@
             // WinPrint.close();
             prtContent.innerHTML = "";
             document.body.innerHTML = restorepage;
-            pass(grdtotal,);
+            pass();
 
     }
-    function pass(val) {
-        document.getElementById('finalamt').value = val;
+    function pass() {
+        document.getElementById('nettotal').value = total;
+        document.getElementById('disper').value = disc;
+        document.getElementById('taxablettl').value = taxableamnt;
+        document.getElementById('vatamt').value = tax;
+        document.getElementById('grdamnt').value = grandtotal;
     }
 </script>
 <script>
-    var today = new Date();
-    var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    document.getElementById('todaydate').innerHTML = date;
-    document.getElementById('todaydate1').innerHTML = date;
-    document.getElementById('totalamt').innerHTML = total;
-    document.getElementById('totalamt1').innerHTML = total;
-    document.getElementById('currtime').innerHTML = time;
-    document.getElementById('currtime1').innerHTML = time;
-    document.getElementById('curyrs').innerHTML = today.getFullYear();
+
+
 </script>
 
 

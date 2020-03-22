@@ -75,6 +75,8 @@ class Menu(models.Model) :
 class Table(models.Model):
     title = models.CharField(max_length=100, unique=True, validators=[mycustomvalidator, val2])
     occupied = models.IntegerField(null=True,blank=True)
+    occHrs = models.IntegerField(null=True,blank=True)
+    occMin = models.IntegerField(null=True,blank=True)
     reserved = models.IntegerField(null=True,blank=True)
     merged = models.IntegerField(null=True,blank=True)
 
@@ -99,11 +101,22 @@ class Order(models.Model) :
 
 
 class Bill(models.Model):
-    bill_date = models.DateField(auto_now=True)
-    table = models.CharField(max_length=50,null=True,blank=True)
+    fiscalyrs = models.CharField(max_length=50,null=True,blank=True)
     billnum = models.CharField(max_length=50,null=True,blank=True)
+    bill_date = models.CharField(max_length=50,null=True)
+    table = models.CharField(max_length=50,null=True,blank=True)
+    amnt = models.FloatField(null=True,blank=True)
+    discount = models.FloatField(null=True,blank=True)
+    taxable_amnt = models.FloatField(null=True,blank=True)
+    tax_amnt = models.FloatField(null=True,blank=True)
+    total_amnt = models.FloatField(null=True,blank=True)
+    sync_ird = models.IntegerField(null=True,blank=True)
+    billprt = models.IntegerField(null=True,blank=True)
+    billactive = models.IntegerField(null=True,blank=True)
+    bill_time = models.TimeField(auto_now=True,null=True)
     billuser = models.CharField(max_length=64,null=True,blank=True)
-    total = models.IntegerField(null=False,blank=False)
+    is_realtime = models.BooleanField(null=True,blank=True)
+    payment_method = models.CharField(max_length=50,null=True,blank=True)
 
     def __str__(self) :
         return self.billnum
@@ -128,7 +141,7 @@ class masterPass(models.Model):
 #     inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)
 
 class MergeTable(models.Model):
-    table1 = models.ForeignKey(Table,on_delete=models.CASCADE,related_name='table1',unique=True)
+    table1 = models.ForeignKey(Table,on_delete=models.CASCADE,related_name='table1')
     table2 = models.ForeignKey(Table,on_delete=models.CASCADE,related_name='table2')
 
 
