@@ -25,7 +25,7 @@ SECRET_KEY = 'q-$*nhcppa)dzj+^uhi^%=zvrzp4h!8r957@_=r7j=9#3$*v!e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.254.3','localhost','10.10.100.150','192.168.137.1','192.168.0.104']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','192.168.10.127']
 
 
 # Application definition
@@ -80,9 +80,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'resmansys',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'nouseofit',
         'HOST': 'localhost',
-        'PORT': '3306',
+        'PORT': '3307',
     }
 }
 
@@ -129,3 +129,4 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+

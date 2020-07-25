@@ -1,0 +1,92 @@
+{% extends 'base/base.html' %}
+{% block 'title' %}{% endblock %}
+{% block 'body' %}
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">Send your data to CBMS (TEST DATA ONLY)</h1>
+                    <h6 class="card-subtitle">This is used only for test purpose!!!</h6>
+                    <form class="m-t-40" method="post" action="{% url 'cbmsmanual' %}" novalidate>
+                        <div class="form-group">
+                            <h5>Username <span class="text-danger">*</span></h5>
+                            <div class="controls">
+                                <input type="text" name="uname" class="form-control" hidden value="Test_CBMS" required data-validation-required-message="This field is required">
+                                <input type="text" class="form-control" disabled value="Test_CBMS" required data-validation-required-message="This field is required"> </div>
+                        </div>
+                        <div class="form-group">
+                            <h5>Password <span class="text-danger">*</span></h5>
+                            <div class="controls">
+                                <input type="password" name="password" hidden value="test@321" class="form-control" required data-validation-required-message="This field is required">
+                                <input type="password" disabled value="test@321" class="form-control" required data-validation-required-message="This field is required"> </div>
+                        </div>
+                        <div class="form-group">
+                            <h5>Seller PAN <span class="text-danger">*</span></h5>
+                            <div class="controls">
+                                <input type="text" value="999999999" name="seller_pan" class="form-control" required data-validation-required-message="Please Enter seller PAN" maxlength="9">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h5>Buyer PAN <span class="text-danger">*</span></h5>
+                            <div class="controls">
+                                <input type="text" name="buyer_pan" value="123456789" class="form-control" required data-validation-required-message="Please Enter buyer PAN" maxlength="9">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h5>Buyer Name</h5>
+                            <div class="controls">
+                                <input type="text" name="buyer_name" class="form-control"> </div>
+                        </div>
+                        <div class="form-group">
+                            <h5>Fiscal Year <span class="text-danger">*</span></h5>
+                            <div class="controls">
+                                <input type="text" name="fiscal_year" class="form-control" hidden value="2076.077" required data-validation-required-message="This field is required">
+                                <input type="text" class="form-control" disabled value="2076.077" required data-validation-required-message="This field is required"> </div>
+                        </div>
+                        <div class="form-group">
+                            <h5>Invoice Number <span class="text-danger">*</span></h5>
+                            <div class="controls">
+                                <input type="text" name="invoice_number" class="form-control" required data-validation-required-message="Please enter your invoice number." maxlength="7"> </div>
+                        </div>
+                        <div class="form-group">
+                            <h5>Invoice Date <span class="text-danger">*</span></h5>
+                            <div class="controls">
+                                <input type="date" name="invoice_date" class="form-control" pattern="\d{4}.\d{2}.\d{2}" required data-validation-required-message="Please enter your invoice date."> </div>
+                        </div>
+                        <div class="form-group">
+                            <h5>Net Amount <span class="text-danger">*</span></h5>
+                            <div class="controls">
+                                <input type="number" name="taxable_sales_vat" onkeyup="return totalsale(this.value);" class="form-control" required data-validation-required-message="Please enter your total sales."> </div>
+                        </div>
+                        <div class="form-group">
+                            <h5>VAT <span class="text-danger">*</span></h5>
+                            <div class="controls">
+                                <input type="text" name="vat" id="vat" hidden class="form-control" required data-validation-required-message="Please enter your total sales.">
+                                <input type="text" id="vat2" disabled class="form-control" required data-validation-required-message="Please enter your total sales."> </div>
+                        </div>
+                        <div class="form-group">
+                            <h5>Total Sales <span class="text-danger">*</span></h5>
+                            <div class="controls">
+                                <input type="text" name="total_sales" hidden id="total_sales" class="form-control" required data-validation-required-message="Please enter your total sales.">
+                                <input type="text" disabled id="total_sales1" class="form-control" required data-validation-required-message="Please enter your total sales."> </div>
+                        </div>
+                        {% csrf_token %}
+                        <div class="text-xs-right">
+                            <button type="submit" class="btn btn-info">Submit</button>
+                            <button type="reset" class="btn btn-inverse">Reset</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function totalsale(val) {
+            var vat = (13/100)*val;
+            document.getElementById('vat').value = vat.toFixed(2);
+            document.getElementById('vat2').value = vat.toFixed(2);
+            document.getElementById('total_sales').value =(parseFloat(vat)+parseFloat(val)).toFixed(2);
+            document.getElementById('total_sales1').value =(parseFloat(vat)+parseFloat(val)).toFixed(2);
+        }
+    </script>
+{% endblock %}

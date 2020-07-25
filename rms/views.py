@@ -1,6 +1,5 @@
-from builtins import print
 import requests
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -8,7 +7,12 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from Restaurant.models import MenuCategory, Menu, Table, Order, Bill, BillNo, masterPass, Profilepic, MergeTable
 from Restaurant.forms import MenuCategoryForm, UserPicForm
-from datetime import datetime, time
+from datetime import datetime
+from plyer import notification
+
+def sales(request):
+    return render(request, 'sales.html')
+
 
 
 @login_required(login_url='signin')
@@ -235,6 +239,7 @@ def orderitem(request):
         table.occHrs = time[0]
         table.occMin = time[1]
         table.save()
+        table.disval = 0
     if table.merged==1:
         merge = MergeTable.objects.get(Q(table1_id=table.id) | Q(table2_id=table.id))
         t = merge.table1.id
@@ -246,7 +251,12 @@ def orderitem(request):
     data.occupied = 1
     data.save()
     messages.add_message(request, messages.SUCCESS, "Your order has been placed.")
-    return redirect('table')
+    menudetail = Menu.objects.get(pk=m)
+    title = "New order in table "+data.title+"!"
+    msgs = str(request.user)+" added "+str(menudetail.title)+"!"
+    print(title+msgs)
+    notification.notify(title=title,message=msgs,timeout=20)
+    return redirect('/table-order/'+t)
 
 @login_required(login_url='signin')
 def printOrd(request, id):
@@ -275,7 +285,7 @@ def printit(request,id):
     for d in data:
         d.printsts=1
         d.save()
-    return tableorder(request,id)
+    return redirect('/table-order/'+str(id))
 
 
 @login_required(login_url='signin')
@@ -301,6 +311,21 @@ def genBill(request, id):
         'billno': billno,
     }
     return render(request, 'gen_bill.html', context)
+
+def printbill(request,id):
+    disper = request.POST['disper']
+    if disper == '':
+        disper = 0.0
+    table = Table.objects.get(id=id)
+    table.disval=float(disper)
+    table.save()
+    return redirect('/gen-bill/'+str(id))
+
+def removedis(request,id):
+    table = Table.objects.get(id=id)
+    table.disval=0
+    table.save()
+    return redirect('/gen-bill/'+str(id))
 
 
 @login_required(login_url='signin')
@@ -329,6 +354,7 @@ def releaseTable(request, id):
         tab1.merged=0
         tab1.occHrs = 0
         tab1.occMin = 0
+        tab1.disval = 0
         tab1.save()
 
         t2 = Table.objects.get(id=m.table2.id)
@@ -336,6 +362,7 @@ def releaseTable(request, id):
         t2.merged=0
         t2.occHrs = 0
         t2.occMin = 0
+        t2.disval = 0
         t2.save()
 
         m.delete()
@@ -343,8 +370,9 @@ def releaseTable(request, id):
         table.occupied = 0
         table.occHrs = 0
         table.occMin = 0
+        table.disval = 0
         table.save()
-    messages.add_message(request, messages.SUCCESS, "Table Successfully released!!")
+    messages.add_message(request, messages.SUCCESS, "Table "+table.title+" Successfully released!!")
     return redirect('table')
 
 
@@ -354,6 +382,7 @@ def closeTable(request, id):
     table.occupied = 0
     table.occHrs = 0
     table.occMin = 0
+    table.disval = 0
     table.save()
     return redirect('table')
 
@@ -364,7 +393,7 @@ def deletefromtable(request, id):
     id1 = do.table.id
     do.delete()
     messages.add_message(request, messages.ERROR, "Item removed successfully")
-    return tableorder(request, id1)
+    return redirect('/table-order/'+str(id1))
 
 
 @login_required(login_url='signin')
@@ -374,7 +403,7 @@ def editqty(request, id):
     newqty = request.POST['qty']
     data.quantity = newqty
     data.save()
-    return tableorder(request,id1)
+    return redirect('/table-order/'+str(id1))
 
 
 @login_required(login_url='signin')
@@ -384,7 +413,7 @@ def addMenu(request, id):
     add = Menu(title=title,price=price,category_id=id)
     add.save()
     messages.add_message(request,messages.SUCCESS,"Menu Item added successfully")
-    return menuitem(request,id)
+    return redirect('/menu/' + str(id))
 
 def reservedTable(request):
     if request.user.is_staff:
@@ -401,11 +430,11 @@ def reservedTable(request):
         res = Table.objects.get(id=id)
         res.reserved = 0
         res.save()
-        print(res.title)
+        # print(res.title)
         messages.add_message(request,messages.ERROR,"Table reservation cancelled of table "+res.title)
         return render(request,'table.html',context)
     messages.add_message(request,messages.ERROR,"Not Authorized")
-    return tables(request)
+    return redirect('table')
 
 def addReservation(request):
     if request.user.is_staff:
@@ -417,7 +446,7 @@ def addReservation(request):
         messages.add_message(request,messages.SUCCESS,"Table - "+res.title+" is reserved")
         return render(request,'reserved.html',context={'table':table})
     messages.add_message(request,messages.ERROR,"Not Authorized")
-    return tables(request)
+    return redirect('table')
 
 
 
@@ -440,16 +469,16 @@ def editMenu(request, id):
     data.price = price
     data.save()
     messages.add_message(request, messages.SUCCESS, "Menu Update successfully")
-    return menuitem(request, id1)
+    return redirect('/menu/' + str(id1))
 
 def changeMenuCate(request, id):
     data = Menu.objects.get(pk=id)
     cate = request.POST['newCategory']
-    print(cate,data.category_id)
+    # print(cate,data.category_id)
     data.category_id = cate
     data.save()
-    print(data.category.id)
-    return menuitem(request, cate)
+    # print(data.category.id)
+    return redirect('/menu/'+str(cate))
 
 @login_required(login_url='signin')
 def editTable(request, id):
@@ -457,7 +486,7 @@ def editTable(request, id):
     newtitle = request.POST['newtitle']
     data.title = newtitle
     data.save()
-    return tables(request)
+    return redirect('table')
 
 
 @login_required(login_url='signin')
@@ -466,7 +495,7 @@ def deletefrommenu(request, id):
     id1 = dm.category.id
     dm.delete()
     messages.add_message(request, messages.ERROR, "Item deleted successfully")
-    return menuitem(request, id1)
+    return redirect('/menu/'+str(id1))
 
 
 @login_required(login_url='signin')
@@ -508,13 +537,6 @@ def reset_pass(request):
         messages.add_message(request, messages.ERROR, "Your master password doesn't match!!!")
         return redirect('forgot')
 
-def time_diff(time_str1, time_str2):
-    t1 = datetime.strptime(time_str1, '%H:%M')
-    t2 = datetime.strptime(time_str2, '%H:%M')
-    dt = abs(t2 - t1)
-    return time(dt.seconds // 3600, (dt.seconds // 60) % 60).strftime('%H:%M')
-
-
 def reset_pass_complete(request, id):
     user = User.objects.get(id=id)
     p1 = request.POST['pass1']
@@ -522,7 +544,7 @@ def reset_pass_complete(request, id):
     if p1 == p2:
         user.set_password(p1)
         user.save()
-        messages.add_message(request, messages.SUCCESS, "Your password is change!!!")
+        messages.add_message(request, messages.SUCCESS, "Your password is changed!!!")
         return redirect('signin')
     else:
         messages.add_message(request, messages.ERROR, "Your confirm password doesn't match!!!")
@@ -533,21 +555,6 @@ def reset_pass_complete(request, id):
 
 @login_required(login_url='signin')
 def changetable (request, id):
-    # oldTable = Table.objects.get(id=id)
-    # t = request.POST['newTable']
-    # newTable = Table.objects.get(id=t)
-    # nt = newTable.title
-    # ot = oldTable.title
-    # tmpNt = nt
-    # tmpOt = ot
-    # tmp = "temp"
-    # newTable.title = tmp
-    # newTable.save()
-    # oldTable.title = tmpNt
-    # oldTable.save()
-    # newTable.title = tmpOt
-    # newTable.save()
-
     oldTable = Table.objects.get(id=id)
     t = request.POST['newTable']
     newTable = Table.objects.get(id=t)
@@ -556,10 +563,17 @@ def changetable (request, id):
         o.table_id = newTable.id
         o.save()
     newTable.occupied = 1
+    newTable.occHrs = oldTable.occHrs
+    newTable.occMin = oldTable.occMin
     newTable.save()
     oldTable.occupied = 0
+    oldTable.occMin = 0
+    oldTable.occHrs = 0
     oldTable.save()
-    return tables(request)
+    title = oldTable.title +" changed to " + newTable.title
+    msgs = str(request.user)+" transfered them"
+    notification.notify(title=title,message=msgs,timeout=20)
+    return redirect('table')
 
 
 @login_required(login_url='signin')
@@ -594,8 +608,7 @@ def saveEditedUser(request):
             u.is_superuser = adm
             u.is_active = act
             u.save()
-
-        return allUsers(request)
+        return redirect('users')
 
 # def delete_user(request,username):
 #     mpass = request.POST['mpass']
@@ -627,6 +640,7 @@ def addmoreitems(request, id):
         'table': table
     }
     return render(request, 'allitem.html',context)
+
 def additemstotable(request, id):
     to = int(request.POST['totalordval'])
     m = request.POST.getlist('orderid')
@@ -649,7 +663,10 @@ def additemstotable(request, id):
         table.occupied = 1
         table.save()
     messages.add_message(request, messages.SUCCESS, "Your order has been placed.")
-    return tableorder(request, id)
+    title = "Multiple Orders in "+table.title
+    msgs = str(request.user)+" added multiple order!!"
+    notification.notify(title=title,message=msgs,timeout=20)
+    return redirect('/table-order/'+str(id))
 
 def mergeTable(request):
     t1 = request.POST['tbl1']
@@ -667,7 +684,7 @@ def mergeTable(request):
     tbl2.save()
     merge = MergeTable(table1_id=t1,table2_id=t2)
     merge.save()
-    return tables(request)
+    return redirect('table')
 
 def unmergeTable(request,id):
     mt = MergeTable.objects.get(id=id)
@@ -678,7 +695,7 @@ def unmergeTable(request,id):
     tbl2.merged=0
     tbl2.save()
     mt.delete()
-    return tables(request)
+    return redirect('table')
 
 def sendToCBMS(request,id):
     bills = Bill.objects.get(id=id)
@@ -711,8 +728,55 @@ def sendToCBMS(request,id):
     else:
         messages.add_message(request, messages.ERROR, "Internal Server Error!!!")
 
-    bill = Bill.objects.all()
-    context = {
-        'bill' : bill
-    }
-    return render(request, 'report.html', context)
+    return redirect('report')
+
+def sendToCBMSmanual(request):
+    if request.method == 'GET':
+        return render(request,'manualdata.html');
+    else:
+        un = request.POST['uname']
+        pw = request.POST['password']
+        sp = request.POST['seller_pan']
+        bp = request.POST['buyer_pan']
+        bn = request.POST['buyer_name']
+        fy = request.POST['fiscal_year']
+        inum = request.POST['invoice_number']
+        idate = str(request.POST['invoice_date'])
+        idatesp = idate.split('-')
+        tsv = request.POST['taxable_sales_vat']
+        ts = request.POST['total_sales']
+        v = request.POST['vat']
+
+        serverurl = "http://103.1.92.174:9050/api/bill"
+        payload_bill = "{\"username\":\""+un+"\",\"password\":\""+pw+"\",\"seller_pan\":\""+sp+"\",\"buyer_pan\":\""+bp+"\",\"buyer_name\":\""+bn+"\",\"fiscal_year\" : \"" + fy + "\",\"invoice_number\":\"" + inum + "\",\"invoice_date\":\"" +idatesp[0]+"."+idatesp[1]+"."+idatesp[2]+"\",\"total_sales\":" + str(ts) + ",\"taxable_sales_vat\":" + str(tsv) + ",\"vat\":" + str(v) + ",\"excisable_amount\":0,\"excise\":0,\"taxable_sales_hst\":0,\"hst\":0,\"amount_for_esf\":0,\"esf\":0,\"export_sales\":0,\"tax_exempted_sales\":0,\"isrealtime\":true,\"datetimeclient\":\"" + datetime.today().strftime('%Y/%m/%d %H:%M:%S') + "\" }"
+        # print(payload_bill)
+        headers = {'Content-Type' : "application/json"}
+        send_bill = requests.request("POST", serverurl, data=payload_bill, headers=headers)
+        r_bill = send_bill.json()
+        # print(r_bill)
+
+        if r_bill == 200 :
+            messages.add_message(request, messages.SUCCESS, "Your data was sent successfully!!!")
+        elif r_bill == 100 :
+            messages.add_message(request, messages.ERROR, "Error:100 - API credentials do not match !!!")
+        elif r_bill == 101 :
+            messages.add_message(request, messages.ERROR, "Error:101 - Bill Already exists!!!")
+        elif r_bill == 102 :
+            messages.add_message(request, messages.ERROR,
+                                 "Error:102 - Exception while saving bill details, Please check model fields and values!!!")
+        elif r_bill == 103 :
+            messages.add_message(request, messages.ERROR,
+                                 "Error:103 -  Unknown exceptions, Please check API URL and model fields and values !!!")
+        elif r_bill == 104 :
+            messages.add_message(request, messages.ERROR, "Error:104 - Model invalid!!!")
+        else :
+            messages.add_message(request, messages.ERROR, "Internal Server Error!!!")
+
+    return redirect('report')
+
+
+def eula(request):
+    return render(request,"eula.html")
+
+def privacyAndPolicy(request):
+    return render(request,"privacy.html")

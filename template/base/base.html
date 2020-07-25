@@ -9,11 +9,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static '/assets/images/tropical_ico.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static '/assets/images/logo.png' %}">
     <title>{% block 'title' %}{% endblock %} - Tropical Rest</title>
     <!-- This page CSS -->
+    {% block 'css' %} {% endblock %}
     <!--c3 plugins CSS -->
     <link href="{% static 'assets/node_modules/c3-master/c3.min.css' %}" rel="stylesheet">
+    <!-- toast CSS -->
+    <link href="{% static 'assets/node_modules/toast-master/css/jquery.toast.css' %}" rel="stylesheet">
     <!--alerts CSS -->
     <link href="{%  static 'assets/node_modules/sweetalert2/dist/sweetalert2.min.css' %}" rel="stylesheet">
     <!-- Custom CSS -->
@@ -48,7 +51,7 @@
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <div id="main-wrapper">
+    <span id="main-wrapper">
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
@@ -62,16 +65,17 @@
                         <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="{% static 'assets/images/tropical_ico.png' %}" alt="homepage" class="dark-logo"  height="45px"/>
+                            <img src="{% static 'assets/images/logo.png' %}" alt="homepage" class="dark-logo"  height="45px"/>
                             <!-- Light Logo icon -->
-                            <img src="{% static 'assets/images/tropical_ico.png' %}" alt="homepage" class="light-logo" height="45px" />
+                            <img src="{% static 'assets/images/logo.png' %}" alt="homepage" class="light-logo" height="45px" />
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text --><span>
-                         <!-- dark Logo text -->
+                        <!-- dark Logo text -->
                          <img src="{% static 'assets/images/logo-text.png' %}" alt="homepage" class="dark-logo" />
                          <!-- Light Logo text -->
-                         <img src="{% static 'assets/images/logo-text.png' %}" class="light-logo" alt="homepage" /></span> </a>
+                         <img src="{% static 'assets/images/logo-text.png' %}" class="light-logo" alt="homepage" />
+                        </span> </a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -142,7 +146,7 @@
         <!-- ============================================================== -->
         <aside class="left-sidebar">
             <div class="d-flex no-block nav-text-box align-items-center">
-                <span><img src="{% static 'assets/images/tropical_ico.png' %}" alt="Tropical Rest" height="40px"></span>
+                <span><img src="{% static 'assets/images/logo.png' %}" alt="Tropical Rest" height="40px"></span>
                 <a class="waves-effect waves-dark ml-auto hidden-sm-down" href="javascript:void(0)"><i class="ti-menu"></i></a>
                 <a class="nav-toggler waves-effect waves-dark ml-auto hidden-sm-up" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
             </div>
@@ -223,7 +227,18 @@
         <!-- footer -->
         <!-- ============================================================== -->
         <footer class="footer">
-            © 2020 Tropical Rest - Powered by <a href="https://nishamwagle.com.np/" target="_blank" class="text-danger">Nisham Wagle</a>
+            <div class="row">
+                <div class="col-md-4 text-left"  >
+                    <a href="#" class="text-danger">Help </a> - <a href="#" class="text-danger">About Us</a>
+                </div>
+                <div class="col-md-4 text-center">
+                    © 2020 Tropical Rest - Powered by <a href="https://nishamwagle.com.np/" target="_blank" class="text-danger">Nisham Wagle</a>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a href="{% url 'policy' %}" target="_blank" class="text-danger" >Privacy & Policy</a> - <a href="{% url 'eula' %}" target="_blank" class="text-danger" >End User License Agreement</a>
+                </div>
+            </div>
+
         </footer>
         <!-- ============================================================== -->
         <!-- End footer -->
@@ -249,10 +264,15 @@
     <script src="{% static 'dist/js/custom.min.js' %}"></script>
     <!-- ============================================================== -->
     <!-- This page plugins -->
+    <script src="{% static 'assets/node_modules/raphael/raphael.min.js' %}"></script>
+    <script src="{% static 'assets/node_modules/morrisjs/morris.min.js' %}"></script>
+    <script src="{% static 'assets/node_modules/jquery-sparkline/jquery.sparkline.min.js' %}"></script>
     <!-- ============================================================== -->
     <!-- Chart JS -->
     <script src="{% static 'dist/js/dashboard1.js' %}"></script>
-
+    <!--c3 JavaScript -->
+    <script src="{% static 'assets/node_modules/d3/d3.min.js' %}"></script>
+    <script src="{% static 'assets/node_modules/c3-master/c3.min.js' %}"></script>
     <!-- This is data table -->
     <script src="{% static 'assets/node_modules/datatables.net/js/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'assets/node_modules/datatables.net-bs4/js/dataTables.responsive.min.js' %}"></script>
@@ -327,6 +347,13 @@
  <!-- Sweet-Alert  -->
     <script src="{% static 'assets/node_modules/sweetalert2/dist/sweetalert2.all.min.js' %}"></script>
     <script src="{% static 'assets/node_modules/sweetalert2/sweet-alert.init.js' %}"></script>
+
+    <script src="{% static 'assets/node_modules/inputmask/dist/min/jquery.inputmask.bundle.min.js' %}"></script>
+    <script src="{% static 'dist/js/pages/mask.js' %}"></script>
+
+    <script type="text/javascript">
+
+    </script>
 
 {% block 'script' %}
 

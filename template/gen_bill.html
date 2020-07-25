@@ -81,21 +81,14 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td>Discount</td>
-                                                    <td><span id="discountper">0.0</span>%</td>
-                                                </tr>
-                                                <tr class="tabletitle h5">
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td>Taxable amount</td>
-                                                    <td>Rs. <span id="taxable" ></span>/-</td>
-                                                </tr>
-                                                <tr class="tabletitle h5">
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td>VAT (13%)</td>
-                                                    <td>Rs. <span id="vat" ></span>/-</td>
+                                                    <td><span>{{table.disval}}<script>var disc = {{ table.disval }};</script></span>%
+                                                        {% if table.disval != 0 %}
+                                                            <span id="editdis"><a href="" data-toggle="modal" data-target="#dismodal"><i class="fa fa-edit text-primary"></i></a></span>|
+                                                            <span id="removedis"><a href="{% url 'removedis' table.id %}"><i class="fa fa-minus-circle text-danger"></i></a></span>
+                                                        {% else%}
+                                                            <span id="adddisval"><a href="" data-toggle="modal" data-target="#dismodal"><i class="fa fa-plus-circle text-success"></i></a></span>
+                                                        {% endif %}
+                                                    </td>
                                                 </tr>
                                                 <tr class="tabletitle font-weight-bold h4">
                                                     <td></td>
@@ -118,16 +111,20 @@
                                     <div class="text-right">
                                         <form action="{% url 'releaseTable' table.id %}" method="post">
                                             <input type="text" name="nettotal" id="nettotal" hidden />
-                                            <input type="text" name="disper" id="disper" hidden />
-                                            <input type="text" name="taxablettl" id="taxablettl" hidden />
-                                            <input type="text" name="vatamt" id="vatamt" hidden />
+                                            <input type="text" name="taxablettl" value="0" hidden />
+                                            <input type="text" name="disper" value="{{ table.disval }}" hidden />
+                                            <input type="text" name="vatamt" value="0" hidden />
                                             <input type="text" name="grdamnt" id="grdamnt" hidden />
                                             <input type="text" name="billnum" value="TRP{{billno.number}}" hidden />
                                             {% csrf_token %}
-                                           <input type="number" min="1" max="100" id="discount" style=" width: 200px !important; float: left; color: red; font-weight: bolder"  class="form-control" placeholder=" Enter Discount%...">
                                         <button class="btn btn-success" id="releaseTable" style="float: right;" type="submit" ><i class="fa fa-check" onclick="return confirm('Are you sure want to proceed?');"></i> Release Table </button>
-                                        <button style="margin-right: 10px;" id="btnPrint" class="btn btn-danger " type="button" onclick="CallPrint('receipt')"> <span><i class="fa fa-print"></i> Print Receipt</span> </button>
                                         </form>
+                                        <button style="margin-right: 10px;" id="btnPrint" class="btn btn-danger " type="button" onclick="CallPrint('receipt')"> <span><i class="fa fa-print"></i> Print Receipt</span> </button>
+{#                                        <form action="{% url 'printbill' table.id %}" method="post" style="float:left">#}
+{#                                            <input  type="number" min="1" max="100" name="disper" id="discount" style=" width: 120px !important; float: left; color: red; font-weight: bolder" value="{% if table.disval != 0 %}{{ table.disval }}{% endif %}"  class="form-control" placeholder="Discount %">#}
+{#                                            {% csrf_token %}#}
+{#                                            <button class="btn btn-danger " type="submit"> <span><i class="fa fa-save"></i> Save</span> </button>#}
+{#                                        </form>#}
                                     </div>
                                 </div>
                             </div>
@@ -144,7 +141,7 @@
       <div class="info">
         <p ><span style="font-weight: bold; font-size: 30px">Tropical Rest</span><br>
             <b>Kathmandu, Nepal</b><br><br>
-            <span style="font-weight: bold; font-size: 20px">Tax Invoice</span>
+            <span style="font-weight: bold; font-size: 20px">Abbreviated Tax Invoice</span>
       <hr style="color: black;">
         </p>
       </div><!--End Info-->
@@ -213,16 +210,6 @@
                                 <td><span id="disamt">0.0</span>%</td>
                             </tr>
                             <tr>
-                                <td style="text-align: right;">Taxable amount</td>
-                                <td>=</td>
-                                <td>Rs. <span id="taxamt"></span>/-</td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: right;">Vat(13%)</td>
-                                <td>=</td>
-                                <td>Rs. <span id="tax"></span>/-</td>
-                            </tr>
-                            <tr>
                                 <td style="text-align: right;"><h3>Grand Total</h3></td>
                                 <td><h3>=</h3></td>
                                 <td><h3>Rs. <span id="grdttl"></span>/-</h3></td>
@@ -242,7 +229,34 @@
   </div><!--End Invoice-->
 
     </div>
-
+<div class="modal fade" id="dismodal" tabindex="-1" role="dialog" aria-labelledby="mergeTable"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"><b class="text-danger">Discount -</b> in Table <b class="text-danger">{{ table.title }}</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'printbill' table.id %}" novalidate>
+                    <div class="form-group">
+                        <h5>Enter Discount %: <span class="text-danger">*</span></h5><br>
+                        <div class="input-group">
+                            <input  type="number" min="1" max="100" name="disper" id="discount" style=" width: 120px !important; float: left; color: red; font-weight: bolder" value="{% if table.disval != 0 %}{{ table.disval }}{% endif %}"  class="form-control" placeholder="Discount %" />
+                        </div>
+                    </div>
+                    {% csrf_token %}
+                    <button class="btn btn-danger btn-block" type="submit" onsubmit="return confirm('Are you sure want to add discount?')"><i class="fa fa-save"></i> Save</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script type="text/javascript">
@@ -304,43 +318,16 @@
 
     document.getElementById('totalamt').innerHTML = total;
     document.getElementById('totalamt1').innerHTML = total;
-    var taxableamnt = total;
-    var tax = (13/100)*taxableamnt;
-    var grandtotal = taxableamnt + tax;
-    document.getElementById('taxable').innerHTML = taxableamnt;
-    document.getElementById('taxamt').innerHTML = taxableamnt;
-    document.getElementById('vat').innerHTML = tax;
-    document.getElementById('tax').innerHTML = tax;
+    var grandtotal = total-(disc/100)*total;
     document.getElementById('grandttl').innerHTML = grandtotal;
     document.getElementById('grdttl').innerHTML = grandtotal;
-    var disc = document.getElementById('discount').value;
-
     document.getElementById('nettotal').value = total;
-    document.getElementById('disper').value = disc;
-    document.getElementById('taxablettl').value = taxableamnt;
-    document.getElementById('vatamt').value = tax;
-    document.getElementById('grdamnt').value = grandtotal;
-
+    document.getElementById('grdamnt').value = grandtotal.toFixed(2);
     function CallPrint(strid) {
-        disc = document.getElementById('discount').value;
-        if (disc != 0){
-            taxableamnt = total-(disc/100)*total;
-            tax = (13/100)*taxableamnt;
-            grandtotal = taxableamnt + tax;
-            grandtotal = grandtotal.toFixed(2);
-            document.getElementById('discountper').innerHTML = disc;
+        if (disc !== 0){
             document.getElementById('disamt').innerHTML = disc;
-            document.getElementById('taxable').innerHTML = taxableamnt;
-            document.getElementById('taxamt').innerHTML = taxableamnt;
-            document.getElementById('vat').innerHTML = tax;
-            document.getElementById('tax').innerHTML = tax;
-            document.getElementById('grandttl').innerHTML = grandtotal;
-            document.getElementById('grdttl').innerHTML = grandtotal;
+            document.getElementById('grdttl').innerHTML = grandtotal.toFixed(2);
         }
-        else{
-            disc = 0;
-        }
-
 
             var restorepage = document.body.innerHTML;
             var prtContent = document.getElementById(strid);
@@ -398,18 +385,13 @@
             pass();
 
     }
+
     function pass() {
         document.getElementById('nettotal').value = total;
-        document.getElementById('disper').value = disc;
-        document.getElementById('taxablettl').value = taxableamnt;
-        document.getElementById('vatamt').value = tax;
-        document.getElementById('grdamnt').value = grandtotal;
+        document.getElementById('grdamnt').value = grandtotal.toFixed(2);
     }
 </script>
-<script>
 
-
-</script>
 
 
 

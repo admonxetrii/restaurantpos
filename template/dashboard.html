@@ -5,11 +5,11 @@
 
 <div class="container-fluid">
     <div class="d-sm-flex justify-content-between align-items-center mb-4">
-        <h1 class="text-dark mb-0">Menu Categories</h1>
+        <h1 class="text-dark font-weight-bold mb-0">Menu Categories</h1>
         <p></p>
-        {% include 'component/message.html' %}
         <!--        <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>-->
     </div>
+    {% include 'component/message.html' %}
     <div class="row">
         {% for c in category %}
         <div class="col-md-6 col-xl-3 mb-4">

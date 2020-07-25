@@ -4,10 +4,10 @@
 {% block 'body' %}
     <div class="row">
         <div class="col-md-12">
+        {% include 'component/message.html' %}
             <div class="card">
                 <div class="card-body">
                     <h1 class="text-dark mb-1 font-weight-bolder">{{cate.title}}</h1>
-                    {% include 'component/message.html' %}
                     <div class="table-responsive ">
                         <table id="myTable" class="table table-bordered table-striped">
                             <thead>
@@ -85,7 +85,7 @@
                         </div>
                     </div>
 
-                    <select name="menu" required  id="id_menu" hidden class="form-control">
+                    <select name="menu" required id="id_menu" hidden class="form-control">
                         <option value="{{m.id}}" selected="">{{m.title}}</option>
                     </select>
                     <input type="number" id="hrs" name="hrs" hidden />
@@ -103,7 +103,7 @@
                             <div class="input-group-prepend">
                                 <button class="btn btn-danger" type="button" onclick="decrementValue{{ m.id }}();"><b> - </b></button>
                             </div>
-                            <input type="number" name="qty" class="form-control" id="ordervalue{{ m.id }}" value="1" required min="1" max="10">
+                            <input type="number" name="qty" readonly class="form-control" id="ordervalue{{ m.id }}" value="1" required min="1" max="10">
                             <div class="input-group-append">
                                 <button class="btn btn-success" type="button" onclick="incrementValue{{ m.id }}();"><b> + </b></button>
                             </div>

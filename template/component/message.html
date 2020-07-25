@@ -1,13 +1,21 @@
 {% if messages %}
-    <ul>
     {% for m in messages %}
         {% if m.tags == "error" %}
-            <li class="alert alert-danger" id="sa-position" style="color: red;">{{m}}</li>
-        {% else %}
-            <li class="alert alert-success" id="sa-position" style="color: green;">{{m}}</li>
+            <div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <strong>Alert - </strong>{{m}}
+            </div>
+        {% elif m.tags == "success" %}
+            <div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <strong>Success - </strong>{{m}}
+            </div>
         {% endif %}
     {% endfor %}
-    </ul>
 
 
 {% endif %}

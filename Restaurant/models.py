@@ -79,6 +79,7 @@ class Table(models.Model):
     occMin = models.IntegerField(null=True,blank=True)
     reserved = models.IntegerField(null=True,blank=True)
     merged = models.IntegerField(null=True,blank=True)
+    disval = models.FloatField(null=True,blank=True)
 
     def __str__(self) :
         return self.title
@@ -144,4 +145,7 @@ class MergeTable(models.Model):
     table1 = models.ForeignKey(Table,on_delete=models.CASCADE,related_name='table1')
     table2 = models.ForeignKey(Table,on_delete=models.CASCADE,related_name='table2')
 
+# class TableDiscount(models.Model):
+#     table = models.ForeignKey(Table,on_delete=models.CASCADE)
+#     disval = models.FloatField(null=True,blank=True)
 

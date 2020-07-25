@@ -38,7 +38,7 @@
                                 <td>{{o.menu.title}}</td>
                                 <td>{{o.quantity}}</td>
                                 <td>
-                                {% if request.user.is_staff %}
+                                {% if request.user.is_superuser %}
                                     <a href="{% url 'delitem' o.id %}" onclick="return confirm('Are you sure?');"  style="color: #ff032d;"><button class="btn btn-secondary btn-sm"><i class="fa fa-trash"></i> Remove</button></a>
                                 {% else %}
                                     <button class="btn btn-danger btn-sm" disabled><i class="fa fa-trash"></i> Remove</button>
@@ -152,7 +152,7 @@
                             <div class="input-group-prepend">
                                 <button class="btn btn-danger" type="button" onclick="decrementValue{{ o.id }}();"><b> - </b></button>
                             </div>
-                            <input type="number" name="qty" class="form-control" id="ordervalue{{ o.id }}" value="{{o.quantity}}" required min="1" max="10">
+                            <input type="number" name="qty" readonly class="form-control" id="ordervalue{{ o.id }}" value="{{o.quantity}}" required min="1" max="10">
                             <div class="input-group-append">
                                 <button class="btn btn-success" type="button" onclick="incrementValue{{ o.id }}();"><b> + </b></button>
                             </div>

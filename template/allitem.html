@@ -6,61 +6,67 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <h1 class="text-dark mb-1 font-weight-bolder">Add Item in - <b class="text-danger">{{table.title}}</b></h1>
-                    <a href="{% url 'tableorder' table.id %}"><button class="btn btn-danger "><i class="fa fa-times"></i> Cancel</button></a>
+                    <h1 class="text-dark mb-1 font-weight-bolder">Add Item in - <b
+                            class="text-danger">{{ table.title }}</b></h1>
+                    <a href="{% url 'tableorder' table.id %}">
+                        <button class="btn btn-danger "><i class="fa fa-times"></i> Cancel</button>
+                    </a>
                     <div class="clear"></div>
                     <br>
                     {% include 'component/message.html' %}
                     <p><br></p>
+                    <hr>
+                    <form id="order_form" action="{% url 'additem' table.id %}" method="post">
+                        <br>
+                        <h5 class="text-danger font-weight-bolder">Order confirmation</h5>
+                        <input type="number" id="totalorders" name="totalordval" hidden>
+                        <div hidden>
+                            <div class="orders" id="orderadd">
+
+                            </div>
+                        </div>
+                        <ol id="totalord" class="form-group">
+
+                        </ol>
+                        {% csrf_token %}
+                        <input type="submit" value="Order" class="btn btn-success btn-lg"
+                               onclick="return validateord()"><br>
+                        <span id="msgOrd" class="text-danger"></span>
+                    </form>
+                    <hr>
                     <div class="table-responsive table-hover">
-                        <table class="table table-bordered" id="myTable"  cellspacing="0">
+                        <table class="table table-bordered" id="myTable" cellspacing="0">
                             <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    {% if request.user.is_superuser %}
-                                        <th>Price</th>
-                                    {% endif %}
-                                    <th>Category</th>
-                                </tr>
+                            <tr>
+                                <th>Name</th>
+                                {% if request.user.is_superuser %}
+                                    <th>Price</th>
+                                {% endif %}
+                                <th>Category</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                {{ forloop.counter }}
-                                {% for m in menu %}
-                                <tr data-toggle="modal" data-target="#order{{m.id}}">
-                                    <td><b class="text-dark font-bold titlehovcustom" >{{m.title}}</b></td>
+                            {{ forloop.counter }}
+                            {% for m in menu %}
+                                <tr data-toggle="modal" data-target="#order{{ m.id }}">
+                                    <td><b class="text-dark font-bold titlehovcustom">{{ m.title }}</b></td>
                                     {% if request.user.is_superuser %}
-                                        <th>{{m.price}}</th>
+                                        <th>{{ m.price }}</th>
                                     {% endif %}
                                     <td>{{ m.category.title }}</td>
                                 </tr>
-                                {% endfor %}
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
-                        <form id="order_form" action="{% url 'additem' table.id %}" method="post">
-                            <br>
-                            <h5 class="text-danger font-weight-bolder">Order confirmation</h5>
-                            <input type="number" id="totalorders" name="totalordval" hidden>
-                            <div hidden>
-                                  <div class="orders" id="orderadd">
 
-                                  </div>
-                            </div>
-                            <ol id="totalord" class="form-group">
-
-                            </ol>
-                            {%csrf_token%}
-                            <input type="submit" value="Order" class="btn btn-success btn-lg" onclick="return validateord()"><br>
-                            <span id="msgOrd" class="text-danger"></span>
-                        </form>
                     <script>
                         function validateord() {
                             var vali = document.getElementById('totalorders').value;
-                            if (vali==""){
+                            if (vali == "") {
                                 document.getElementById('msgOrd').innerHTML = "Please order atleast one item";
                                 return false;
-                            }
-                            else {
+                            } else {
                                 return true;
                             }
                         }
@@ -71,98 +77,105 @@
     </div>
 
 
-<!--model-->
-{% for m in menu %}
+    <!--model-->
+    {% for m in menu %}
 
-<div class="modal fade" id="order{{m.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Order - <b class="text-danger">{{m.title}}</b></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                    <input type="number" id="menuid{{ m.id }}" name="menu" value="{{ m.id }}" hidden />
-
-                    <h5>Enter quantity: <span class="text-danger">*</span></h5>
-
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <button class="btn btn-danger" type="button" onclick="decrementValue{{ m.id }}();"><b> - </b></button>
-                        </div>
-                        <input type="number" name="qty" disabled class="form-control" id="ordervalue{{ m.id }}" value="1" required min="1" max="10">
-                        <div class="input-group-append">
-                            <button class="btn btn-success" type="button" onclick="incrementValue{{ m.id }}();"><b> + </b></button>
-                        </div>
+        <div class="modal fade" id="order{{ m.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Order - <b
+                                class="text-danger">{{ m.title }}</b></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <br>
-                    <script type="text/javascript">
-                    function incrementValue{{ m.id }}()
-                    {
-                        var value = parseInt(document.getElementById('ordervalue{{ m.id }}').value);
-                        value++;
-                        document.getElementById('ordervalue{{ m.id }}').value = value;
-                    }
-                    function decrementValue{{ m.id }}()
-                    {
-                        var value = parseInt(document.getElementById('ordervalue{{ m.id }}').value);
-                        value--;
-                        document.getElementById('ordervalue{{ m.id }}').value = value;
-                    }
+                    <div class="modal-body">
 
-                    var totalorder=0;
-                    function addformelement{{ m.id }}(){
-                            totalorder++;
-                            a = document.getElementById('orderadd');
-                            b = document.getElementById('totalord');
+                        <input type="number" id="menuid{{ m.id }}" name="menu" value="{{ m.id }}" hidden/>
 
-                            divx=document.createElement('div');
-                            divx.class='menuidno';
+                        <h5>Enter quantity: <span class="text-danger">*</span></h5>
 
-                            divy=document.createElement('div');
-                            divy.class='orderqtys';
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger" type="button" onclick="decrementValue{{ m.id }}();"><b>
+                                    - </b></button>
+                            </div>
+                            <input type="number" name="qty" disabled class="form-control" id="ordervalue{{ m.id }}"
+                                   value="1" required min="1" max="10">
+                            <div class="input-group-append">
+                                <button class="btn btn-success" type="button" onclick="incrementValue{{ m.id }}();"><b>
+                                    + </b></button>
+                            </div>
+                        </div>
+                        <br>
+                        <script type="text/javascript">
+                            function incrementValue{{ m.id }}() {
+                                var value = parseInt(document.getElementById('ordervalue{{ m.id }}').value);
+                                value++;
+                                document.getElementById('ordervalue{{ m.id }}').value = value;
+                            }
 
-                            divz=document.createElement('li');
-                            divz.class='orderqtys';
+                            function decrementValue{{ m.id }}() {
+                                var value = parseInt(document.getElementById('ordervalue{{ m.id }}').value);
+                                value--;
+                                document.getElementById('ordervalue{{ m.id }}').value = value;
+                            }
 
-                             x=document.createElement('input');
-                             x.type='number';
-                             x.name='orderid';
-                             x.value = document.getElementById('menuid{{ m.id }}').value;
+                            var totalorder = 0;
 
-                             y=document.createElement('input');
-                             y.type = 'number';
-                             y.name = 'orderqty';
-                             y.value = document.getElementById('ordervalue{{ m.id }}').value;
+                            function addformelement{{ m.id }}() {
+                                totalorder++;
+                                a = document.getElementById('orderadd');
+                                b = document.getElementById('totalord');
 
-                             z = document.createElement('div');
-                             z.innerHTML = "{{ m.title }}" + "-----------Qty = "+document.getElementById('ordervalue{{ m.id }}').value;
+                                divx = document.createElement('div');
+                                divx.class = 'menuidno';
 
-                             divx.appendChild(x);
-                             divy.appendChild(y);
-                             divz.appendChild(z);
-                             a.appendChild(divx) ;
-                             a.appendChild(divy) ;
-                             b.appendChild(divz) ;
+                                divy = document.createElement('div');
+                                divy.class = 'orderqtys';
 
-                             document.getElementById('totalorders').value = totalorder;
-                    }
-                    </script>
+                                divz = document.createElement('li');
+                                divz.class = 'orderqtys';
 
-                <button type="submit" class="btn btn-info btn-block waves-effect waves-light" onclick="addformelement{{ m.id }}()" data-dismiss="modal">Order</button>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                                x = document.createElement('input');
+                                x.type = 'number';
+                                x.name = 'orderid';
+                                x.value = document.getElementById('menuid{{ m.id }}').value;
+
+                                y = document.createElement('input');
+                                y.type = 'number';
+                                y.name = 'orderqty';
+                                y.value = document.getElementById('ordervalue{{ m.id }}').value;
+
+                                z = document.createElement('div');
+                                z.innerHTML = "{{ m.title }}" + "-----------Qty = " + document.getElementById('ordervalue{{ m.id }}').value;
+
+                                divx.appendChild(x);
+                                divy.appendChild(y);
+                                divz.appendChild(z);
+                                a.appendChild(divx);
+                                a.appendChild(divy);
+                                b.appendChild(divz);
+
+                                document.getElementById('totalorders').value = totalorder;
+                            }
+                        </script>
+
+                        <button type="submit" class="btn btn-info btn-block waves-effect waves-light"
+                                onclick="addformelement{{ m.id }}()" data-dismiss="modal">Order
+                        </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
 
 
-{% endfor %}
+    {% endfor %}
 {% endblock %}
