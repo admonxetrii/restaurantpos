@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from Restaurant.models import MenuCategory, Menu, Table, Order, Bill, BillNo, masterPass, Profilepic, MergeTable
+from Restaurant.models import MenuCategory, Menu, Table, Order, Bill, BillNo, masterPass, Profilepic, MergeTable, RestoLogs
 from Restaurant.forms import MenuCategoryForm, UserPicForm
 from datetime import datetime
 from plyer import notification
@@ -13,18 +13,15 @@ from plyer import notification
 def sales(request):
     return render(request, 'sales.html')
 
-
-
 @login_required(login_url='signin')
 def report(request):
     if request.user.is_superuser:
-        bill = Bill.objects.all()
+        bill = Bill.objects.all().order_by('-bill_date','-bill_time')
         context = {
             'bill': bill
         }
         return render(request, 'report.html', context)
     return redirect('dashboard')
-
 
 def signin(request):
     if request.user.is_authenticated:
@@ -37,6 +34,12 @@ def signin(request):
         user = authenticate(username=u, password=p)
         if user is not None:
             login(request, user)
+            datentime = datetime
+            logs = RestoLogs()
+            logs.datentime=datetime.now()
+            logs.account = user
+            logs.activity = "Signed in!!"
+            logs.save()
             return redirect('dashboard')
         else:
             messages.add_message(request, messages.ERROR, "Your username and password doesn't match!!!")
@@ -64,6 +67,11 @@ def signup(request):
                 user = User.objects.get(username=un)
                 pic = Profilepic(user_id=user.id)
                 pic.save()
+                logs = RestoLogs()
+                logs.datentime = datetime.now()
+                logs.account = un
+                logs.activity = "Signed up!!"
+                logs.save()
                 messages.add_message(request, messages.SUCCESS, "Your account is registered!!!")
                 return redirect('signin')
             else:
@@ -101,6 +109,11 @@ def edituser(request):
     user.first_name = first
     user.last_name = last
     user.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = user
+    logs.activity = "Edited their profile information."
+    logs.save()
     messages.add_message(request, messages.SUCCESS, "Your account is successfully changed!!!")
     return redirect('profile')
 
@@ -116,6 +129,11 @@ def editpassword(request):
         if p1 == p2:
             user.set_password(p1)
             user.save()
+            logs = RestoLogs()
+            logs.datentime = datetime.now()
+            logs.account = u
+            logs.activity = "Changed their password."
+            logs.save()
             messages.add_message(request, messages.SUCCESS, "Your password is changed, Please Login again")
             return signout(request)
         else:
@@ -126,6 +144,7 @@ def editpassword(request):
         return redirect('profile')
 
 def editMpassword(request):
+    u = request.user
     p = request.POST['oldMpass']
     p1 = request.POST['mpass1']
     p2 = request.POST['mpass2']
@@ -134,6 +153,11 @@ def editMpassword(request):
         if p1 == p2:
             mp.password = p1
             mp.save()
+            logs = RestoLogs()
+            logs.datentime = datetime.now()
+            logs.account = u
+            logs.activity = "Changed master password!!"
+            logs.save()
             messages.add_message(request, messages.SUCCESS, "Your master password is changed, Please Login again!!!")
             return signout(request)
         else:
@@ -145,6 +169,11 @@ def editMpassword(request):
 
 
 def signout(request):
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Signed out!!"
+    logs.save()
     logout(request)
     messages.add_message(request, messages.ERROR, "You've been logged out!")
     return redirect('signin')
@@ -156,7 +185,12 @@ def dash_board(request):
     form = MenuCategoryForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save()
-        messages.add_message(request, messages.SUCCESS, "Menu Category created successfully!!!")
+        logs = RestoLogs()
+        logs.datentime = datetime.now()
+        logs.account = request.user
+        logs.activity = "Created a new Menu Category  \""+request.POST['title']+"\"!!"
+        logs.save()
+        messages.add_message(request, messages.SUCCESS, "Menu Category \""+request.POST['title']+"\" created successfully!!!")
         return redirect('dashboard')
     context = {
         'form': form,
@@ -167,9 +201,15 @@ def dash_board(request):
 @login_required(login_url='signin')
 def editMenuCategory(request, id):
     data = MenuCategory.objects.get(pk=id)
+    oldtitle = data.title
     form = MenuCategoryForm(request.POST or None, request.FILES or None, instance=data)
     if form.is_valid():
         form.save()
+        logs = RestoLogs()
+        logs.datentime = datetime.now()
+        logs.account = request.user
+        logs.activity = "Edited Menu Category from \""+ oldtitle +"\" to \"" + request.POST['title'] + "\"!!"
+        logs.save()
         messages.add_message(request, messages.SUCCESS, "Category Updated successfully")
         return redirect('dashboard')
     context = {
@@ -250,6 +290,11 @@ def orderitem(request):
     data = Table.objects.get(id=t)
     data.occupied = 1
     data.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Ordered "+qty+" \""+Menu.objects.get(id=m).title+"\" in table \""+t+"\"."
+    logs.save()
     messages.add_message(request, messages.SUCCESS, "Your order has been placed.")
     menudetail = Menu.objects.get(pk=m)
     title = "New order in table "+data.title+"!"
@@ -285,6 +330,11 @@ def printit(request,id):
     for d in data:
         d.printsts=1
         d.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Printed KOT/BOT"
+    logs.save()
     return redirect('/table-order/'+str(id))
 
 
@@ -319,12 +369,22 @@ def printbill(request,id):
     table = Table.objects.get(id=id)
     table.disval=float(disper)
     table.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Added discount \""+disper+"%\" to Table no: " + table.title
+    logs.save()
     return redirect('/gen-bill/'+str(id))
 
 def removedis(request,id):
     table = Table.objects.get(id=id)
     table.disval=0
     table.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Removed discount of Table no: " + table.title
+    logs.save()
     return redirect('/gen-bill/'+str(id))
 
 
@@ -372,6 +432,11 @@ def releaseTable(request, id):
         table.occMin = 0
         table.disval = 0
         table.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Generated Bill no: " + billno
+    logs.save()
     messages.add_message(request, messages.SUCCESS, "Table "+table.title+" Successfully released!!")
     return redirect('table')
 
@@ -384,6 +449,11 @@ def closeTable(request, id):
     table.occMin = 0
     table.disval = 0
     table.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Closed Table " + table.title
+    logs.save()
     return redirect('table')
 
 
@@ -392,6 +462,11 @@ def deletefromtable(request, id):
     do = Order.objects.get(pk=id)
     id1 = do.table.id
     do.delete()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Removed item \""+Menu.objects.get(id=do.menu.id).title+"\" of Table no: " + Table.objects.get(id=id1).title
+    logs.save()
     messages.add_message(request, messages.ERROR, "Item removed successfully")
     return redirect('/table-order/'+str(id1))
 
@@ -399,10 +474,16 @@ def deletefromtable(request, id):
 @login_required(login_url='signin')
 def editqty(request, id):
     data = Order.objects.get(pk=id)
+    oldqty = data.quantity
     id1 = data.table.id
     newqty = request.POST['qty']
     data.quantity = newqty
     data.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Edited quantity of item \""+Menu.objects.get(id=data.menu.id).title+"\" from "+str(oldqty)+" to "+str(newqty)+" from " + Table.objects.get(id=id1).title
+    logs.save()
     return redirect('/table-order/'+str(id1))
 
 
@@ -412,6 +493,11 @@ def addMenu(request, id):
     price = request.POST['price']
     add = Menu(title=title,price=price,category_id=id)
     add.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Added Menu Item \""+title+"."
+    logs.save()
     messages.add_message(request,messages.SUCCESS,"Menu Item added successfully")
     return redirect('/menu/' + str(id))
 
@@ -455,6 +541,11 @@ def addTables(request):
     t = request.POST['title']
     form = Table(title=t, occupied=0,reserved=0,merged=0,occHrs=0,occMin=0)
     form.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Reserved table \"" + t + "\"."
+    logs.save()
     messages.add_message(request, messages.SUCCESS, "Table created successfully!!!")
     return redirect('table')
 
@@ -468,32 +559,56 @@ def editMenu(request, id):
     data.title = menuTitle
     data.price = price
     data.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Edited menu item\"" + data.title + "\"."
+    logs.save()
     messages.add_message(request, messages.SUCCESS, "Menu Update successfully")
     return redirect('/menu/' + str(id1))
 
 def changeMenuCate(request, id):
     data = Menu.objects.get(pk=id)
+    oldcat = data.category.title
     cate = request.POST['newCategory']
     # print(cate,data.category_id)
     data.category_id = cate
+    newcat = data.category.title
     data.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Menu Category of \""+data.title+"\" changed from \"" + oldcat + "\" to \""+newcat+"\"."
+    logs.save()
     # print(data.category.id)
     return redirect('/menu/'+str(cate))
 
 @login_required(login_url='signin')
 def editTable(request, id):
     data = Table.objects.get(pk=id)
+    old = data.title
     newtitle = request.POST['newtitle']
     data.title = newtitle
     data.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Table Edited from \"" + old + "\" to \""+newtitle+"\"."
+    logs.save()
     return redirect('table')
 
 
 @login_required(login_url='signin')
 def deletefrommenu(request, id):
     dm = Menu.objects.get(pk=id)
+    itemname = dm.title
     id1 = dm.category.id
     dm.delete()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Deleted Menu Item \"" + itemname + "\"."
+    logs.save()
     messages.add_message(request, messages.ERROR, "Item deleted successfully")
     return redirect('/menu/'+str(id1))
 
@@ -501,7 +616,13 @@ def deletefrommenu(request, id):
 @login_required(login_url='signin')
 def deletefrommenucat(request, id):
     dm = MenuCategory.objects.get(pk=id)
+    menucate = dm.title
     dm.delete()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Deleted Menu Category \""+ menucate + "\"."
+    logs.save()
     messages.add_message(request, messages.ERROR, "Item deleted successfully")
     return redirect('dashboard')
 
@@ -509,7 +630,13 @@ def deletefrommenucat(request, id):
 @login_required(login_url='signin')
 def deletetable(request, id):
     t = Table.objects.get(pk=id)
+    tablename = t.title
     t.delete()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Deleted Table \"" + tablename + "\"."
+    logs.save()
     messages.add_message(request, messages.ERROR, "Table deleted successfully")
     return redirect('table')
 
@@ -544,6 +671,11 @@ def reset_pass_complete(request, id):
     if p1 == p2:
         user.set_password(p1)
         user.save()
+        logs = RestoLogs()
+        logs.datentime = datetime.now()
+        logs.account = "System"
+        logs.activity = "Changed password of \"" + user + "\"."
+        logs.save()
         messages.add_message(request, messages.SUCCESS, "Your password is changed!!!")
         return redirect('signin')
     else:
@@ -556,6 +688,7 @@ def reset_pass_complete(request, id):
 @login_required(login_url='signin')
 def changetable (request, id):
     oldTable = Table.objects.get(id=id)
+    oldTablename= oldTable.title
     t = request.POST['newTable']
     newTable = Table.objects.get(id=t)
     orders = Order.objects.filter(table_id=id)
@@ -566,10 +699,16 @@ def changetable (request, id):
     newTable.occHrs = oldTable.occHrs
     newTable.occMin = oldTable.occMin
     newTable.save()
+    newTablename = newTable.title
     oldTable.occupied = 0
     oldTable.occMin = 0
     oldTable.occHrs = 0
     oldTable.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Changed Table from \"" + oldTablename + "\" to \""+newTablename+"."
+    logs.save()
     title = oldTable.title +" changed to " + newTable.title
     msgs = str(request.user)+" transfered them"
     notification.notify(title=title,message=msgs,timeout=20)
@@ -608,6 +747,11 @@ def saveEditedUser(request):
             u.is_superuser = adm
             u.is_active = act
             u.save()
+            logs = RestoLogs()
+            logs.datentime = datetime.now()
+            logs.account = request.user
+            logs.activity = "Edited User Permission."
+            logs.save()
         return redirect('users')
 
 # def delete_user(request,username):
@@ -662,6 +806,11 @@ def additemstotable(request, id):
     else:
         table.occupied = 1
         table.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Added Multiple orders at Table \""+table.title
+    logs.save()
     messages.add_message(request, messages.SUCCESS, "Your order has been placed.")
     title = "Multiple Orders in "+table.title
     msgs = str(request.user)+" added multiple order!!"
@@ -684,6 +833,11 @@ def mergeTable(request):
     tbl2.save()
     merge = MergeTable(table1_id=t1,table2_id=t2)
     merge.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Merged tables \"" + tbl1.title + "\" and \""+tbl2.title+"\"."
+    logs.save()
     return redirect('table')
 
 def unmergeTable(request,id):
@@ -695,6 +849,11 @@ def unmergeTable(request,id):
     tbl2.merged=0
     tbl2.save()
     mt.delete()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Unmerged Tables \"" + tbl1.title + "\" and \""+tbl2.title+"\"."
+    logs.save()
     return redirect('table')
 
 def sendToCBMS(request,id):
@@ -712,6 +871,11 @@ def sendToCBMS(request,id):
     print(r_bill)
 
     if r_bill==200:
+        logs = RestoLogs()
+        logs.datentime = datetime.now()
+        logs.account = request.user
+        logs.activity = "Sent Bill data to CBMS of bill no\"" + bills.billnum + "\"."
+        logs.save()
         messages.add_message(request,messages.SUCCESS,"Your data was sent successfully!!!")
         bills.sync_ird = 1
         bills.save()
@@ -729,7 +893,44 @@ def sendToCBMS(request,id):
         messages.add_message(request, messages.ERROR, "Internal Server Error!!!")
 
     return redirect('report')
+def sendAllToCBMS(request):
+    b = Bill.objects.filter(sync_ird=0)
+    serverurl = "http://103.1.92.174:9050/api/bill"
+    headers = {'Content-Type':"application/json"}
+    for bills in b:
+        if bills.is_realtime is True :
+            rltm = "true"
+        else :
+            rltm = "false"
+        payload_bill = "{\"username\":\"Test_CBMS\",\"password\":\"test@321\",\"seller_pan\":\"999999999\",\"buyer_pan\":\"123456789\",\"buyer_name\":\"\",\"fiscal_year\" : \""+str(bills.fiscalyrs)+"\",\"invoice_number\":\""+str(bills.billnum)+"\",\"invoice_date\":\""+str(bills.bill_date)+"\",\"total_sales\":"+str(bills.total_amnt)+",\"taxable_sales_vat\":"+str(bills.taxable_amnt)+",\"vat\":"+str(bills.tax_amnt)+",\"excisable_amount\":0,\"excise\":0,\"taxable_sales_hst\":0,\"hst\":0,\"amount_for_esf\":0,\"esf\":0,\"export_sales\":0,\"tax_exempted_sales\":0,\"isrealtime\":"+rltm+",\"datetimeclient\":\""+datetime.today().strftime('%Y/%m/%d %H:%M:%S')+"\" }"
+        print(payload_bill)
+        send_bill = requests.request("POST",serverurl,data=payload_bill,headers=headers)
+        r_bill = send_bill.json()
+        print(r_bill)
 
+    if r_bill==200:
+        logs = RestoLogs()
+        logs.datentime = datetime.now()
+        logs.account = request.user
+        logs.activity = "Sent Bill data to CBMS of bill no\"" + bills.billnum + "\"."
+        logs.save()
+        messages.add_message(request,messages.SUCCESS,"Your data was sent successfully!!!")
+        bills.sync_ird = 1
+        bills.save()
+    elif r_bill == 100:
+        messages.add_message(request, messages.ERROR, "Error:100 - API credentials do not match !!!")
+    elif r_bill == 101:
+        messages.add_message(request, messages.ERROR, "Error:101 - Bill Already exists!!!")
+    elif r_bill == 102:
+        messages.add_message(request, messages.ERROR, "Error:102 - Exception while saving bill details, Please check model fields and values!!!")
+    elif r_bill == 103:
+        messages.add_message(request, messages.ERROR, "Error:103 -  Unknown exceptions, Please check API URL and model fields and values !!!")
+    elif r_bill == 104:
+        messages.add_message(request, messages.ERROR, "Error:104 - Model invalid!!!")
+    else:
+        messages.add_message(request, messages.ERROR, "Internal Server Error!!!")
+
+    return redirect('report')
 def sendToCBMSmanual(request):
     if request.method == 'GET':
         return render(request,'manualdata.html');

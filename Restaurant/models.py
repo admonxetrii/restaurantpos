@@ -149,3 +149,8 @@ class MergeTable(models.Model):
 #     table = models.ForeignKey(Table,on_delete=models.CASCADE)
 #     disval = models.FloatField(null=True,blank=True)
 
+class RestoLogs(models.Model):
+    datentime = models.CharField(max_length=50)
+    account = models.CharField(max_length=50)
+    activity = models.TextField(max_length=250)
+

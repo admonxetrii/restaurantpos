@@ -77,7 +77,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{% url 'dashboard'%}" enctype="multipart/form-data">
+                <form method="post" name="addMenuCat" action="{% url 'dashboard'%}" enctype="multipart/form-data">
                     {{ form.as_p }}
                     {% csrf_token %}
                     <button class="btn btn-info btn-block" type="submit"><i class="fa fa-plus"></i>Add Menu Categories</button>

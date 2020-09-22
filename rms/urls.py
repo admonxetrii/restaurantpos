@@ -68,6 +68,7 @@ urlpatterns = [
     path('add-item/<int:id>',views.addmoreitems,name='addmoreitems'),
     path('add-item-conf/<int:id>',views.additemstotable,name='additem'),
     path('send-cbms/<int:id>',views.sendToCBMS,name='cbms'),
+    path('send-cbms-all/',views.sendAllToCBMS,name='cbmsauto'),
     path('send-cbms-manual/',views.sendToCBMSmanual,name='cbmsmanual'),
     path('eula/',views.eula,name='eula'),
     path('policy/',views.privacyAndPolicy,name='policy')
