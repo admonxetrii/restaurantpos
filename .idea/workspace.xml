@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0005_restologs.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0006_restologs_datentime.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/User/spider-man-far-from-home-3840x2160-mysterio-4k-19069.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Restaurant/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Restaurant/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rms/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rms/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/report.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/report.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,7 +201,7 @@
       <workItem from="1599651640895" duration="1964000" />
       <workItem from="1600156919685" duration="5000" />
       <workItem from="1600278979215" duration="4000" />
-      <workItem from="1600751561620" duration="6743000" />
+      <workItem from="1600751561620" duration="6879000" />
     </task>
     <task id="LOCAL-00001" summary="Semi Final">
       <created>1584892818229</created>
@@ -225,7 +217,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595683750036</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Semi Final">
+      <created>1600758372602</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1600758372602</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -237,10 +236,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="Semi Final" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="531" y="131" key="CommitChangelistDialog2" timestamp="1595683743441">
+    <state x="531" y="131" key="CommitChangelistDialog2" timestamp="1600758370771">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="531" y="131" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1595683743441" />
+    <state x="531" y="131" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1600758370771" />
     <state x="740" y="295" key="FileChooserDialogImpl" timestamp="1598419847538">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
