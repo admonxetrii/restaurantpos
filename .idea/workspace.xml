@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/template/restrologs.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rms/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rms/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/base/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/base/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/sales.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/sales.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/table.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/table.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/allitem.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/allitem.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/menu.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/tabledetail.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/tabledetail.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,7 +202,8 @@
       <workItem from="1600751561620" duration="6879000" />
       <workItem from="1600758593576" duration="220000" />
       <workItem from="1600796081682" duration="1805000" />
-      <workItem from="1600839184545" duration="4968000" />
+      <workItem from="1600839184545" duration="5221000" />
+      <workItem from="1600846690408" duration="191000" />
     </task>
     <task id="LOCAL-00001" summary="Semi Final">
       <created>1584892818229</created>
@@ -234,7 +233,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600758757919</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added Logs">
+      <created>1600844290331</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1600844290331</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,13 +250,14 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Semi Final" />
     <MESSAGE value="almost there" />
-    <option name="LAST_COMMIT_MESSAGE" value="almost there" />
+    <MESSAGE value="Added Logs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Logs" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="531" y="131" key="CommitChangelistDialog2" timestamp="1600758757048">
+    <state x="531" y="131" key="CommitChangelistDialog2" timestamp="1600844288199">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="531" y="131" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1600758757048" />
+    <state x="531" y="131" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1600844288199" />
     <state x="740" y="295" key="FileChooserDialogImpl" timestamp="1598419847538">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -270,7 +277,6 @@
     <state x="656" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1600751562647">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="656" y="364" key="com.intellij.ide.util.TipDialog/0.0.1920.1080/1920.0.1280.720@0.0.1920.1080" timestamp="1592192291103" />
     <state x="656" y="364" key="com.intellij.ide.util.TipDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1600751562647" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">

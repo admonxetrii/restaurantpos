@@ -162,13 +162,17 @@
                         function incrementValue{{ o.id }}()
                         {
                             var value = parseInt(document.getElementById('ordervalue{{ o.id }}').value);
-                            value++;
+                            if(value<10){
+                                value++;
+                            }
                             document.getElementById('ordervalue{{ o.id }}').value = value;
                         }
                         function decrementValue{{ o.id }}()
                         {
                             var value = parseInt(document.getElementById('ordervalue{{ o.id }}').value);
-                            value--;
+                            if(value>1){
+                                value--;
+                            }
                             document.getElementById('ordervalue{{ o.id }}').value = value;
                         }
                         </script>

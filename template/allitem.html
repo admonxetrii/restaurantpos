@@ -114,13 +114,17 @@
                         <script type="text/javascript">
                             function incrementValue{{ m.id }}() {
                                 var value = parseInt(document.getElementById('ordervalue{{ m.id }}').value);
-                                value++;
+                                if(value<10){
+                                    value++;
+                                }
                                 document.getElementById('ordervalue{{ m.id }}').value = value;
                             }
 
                             function decrementValue{{ m.id }}() {
                                 var value = parseInt(document.getElementById('ordervalue{{ m.id }}').value);
-                                value--;
+                                if(value>1){
+                                    value--;
+                                }
                                 document.getElementById('ordervalue{{ m.id }}').value = value;
                             }
 

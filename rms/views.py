@@ -538,6 +538,11 @@ def addReservation(request):
         res = Table.objects.get(id=id)
         res.reserved=1
         res.save()
+        logs = RestoLogs()
+        logs.datentime = datetime.now()
+        logs.account = request.user
+        logs.activity = "Added Reservation of Table \"" + res.title + "\"."
+        logs.save()
         messages.add_message(request,messages.SUCCESS,"Table - "+res.title+" is reserved")
         return render(request,'reserved.html',context={'table':table})
     messages.add_message(request,messages.ERROR,"Not Authorized")
@@ -553,7 +558,7 @@ def addTables(request):
     logs = RestoLogs()
     logs.datentime = datetime.now()
     logs.account = request.user
-    logs.activity = "Reserved table \"" + t + "\"."
+    logs.activity = "Added new table \"" + t + "\"."
     logs.save()
     messages.add_message(request, messages.SUCCESS, "Table created successfully!!!")
     return redirect('table')
@@ -716,7 +721,7 @@ def changetable (request, id):
     logs = RestoLogs()
     logs.datentime = datetime.now()
     logs.account = request.user
-    logs.activity = "Changed Table from \"" + oldTablename + "\" to \""+newTablename+"."
+    logs.activity = "Changed Table from \"" + oldTablename + "\" to \""+newTablename+"\"."
     logs.save()
     title = oldTable.title +" changed to " + newTable.title
     msgs = str(request.user)+" transfered them"
@@ -904,41 +909,43 @@ def sendToCBMS(request,id):
     return redirect('report')
 def sendAllToCBMS(request):
     b = Bill.objects.filter(sync_ird=0)
-    serverurl = "http://103.1.92.174:9050/api/bill"
-    headers = {'Content-Type':"application/json"}
-    for bills in b:
-        if bills.is_realtime is True :
-            rltm = "true"
-        else :
-            rltm = "false"
-        payload_bill = "{\"username\":\"Test_CBMS\",\"password\":\"test@321\",\"seller_pan\":\"999999999\",\"buyer_pan\":\"123456789\",\"buyer_name\":\"\",\"fiscal_year\" : \""+str(bills.fiscalyrs)+"\",\"invoice_number\":\""+str(bills.billnum)+"\",\"invoice_date\":\""+str(bills.bill_date)+"\",\"total_sales\":"+str(bills.total_amnt)+",\"taxable_sales_vat\":"+str(bills.taxable_amnt)+",\"vat\":"+str(bills.tax_amnt)+",\"excisable_amount\":0,\"excise\":0,\"taxable_sales_hst\":0,\"hst\":0,\"amount_for_esf\":0,\"esf\":0,\"export_sales\":0,\"tax_exempted_sales\":0,\"isrealtime\":"+rltm+",\"datetimeclient\":\""+datetime.today().strftime('%Y/%m/%d %H:%M:%S')+"\" }"
-        print(payload_bill)
-        send_bill = requests.request("POST",serverurl,data=payload_bill,headers=headers)
-        r_bill = send_bill.json()
-        print(r_bill)
+    if b.count() != 0:
+        serverurl = "http://103.1.92.174:9050/api/bill"
+        headers = {'Content-Type':"application/json"}
+        for bills in b:
+            if bills.is_realtime is True :
+                rltm = "true"
+            else :
+                rltm = "false"
+            payload_bill = "{\"username\":\"Test_CBMS\",\"password\":\"test@321\",\"seller_pan\":\"999999999\",\"buyer_pan\":\"123456789\",\"buyer_name\":\"\",\"fiscal_year\" : \""+str(bills.fiscalyrs)+"\",\"invoice_number\":\""+str(bills.billnum)+"\",\"invoice_date\":\""+str(bills.bill_date)+"\",\"total_sales\":"+str(bills.total_amnt)+",\"taxable_sales_vat\":"+str(bills.taxable_amnt)+",\"vat\":"+str(bills.tax_amnt)+",\"excisable_amount\":0,\"excise\":0,\"taxable_sales_hst\":0,\"hst\":0,\"amount_for_esf\":0,\"esf\":0,\"export_sales\":0,\"tax_exempted_sales\":0,\"isrealtime\":"+rltm+",\"datetimeclient\":\""+datetime.today().strftime('%Y/%m/%d %H:%M:%S')+"\" }"
+            print(payload_bill)
+            send_bill = requests.request("POST",serverurl,data=payload_bill,headers=headers)
+            r_bill = send_bill.json()
+            print(r_bill)
 
-    if r_bill==200:
-        logs = RestoLogs()
-        logs.datentime = datetime.now()
-        logs.account = request.user
-        logs.activity = "Sent Bill data to CBMS of bill no\"" + bills.billnum + "\"."
-        logs.save()
-        messages.add_message(request,messages.SUCCESS,"Your data was sent successfully!!!")
-        bills.sync_ird = 1
-        bills.save()
-    elif r_bill == 100:
-        messages.add_message(request, messages.ERROR, "Error:100 - API credentials do not match !!!")
-    elif r_bill == 101:
-        messages.add_message(request, messages.ERROR, "Error:101 - Bill Already exists!!!")
-    elif r_bill == 102:
-        messages.add_message(request, messages.ERROR, "Error:102 - Exception while saving bill details, Please check model fields and values!!!")
-    elif r_bill == 103:
-        messages.add_message(request, messages.ERROR, "Error:103 -  Unknown exceptions, Please check API URL and model fields and values !!!")
-    elif r_bill == 104:
-        messages.add_message(request, messages.ERROR, "Error:104 - Model invalid!!!")
+        if r_bill==200:
+            logs = RestoLogs()
+            logs.datentime = datetime.now()
+            logs.account = request.user
+            logs.activity = "Sent Multiple Bills data to CBMS."
+            logs.save()
+            messages.add_message(request,messages.SUCCESS,"Your data was sent successfully!!!")
+            bills.sync_ird = 1
+            bills.save()
+        elif r_bill == 100:
+            messages.add_message(request, messages.ERROR, "Error:100 - API credentials do not match !!!")
+        elif r_bill == 101:
+            messages.add_message(request, messages.ERROR, "Error:101 - Bill Already exists!!!")
+        elif r_bill == 102:
+            messages.add_message(request, messages.ERROR, "Error:102 - Exception while saving bill details, Please check model fields and values!!!")
+        elif r_bill == 103:
+            messages.add_message(request, messages.ERROR, "Error:103 -  Unknown exceptions, Please check API URL and model fields and values !!!")
+        elif r_bill == 104:
+            messages.add_message(request, messages.ERROR, "Error:104 - Model invalid!!!")
+        else:
+            messages.add_message(request, messages.ERROR, "Internal Server Error!!!")
     else:
-        messages.add_message(request, messages.ERROR, "Internal Server Error!!!")
-
+        messages.add_message(request, messages.ERROR, "All Bills are synced!!!")
     return redirect('report')
 def sendToCBMSmanual(request):
     if request.method == 'GET':
