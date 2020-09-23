@@ -204,7 +204,7 @@
                             <select name="newTable" id="cselect" required data-validation-required-message="Please Select Table" class="form-control" onchange="getVal{{ t.id }}(this.id);">
                                 <option value="" selected>---------</option>
                                 {% for t in table %}
-                                {% if t.occupied == 0 %}
+                                {% if t.occupied == 0 and t.reserved == 0 %}
                                     <option value="{{t.id}}">{{t.title}}</option>
                                 {% endif %}
                                     <script>

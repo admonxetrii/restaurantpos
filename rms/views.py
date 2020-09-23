@@ -14,6 +14,15 @@ def sales(request):
     return render(request, 'sales.html')
 
 @login_required(login_url='signin')
+def restrologs(request):
+    if request.user.is_superuser:
+        logs = RestoLogs.objects.all().order_by('-datentime')
+        context = {
+            'logs': logs
+        }
+        return render(request, 'restrologs.html', context)
+    return  redirect('dashboard')
+@login_required(login_url='signin')
 def report(request):
     if request.user.is_superuser:
         bill = Bill.objects.all().order_by('-bill_date','-bill_time')

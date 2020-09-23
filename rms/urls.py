@@ -35,6 +35,7 @@ urlpatterns = [
     path('signout/',views.signout,name='signout'),
     path('dashboard/',views.dash_board,name='dashboard'),
     path('sales/',views.sales,name='sales'),
+    path('logs/',views.restrologs,name='logs'),
     path('table/',views.tables,name='table'),
     path('menu/<int:id>',views.menuitem,name='menu'),
     path('gen-bill/<int:id>',views.genBill,name='genbill'),

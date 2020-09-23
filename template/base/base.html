@@ -163,6 +163,7 @@
                         {% if request.user.is_superuser %}
                             <li> <a class="waves-effect waves-dark {% if request.url == '/users/' %} active {% endif %} " href="{% url 'users' %}" aria-expanded="false"><i class="fa fa-users"></i><span class="hide-menu"></span>Users</a></li>
                             <li> <a class="waves-effect waves-dark {% if request.url == '/report/' %} active {% endif %} " href="{% url 'report' %}" aria-expanded="false"><i class="fa fa-dollar-sign"></i><span class="hide-menu"></span>Reports</a></li>
+                            <li> <a class="waves-effect waves-dark {% if request.url == '/logs/' %} active {% endif %} " href="{% url 'logs' %}" aria-expanded="false"><i class="fa fa-clipboard-list"></i><span class="hide-menu"></span>Logs</a></li>
                         {% endif %}
                     </ul>
                     <div class="font-weight-bold text-center">
