@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="">
+    <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="Fixed Order numbers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/gen_bill.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/gen_bill.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,7 +201,8 @@
       <workItem from="1600796081682" duration="1805000" />
       <workItem from="1600839184545" duration="5221000" />
       <workItem from="1600846690408" duration="215000" />
-      <workItem from="1600998370488" duration="306000" />
+      <workItem from="1600998370488" duration="1533000" />
+      <workItem from="1601196799181" duration="607000" />
     </task>
     <task id="LOCAL-00001" summary="Semi Final">
       <created>1584892818229</created>
@@ -244,7 +246,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600846901748</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Fixed Order numbers">
+      <created>1600998687030</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1600998687030</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -259,10 +268,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="Fixed Order numbers" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="531" y="131" key="CommitChangelistDialog2" timestamp="1600846900655">
+    <state x="531" y="131" key="CommitChangelistDialog2" timestamp="1601000000957">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="531" y="131" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1600846900655" />
+    <state x="531" y="131" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1601000000957" />
     <state x="740" y="295" key="FileChooserDialogImpl" timestamp="1598419847538">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -275,10 +284,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1920.1080@0.0.1920.1080" timestamp="1600753468987" />
-    <state x="552" y="273" key="Vcs.Push.Dialog.v2" timestamp="1600758728046">
+    <state x="552" y="273" key="Vcs.Push.Dialog.v2" timestamp="1600998691341">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="552" y="273" key="Vcs.Push.Dialog.v2/0.0.1920.1080@0.0.1920.1080" timestamp="1600758728046" />
+    <state x="552" y="273" key="Vcs.Push.Dialog.v2/0.0.1920.1080@0.0.1920.1080" timestamp="1600998691341" />
     <state x="656" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1600751562647">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
