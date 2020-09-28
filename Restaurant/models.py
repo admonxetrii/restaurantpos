@@ -123,7 +123,7 @@ class Bill(models.Model):
         return self.billnum
 
 class BillNo(models.Model):
-    number = models.IntegerField()
+    number = models.IntegerField(unique=True)
 
 class masterPass(models.Model):
     password = models.CharField(max_length=50)
