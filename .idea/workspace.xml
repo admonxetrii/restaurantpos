@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="">
+    <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="Aba Documentation ko kaam baaki">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Restaurant/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Restaurant/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/eula.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/eula.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +44,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/assets/node_modules/jquery-sparkline" />
+    <property name="last_opened_file_path" value="F:/Pycemon/PycemonRMS" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -203,7 +203,10 @@
       <workItem from="1600846690408" duration="215000" />
       <workItem from="1600998370488" duration="1533000" />
       <workItem from="1601196799181" duration="2342000" />
-      <workItem from="1605169395149" duration="2081000" />
+      <workItem from="1605169395149" duration="2117000" />
+      <workItem from="1605173887805" duration="42000" />
+      <workItem from="1605175081928" duration="1336000" />
+      <workItem from="1605187213218" duration="1436000" />
     </task>
     <task id="LOCAL-00001" summary="Semi Final">
       <created>1584892818229</created>
@@ -268,7 +271,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601257262777</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Aba Documentation ko kaam baaki">
+      <created>1605173038964</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1605173038964</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -288,14 +298,14 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="586" y="218" key="#Inspections/0.0.1920.1080@0.0.1920.1080" timestamp="1605173007556" />
-    <state x="531" y="131" key="CommitChangelistDialog2" timestamp="1601257261320">
+    <state x="531" y="131" key="CommitChangelistDialog2" timestamp="1605188568041">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="531" y="131" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1601257261320" />
-    <state x="740" y="295" key="FileChooserDialogImpl" timestamp="1598419847538">
+    <state x="531" y="131" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1605188568041" />
+    <state x="740" y="295" key="FileChooserDialogImpl" timestamp="1605173922260">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="740" y="295" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1598419847538" />
+    <state x="740" y="295" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1605173922260" />
     <state x="461" y="182" key="SettingsEditor" timestamp="1600758350539">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
