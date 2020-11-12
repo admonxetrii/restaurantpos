@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="Aba Documentation ko kaam baaki">
+    <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Restaurant/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Restaurant/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rms/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +202,8 @@
       <workItem from="1600839184545" duration="5221000" />
       <workItem from="1600846690408" duration="215000" />
       <workItem from="1600998370488" duration="1533000" />
-      <workItem from="1601196799181" duration="1116000" />
+      <workItem from="1601196799181" duration="2342000" />
+      <workItem from="1605169395149" duration="2081000" />
     </task>
     <task id="LOCAL-00001" summary="Semi Final">
       <created>1584892818229</created>
@@ -261,7 +261,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601256747279</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Aba Documentation ko kaam baaki">
+      <created>1601257262777</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1601257262777</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,13 +280,18 @@
     <MESSAGE value="almost there" />
     <MESSAGE value="Added Logs" />
     <MESSAGE value="Fixed Order numbers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Order numbers" />
+    <MESSAGE value="Aba Documentation ko kaam baaki" />
+    <option name="LAST_COMMIT_MESSAGE" value="Aba Documentation ko kaam baaki" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="531" y="131" key="CommitChangelistDialog2" timestamp="1601256832910">
+    <state x="586" y="218" key="#Inspections" timestamp="1605173007556">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="531" y="131" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1601256832910" />
+    <state x="586" y="218" key="#Inspections/0.0.1920.1080@0.0.1920.1080" timestamp="1605173007556" />
+    <state x="531" y="131" key="CommitChangelistDialog2" timestamp="1601257261320">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="531" y="131" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1601257261320" />
     <state x="740" y="295" key="FileChooserDialogImpl" timestamp="1598419847538">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
