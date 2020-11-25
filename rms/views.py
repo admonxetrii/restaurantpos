@@ -383,6 +383,30 @@ def genBill(request, id) :
     }
     return render(request, 'gen_bill.html', context)
 
+@login_required(login_url='signin')
+def genTaxBill(request, id) :
+    billno = BillNo.objects.get(id=1)
+    table = Table.objects.get(id=id)
+    if table.merged == 1 :
+        merge = MergeTable.objects.get(Q(table1_id=table.id) | Q(table2_id=table.id))
+        data = Order.objects.filter(Q(table_id=merge.table1.id) | Q(table_id=merge.table2.id))
+        for t in data :
+            t.table_id = merge.table1.id
+            t.save()
+    else :
+        data = Order.objects.filter(table_id=id, printsts=1)
+    a = 0
+    for d in data :
+        a += 1
+    if a == 0 :
+        return redirect('dashboard')
+    context = {
+        'order' : data,
+        'table' : table,
+        'billno' : billno,
+    }
+    return render(request, 'gen_tax_bill.html', context)
+
 
 def printbill(request, id) :
     disper = request.POST['disper']
@@ -398,6 +422,20 @@ def printbill(request, id) :
     logs.save()
     return redirect('/gen-bill/' + str(id))
 
+def printbill1(request, id) :
+    disper = request.POST['disper']
+    if disper == '' :
+        disper = 0.0
+    table = Table.objects.get(id=id)
+    table.disval = float(disper)
+    table.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Added discount \"" + disper + "%\" to Table no: " + table.title
+    logs.save()
+    return redirect('/gen-tax-bill/' + str(id))
+
 
 def removedis(request, id) :
     table = Table.objects.get(id=id)
@@ -410,6 +448,16 @@ def removedis(request, id) :
     logs.save()
     return redirect('/gen-bill/' + str(id))
 
+def removedis1(request, id) :
+    table = Table.objects.get(id=id)
+    table.disval = 0
+    table.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Removed discount of Table no: " + table.title
+    logs.save()
+    return redirect('/gen-tax-bill/' + str(id))
 
 @login_required(login_url='signin')
 def releaseTable(request, id) :
@@ -421,12 +469,13 @@ def releaseTable(request, id) :
     date = str(datetime.today().strftime('%Y.%m.%d'))
     nt = request.POST['nettotal']
     d = request.POST['disper']
+    prnt = request.POST['prnted']
     tt = request.POST['taxablettl']
     vt = request.POST['vatamt']
     gt = request.POST['grdamnt']
     b = request.POST['billnum']
     bill = Bill(fiscalyrs=fiscal, billnum=b, bill_date=date, table=tablename, amnt=nt, discount=d, taxable_amnt=tt,
-                tax_amnt=vt, total_amnt=gt, sync_ird=0, billprt=1, billactive=1, billuser=request.user,
+                tax_amnt=vt, total_amnt=gt, sync_ird=0, billprt=prnt, billactive=1, billuser=request.user,
                 is_realtime=True, payment_method="CASH")
     bill.save()
     billno = BillNo.objects.get(id=1)

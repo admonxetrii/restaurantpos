@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="Aba Documentation ko kaam baaki">
+    <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/template/gen_tax_bill.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/rms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rms.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/eula.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/eula.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rms/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rms/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/gen_bill.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/gen_bill.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/report.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/tabledetail.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/tabledetail.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,10 +47,11 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="F:/Pycemon/PycemonRMS" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../rms" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -206,7 +213,10 @@
       <workItem from="1605169395149" duration="2117000" />
       <workItem from="1605173887805" duration="42000" />
       <workItem from="1605175081928" duration="1336000" />
-      <workItem from="1605187213218" duration="1436000" />
+      <workItem from="1605187213218" duration="4263000" />
+      <workItem from="1605240918908" duration="3765000" />
+      <workItem from="1605636866230" duration="650000" />
+      <workItem from="1606281559649" duration="6025000" />
     </task>
     <task id="LOCAL-00001" summary="Semi Final">
       <created>1584892818229</created>
@@ -278,7 +288,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605173038964</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Aba Documentation ko kaam baaki">
+      <created>1605188660376</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1605188660376</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,14 +315,22 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="586" y="218" key="#Inspections/0.0.1920.1080@0.0.1920.1080" timestamp="1605173007556" />
-    <state x="531" y="131" key="CommitChangelistDialog2" timestamp="1605188568041">
+    <state x="698" y="364" key="#Notifications" timestamp="1605323242045">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="531" y="131" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1605188568041" />
-    <state x="740" y="295" key="FileChooserDialogImpl" timestamp="1605173922260">
+    <state x="698" y="364" key="#Notifications/0.0.1920.1080@0.0.1920.1080" timestamp="1605323242045" />
+    <state x="640" y="276" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1605262391439">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="740" y="295" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1605173922260" />
+    <state x="640" y="276" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1605262391439" />
+    <state x="531" y="131" key="CommitChangelistDialog2" timestamp="1605188658629">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="531" y="131" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1605188658629" />
+    <state x="740" y="295" key="FileChooserDialogImpl" timestamp="1606283756433">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="740" y="295" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1606283756433" />
     <state x="461" y="182" key="SettingsEditor" timestamp="1600758350539">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

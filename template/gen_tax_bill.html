@@ -6,14 +6,14 @@
     <div class="row ">
                     <div class="col-md-6">
                         <div class="card card-body" >
-                            <h3><b>Abbreviated Tax Invoice</b> <span class="float-right">#{{billno.number}}</span></h3>
+                            <h3><b><span class="text-info">TAX</span> INVOICE</b> <span class="float-right">#{{billno.number}}</span></h3>
                             <hr>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="pull-left">
                                         <address style="float: left ">
                                                 <h3> &nbsp;<b class="text-danger">Tropical Rest</b></h3>
-                                            <p class="text-muted m-l-5">Swayambhu, Kathmandu</p><br>
+                                            <p class="text-muted m-l-5">Shwaymbhu, Kathmandu</p><br>
                                                Bill No: <span class="font-weight-bold">{{billno.number}}</span><br>
                                                Cashier: <span class="font-weight-bold">{{request.user}}</span>
                                         </address>
@@ -49,9 +49,9 @@
                                                     <td class="tableitem"><p class="itemtext">{{forloop.counter}}</p></td>
                                                     <td class="tableitem"><p class="itemtext">{{o.menu.title}}</p></td>
                                                     <td class="tableitem"><p class="itemtext">{{o.quantity}}</p></td>
-                                                    <td class="tableitem"><p class="itemtext">Rs. {{o.menu.price}}/-</p></td>
-                                                    <td class="tableitem"><p class="itemtext">Rs. {{o.quantity|mul:o.menu.price}}/-
-                                                        <script type="text/javascript"> var total = total + {{o.quantity|mul:o.menu.price}};  </script>
+                                                    <td class="tableitem"><p class="itemtext">Rs. <script type="text/javascript">var rate = {{o.menu.price|mul:100|div:113}}; document.write((rate).toFixed(2)); </script>/-</p></td>
+                                                    <td class="tableitem"><p class="itemtext">Rs. <script type="text/javascript">var nettots = {{o.quantity|mul:o.menu.price|mul:100|div:113}}; document.write((nettots).toFixed(2)); </script>/-
+                                                        <script type="text/javascript"> var total = (total + {{o.quantity|mul:o.menu.price|mul:100|div:113}}).toFixed(2);  </script>
                                                     </p></td>
                                                 </tr>
                                                         <script>count++;</script>
@@ -84,11 +84,25 @@
                                                     <td><span>{{table.disval}}<script>var disc = {{ table.disval }};</script></span>%
                                                         {% if table.disval != 0 %}
                                                             <span id="editdis"><a href="" data-toggle="modal" data-target="#dismodal"><i class="fa fa-edit text-primary"></i></a></span>|
-                                                            <span id="removedis"><a href="{% url 'removedis' table.id %}"><i class="fa fa-minus-circle text-danger"></i></a></span>
+                                                            <span id="removedis"><a href="{% url 'removedis1' table.id %}"><i class="fa fa-minus-circle text-danger"></i></a></span>
                                                         {% else%}
                                                             <span id="adddisval"><a href="" data-toggle="modal" data-target="#dismodal"><i class="fa fa-plus-circle text-success"></i></a></span>
                                                         {% endif %}
                                                     </td>
+                                                </tr>
+                                                <tr class="tabletitle h5">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>Taxable amount</td>
+                                                    <td>Rs. <span id="taxable" ></span>/-</td>
+                                                </tr>
+                                                <tr class="tabletitle h5">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>VAT (13%)</td>
+                                                    <td>Rs. <span id="vat" ></span>/-</td>
                                                 </tr>
                                                 <tr class="tabletitle font-weight-bold h4">
                                                     <td></td>
@@ -111,17 +125,18 @@
                                     <div class="text-right">
                                         <form action="{% url 'releaseTable' table.id %}" method="post">
                                             <input type="text" name="nettotal" id="nettotal" hidden />
-                                            <input type="text" name="taxablettl" value="0" hidden />
+                                            <input type="text" name="taxablettl" id="taxablettl" hidden />
+                                            <input type="text" name="vatamt" id="vatamt" hidden />
                                             <input type="text" name="disper" value="{{ table.disval }}" hidden />
-                                            <input type="text" name="vatamt" value="0" hidden />
                                             <input type="text" name="grdamnt" id="grdamnt" hidden />
                                             <input type="text" name="prnted" id="prnted" hidden />
                                             <input type="text" name="billnum" value="TRP{{billno.number}}" hidden />
                                             {% csrf_token %}
-                                        <button class="btn btn-success" id="releaseTable" style="float: right;" type="submit" onclick="pass(); return confirm('Are you sure want to proceed?');" ><i class="fa fa-check"></i> Release Table </button>
-                                        </form>
                                         <script type="text/javascript">var printednumber = 0</script>
+                                        <button class="btn btn-success" id="releaseTable" style="float: right;" type="submit" onclick="pass(); return confirm('Are you sure want to proceed?');"><i class="fa fa-check" ></i> Release Table </button>
+                                        </form>
                                         <button style="margin-right: 10px;" id="btnPrint" class="btn btn-danger " type="button" onclick="CallPrint('receipt')"> <span><i class="fa fa-print"></i> Print Receipt</span> </button>
+
 {#                                        <form action="{% url 'printbill' table.id %}" method="post" style="float:left">#}
 {#                                            <input  type="number" min="1" max="100" name="disper" id="discount" style=" width: 120px !important; float: left; color: red; font-weight: bolder" value="{% if table.disval != 0 %}{{ table.disval }}{% endif %}"  class="form-control" placeholder="Discount %">#}
 {#                                            {% csrf_token %}#}
@@ -143,7 +158,7 @@
       <div class="info">
         <p ><span style="font-weight: bold; font-size: 30px">Tropical Rest</span><br>
             <b>Kathmandu, Nepal</b><br><br>
-            <span style="font-weight: bold; font-size: 20px">Abbreviated Tax Invoice</span>
+            <span style="font-weight: bold; font-size: 20px">Tax Invoice</span>
       <hr style="color: black;">
         </p>
       </div><!--End Info-->
@@ -179,8 +194,8 @@
                                 <td><p class="itemtext">{{forloop.counter}}</p></td>
                                 <td><p class="itemtext" style="font-weight: bold;">{{o.menu.title}}</p></td>
                                 <td width="40px"><p class="itemtext">{{o.quantity}}</p></td>
-                                <td class="tableitem"><p class="itemtext">{{o.menu.price}}</p></td>
-                                <td class="tableitem"><p class="itemtext">{{o.quantity|mul:o.menu.price}}</p></td>
+                                <td class="tableitem"><p class="itemtext"><script type="text/javascript">document.write((rate).toFixed(2)); </script></p></td>
+                                <td class="tableitem"><p class="itemtext"><script type="text/javascript">document.write((nettots).toFixed(2)); </script></p></td>
                             </tr>
                                 {% endfor %}
                             {% if table.title == 'Karaoke' %}
@@ -210,6 +225,16 @@
                                 <td style="text-align: right;">Discount</td>
                                 <td>=</td>
                                 <td><span id="disamt">0.0</span>%</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">Taxable amount</td>
+                                <td>=</td>
+                                <td>Rs. <span id="taxamt"></span>/-</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">Vat(13%)</td>
+                                <td>=</td>
+                                <td>Rs. <span id="tax"></span>/-</td>
                             </tr>
                             <tr>
                                 <td style="text-align: right;"><h3>Grand Total</h3></td>
@@ -242,7 +267,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{% url 'printbill' table.id %}" novalidate>
+                <form method="post" action="{% url 'printbill1' table.id %}" novalidate>
                     <div class="form-group">
                         <h5>Enter Discount %: <span class="text-danger">*</span></h5><br>
                         <div class="input-group">
@@ -320,15 +345,32 @@
 
     document.getElementById('totalamt').innerHTML = total;
     document.getElementById('totalamt1').innerHTML = total;
-    var grandtotal = total-(disc/100)*total;
-    document.getElementById('grandttl').innerHTML = grandtotal;
-    document.getElementById('grdttl').innerHTML = grandtotal;
-    document.getElementById('nettotal').value = total;
+    var taxableamnt = total-(disc/100)*total;
+    var tax = (13/100)*taxableamnt;
+    var grandtotal = taxableamnt + tax;
+    document.getElementById('taxable').innerHTML = taxableamnt.toFixed(2);
+    document.getElementById('taxamt').innerHTML = taxableamnt.toFixed(2);
+    document.getElementById('vat').innerHTML = tax.toFixed(2);
+    document.getElementById('tax').innerHTML = tax.toFixed(2);
+    document.getElementById('grandttl').innerHTML = grandtotal.toFixed(2);
+    document.getElementById('grdttl').innerHTML = grandtotal.toFixed(2);
+    document.getElementById('nettotal').value = total.toFixed(2);
+    document.getElementById('taxablettl').value = taxableamnt.toFixed(2);
+    document.getElementById('vatamt').value = tax.toFixed(2);
     document.getElementById('grdamnt').value = grandtotal.toFixed(2);
+    pass();
     function CallPrint(strid) {
         printednumber++;
         if (disc !== 0){
+            taxableamnt = total-(disc/100)*total;
+            tax = ((13/100)*taxableamnt);
+            grandtotal = taxableamnt + tax;
             document.getElementById('disamt').innerHTML = disc;
+            document.getElementById('taxable').innerHTML = taxableamnt.toFixed(2);
+            document.getElementById('taxamt').innerHTML = taxableamnt.toFixed(2);
+            document.getElementById('vat').innerHTML = tax.toFixed(2);
+            document.getElementById('tax').innerHTML = tax.toFixed(2);
+            document.getElementById('grandttl').innerHTML = grandtotal.toFixed(2);
             document.getElementById('grdttl').innerHTML = grandtotal.toFixed(2);
         }
 
@@ -392,11 +434,11 @@
     function pass() {
         document.getElementById('prnted').value = printednumber;
         document.getElementById('nettotal').value = total;
+        document.getElementById('taxablettl').value = taxableamnt.toFixed(2);
+        document.getElementById('vatamt').value = tax.toFixed(2);
         document.getElementById('grdamnt').value = grandtotal.toFixed(2);
     }
 </script>
-
-
 
 
 {% endblock %}

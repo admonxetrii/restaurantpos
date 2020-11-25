@@ -94,7 +94,8 @@
                     </div>
                 <div class="divider"><br></div>
                     {% if request.user.is_staff %}
-                    <a href="{% url 'genbill' table.id %}"><button id="billbtn" class="btn btn-danger btn-xl" type="submit"><i class="ti ti-money"></i> Generate Bill</button></a>
+                        <a href="{% url 'genbill' table.id %}"><button id="billbtn1" class="btn btn-danger btn-xl" type="submit"><i class="ti ti-money"></i> Generate Abbrevited Bill</button></a>
+                        <a href="{% url 'gentaxbill' table.id %}"><button id="billbtn2" class="btn btn-danger btn-xl" type="submit"><i class="ti ti-money"></i> Generate Tax Bill</button></a>
                     {% endif %}
                     <a href="{% url 'closeTable' table.id %}"><button id="closeTable" class="btn btn-success btn-xl" type="submit"><i class="fa fa-check"></i> Close Table</button></a>
                     <a href="{% url 'printOrd' table.id %}"><button id="btnPrint" class="btn btn-outline-success"><i class="fa fa-print"></i> Print Orders</button></a>
@@ -110,18 +111,26 @@
         <script type="text/javascript">
                 if (total===0){
                     $('#closeTable').show();
-                    $('#billbtn').hide();
+                    $('#billbtn1').hide();
+                    $('#billbtn2').hide();
                     $('#btnPrint').hide();
                 }
                 else {
                     $('#closeTable').hide();
                     if(prtsts!=count){
                         console.log(prtsts,count)
-                        $('#billbtn').hide();
+                        $('#billbtn1').hide();
+                        $('#billbtn2').hide();
                         $('#btnPrint').show()
                     }
                     else {
-                        $('#billbtn').show();
+                        if (total<5000){
+                            $('#billbtn1').show();
+                            $('#billbtn2').hide();
+                        }else{
+                            $('#billbtn1').hide();
+                            $('#billbtn2').show();
+                        }
                         $('#btnPrint').hide();
                     }
                 }

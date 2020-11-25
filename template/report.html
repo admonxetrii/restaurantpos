@@ -21,10 +21,13 @@
                                     <th>Table Name</th>
                                     <th>Net Amount</th>
                                     <th>Discount</th>
+                                    <th>Taxable Amount</th>
+                                    <th>Vat Amount</th>
                                     <th>Total</th>
                                     <th>Payment Method</th>
                                     <th>Cashier</th>
                                     <th>Bill Date & Time</th>
+                                    <th>Printed?</th>
                                     <th>Sync</th>
                                 </tr>
                             </thead>
@@ -35,10 +38,13 @@
                                     <th>Table Name</th>
                                     <th>Net Amount</th>
                                     <th>Discount</th>
+                                    <th>Taxable Amount</th>
+                                    <th>Vat Amount</th>
                                     <th>Total</th>
                                     <th>Payment Method</th>
                                     <th>Cashier</th>
                                     <th>Bill Date & Time</th>
+                                    <th>Printed?</th>
                                     <th>Sync</th>
                                 </tr>
                             </tfoot>
@@ -51,11 +57,14 @@
                                     <td>{{b.billnum}}</td>
                                     <td>{{b.table.title}}</td>
                                     <td>{{b.amnt}}</td>
-                                    <td>{{b.discount}}%</td>
+                                    <td>{{b.discount}}</td>
+                                    <td>{{b.taxable_amnt}}</td>
+                                    <td>{{b.tax_amnt}}</td>
                                     <td>{{b.total_amnt}}</td>
                                     <td>{{b.payment_method}}</td>
                                     <td>{{b.billuser}}</td>
                                     <td>{{b.bill_date}} {{ b.bill_time }}</td>
+                                    <td>{{b.billprt}}</td>
                                     <td>
                                         {% if b.sync_ird == 1 %}
                                             <span class=" text-success"><i class="fa fa-check"></i> Synced</span>
