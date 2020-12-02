@@ -6,7 +6,7 @@
     <div class="row ">
                     <div class="col-md-6">
                         <div class="card card-body" >
-                            <h3><b>Abbreviated Tax Invoice</b> <span class="float-right">#{{billno.number}}</span></h3>
+                            <h3><b>Invoice</b> <span class="float-right">#{{billno.number}}</span></h3>
                             <hr>
                             <div class="row">
                                 <div class="col-md-12">
@@ -22,8 +22,8 @@
                                         <address>
                                             <h3>To,</h3>
                                             <h4 class="font-bold">Table - <input type="text" id="tablename" value="{{ table.title }}" hidden>{{table.title}}</h4>
-                                            <p><b>Occupied Time :</b> <i class="fa fa-clock-o"></i><span id="diffhrs"></span> hrs, <span id="diffmin"></span> min.</p>
-                                            <p class="text-muted m-l-30">Tropical Rest
+                                            <p><b>Occupied Time :</b> <i class="fa fa-clock"></i> <span id="diffhrs"></span> hrs, <span id="diffmin"></span> min.</p>
+
                                             <p class="m-t-30"><b>Invoice Date :</b> <i class="fa fa-calendar"></i> <span id="todaydate"></span></p>
                                             <p><b>Invoice Time :</b> <i class="fa fa-clock-o"></i> <span id="currtime"></span></p>
                                         </address>
@@ -118,10 +118,20 @@
                                             <input type="text" name="prnted" id="prnted" hidden />
                                             <input type="text" name="billnum" value="TRP{{billno.number}}" hidden />
                                             {% csrf_token %}
-                                        <button class="btn btn-success" id="releaseTable" style="float: right;" type="submit" onclick="pass(); return confirm('Are you sure want to proceed?');" ><i class="fa fa-check"></i> Release Table </button>
+                                            <div class="form-group">
+                                                <b class="text-danger">Payment Method : </b>
+                                                    <select style="width: 30%;" required class="form-control" name="paymet" id="paymet">
+                                                        <option value="" disabled selected><span class="text-danger">Select Payment Method</span></option>
+                                                        <option value="cash">Cash</option>
+                                                        <option value="card">Card</option>
+                                                        <option value="fonepay">Fonepay</option>S
+                                                        <option value="ewallet">E-wallet</option>
+                                                    </select>
+                                             </div>
+                                        <span onclick="CallPrint('receipt',1);"><input class="btn btn-success" id="releaseTable" style="float: right;" type="submit" value="Release Table" /></span>
                                         </form>
                                         <script type="text/javascript">var printednumber = 0</script>
-                                        <button style="margin-right: 10px;" id="btnPrint" class="btn btn-danger " type="button" onclick="CallPrint('receipt')"> <span><i class="fa fa-print"></i> Print Receipt</span> </button>
+                                        <button style="margin-right: 10px;" id="btnPrint" class="btn btn-danger " type="button" onclick="CallPrintPre('receiptpre')"> <span><i class="fa fa-print"></i> Print Receipt</span> </button>
 {#                                        <form action="{% url 'printbill' table.id %}" method="post" style="float:left">#}
 {#                                            <input  type="number" min="1" max="100" name="disper" id="discount" style=" width: 120px !important; float: left; color: red; font-weight: bolder" value="{% if table.disval != 0 %}{{ table.disval }}{% endif %}"  class="form-control" placeholder="Discount %">#}
 {#                                            {% csrf_token %}#}
@@ -141,9 +151,10 @@
     <div id="top">
       <div></div>
       <div class="info">
+          <p><span id="copytype"></span></p><br>
         <p ><span style="font-weight: bold; font-size: 30px">Tropical Rest</span><br>
             <b>Kathmandu, Nepal</b><br><br>
-            <span style="font-weight: bold; font-size: 20px">Abbreviated Tax Invoice</span>
+            <span style="font-weight: bold; font-size: 20px">Invoice</span>
       <hr style="color: black;">
         </p>
       </div><!--End Info-->
@@ -155,6 +166,7 @@
             <br>Bill No   : <span>#TRP{{billno.number}}</span>
             <br>Date      : <span id="todaydate1"></span>
             <br>Time      : <span id="currtime1"></span>
+            <br>Payment Method      : <span id="paymentMet"></span>
             <br>Cashier   : <span>@{{request.user}}</span>
         </p>
       </div>
@@ -222,8 +234,8 @@
         <br>
         <hr>
 					<div id="legalcopy">
-						<p class="legal"><strong>Thank you for being here!</strong> <br> All Rights Reserved! ©Tropical Rest <span id="curyrs1"></span>
-                                        <br>POS System Designed by Nisham Wagle.
+                        <p class="legal"><strong>Thank you for being here!</strong> <br> All Rights Reserved! ©Tropical Rest <span id="curyrs1"></span>
+                                        <br>POS System Designed by Pycemon Tech Pvt. Ltd.
 						</p>
 					</div>
 
@@ -231,6 +243,103 @@
   </div><!--End Invoice-->
 
     </div>
+<div hidden id="receiptpre">
+
+ <div id="invoice-POS-pre">
+
+    <div id="top-pre">
+      <div></div>
+      <div class="info">
+        <p ><span style="font-weight: bold; font-size: 30px">Tropical Rest</span><br>
+            <b>Kathmandu, Nepal</b><br><br>
+            <span style="font-weight: bold; font-size: 20px">Invoice (Copy of Original)</span>
+      <hr style="color: black;">
+        </p>
+      </div><!--End Info-->
+    </div><!--End InvoiceTop-->
+    <div id="mid-pre">
+      <div class="info" style="text-align: left !important;">
+        <p>
+            <br>Bill No   : <span>#TRP{{billno.number}}</span>
+            <br>Time      : <span id="currtime1pre"></span>
+            <br><br><b>This invoice is not considered as original. Please receive original one after payment.</b>
+        </p>
+      </div>
+    </div><!--End Invoice Mid-->
+      <hr style="color: black;">
+            <span style="font-weight: bold; font-size: 20px; text-align: center !important;">Table - {{table.title}}</span>
+      <hr style="color: black;">
+    <div id="bot-pre">
+
+					<div id="table-pre" style="justify-content: center; width: 80mm !important;" >
+						<table  style="text-align: left !important;">
+							<tr class="tabletitle" style="padding: 4px !important;">
+								<td><h4>S.N.</h4></td>
+								<td><h4>Ordered Item</h4></td>
+								<td><h4>Qty</h4></td>
+								<td><h4>Unit Cost</h4></td>
+								<td><h4>Sub Total</h4></td>
+							</tr>
+                            {{ forloop.counter }}
+                                {% for o in order %}
+                            <tr class="service">
+                                <td><p class="itemtext">{{forloop.counter}}</p></td>
+                                <td><p class="itemtext" style="font-weight: bold;">{{o.menu.title}}</p></td>
+                                <td width="40px"><p class="itemtext">{{o.quantity}}</p></td>
+                                <td class="tableitem"><p class="itemtext">{{o.menu.price}}</p></td>
+                                <td class="tableitem"><p class="itemtext">{{o.quantity|mul:o.menu.price}}</p></td>
+                            </tr>
+                                {% endfor %}
+                            {% if table.title == 'Karaoke' %}
+                            <tr class="service">
+                                <td><p class="itemtext">
+                                    <script>document.write(count);</script></p></td>
+                                <td><p class="itemtext" style="font-weight: bold;">Karaoke</p></td>
+                                <td width="40px"><p class="itemtext"><span id="karunitbillpre"></span></p></td>
+                                <td class="tableitem"><p class="itemtext">500</p></td>
+                                <td class="tableitem"><p class="itemtext"><span id="karamtbillpre"></span></p></td>
+                            </tr>
+                            {% endif %}
+
+
+
+						</table>
+					</div><!--End Table-->
+        <br>
+                    <div style="float: right; width: 75mm !important;">
+                        <table style="float: right; ">
+                            <tr>
+                                <td style="text-align: right;">Net Total</td>
+                                <td>=</td>
+                                <td>Rs. <span id="totalamt1pre"></span>/-</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">Discount</td>
+                                <td>=</td>
+                                <td><span id="disamtpre">0.0</span>%</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;"><h3>Grand Total</h3></td>
+                                <td><h3>=</h3></td>
+                                <td><h3>Rs. <span id="grdttlpre"></span>/-</h3></td>
+                            </tr>
+
+                        </table>
+                    </div>
+        <br>
+        <hr>
+					<div id="legalcopypre">
+                        <p class="legal"><strong>Thank you for being here!</strong> <br> All Rights Reserved! ©Tropical Rest <span id="curyrs1"></span>
+                                        <br><b>Please collect final bill after the payment is done.</b>
+						</p>
+					</div>
+
+				</div><!--End InvoiceBot-->
+  </div><!--End Invoice-->
+
+    </div>
+
+
 <div class="modal fade" id="dismodal" tabindex="-1" role="dialog" aria-labelledby="mergeTable"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -271,6 +380,7 @@
     document.getElementById('todaydate1').innerHTML = date;
     document.getElementById('currtime').innerHTML = time;
     document.getElementById('currtime1').innerHTML = time;
+    document.getElementById('currtime1pre').innerHTML = time;
     document.getElementById('curyrs').innerHTML = today.getFullYear();
     var consumedhrs = today.getHours() - {{ table.occHrs }};
     var consumedmin = today.getMinutes() - {{ table.occMin }};
@@ -308,8 +418,10 @@
 
                 document.getElementById('karmoney').innerHTML = karmoney;
                 document.getElementById('karamtbill').innerHTML = karmoney;
+                document.getElementById('karamtbillpre').innerHTML = karmoney;
                 document.getElementById('karunit').innerHTML = consumedhrs+' hrs, '+consumedmin+' min.';
                 document.getElementById('karunitbill').innerHTML = consumedhrs+':'+consumedmin;
+                document.getElementById('karunitbillpre').innerHTML = consumedhrs+':'+consumedmin;
                 total = total + karmoney;
             </script>
 
@@ -320,21 +432,34 @@
 
     document.getElementById('totalamt').innerHTML = total;
     document.getElementById('totalamt1').innerHTML = total;
+    document.getElementById('totalamt1pre').innerHTML = total;
     var grandtotal = total-(disc/100)*total;
     document.getElementById('grandttl').innerHTML = grandtotal;
     document.getElementById('grdttl').innerHTML = grandtotal;
+    document.getElementById('grdttlpre').innerHTML = grandtotal;
     document.getElementById('nettotal').value = total;
     document.getElementById('grdamnt').value = grandtotal.toFixed(2);
-    function CallPrint(strid) {
+    function CallPrint(strid,copy) {
+        var left=0;
+        var paymt = document.getElementById('paymet').value
+        if(paymt==""){
+            alert("Please Insert Payment Method");
+            return false;
+        }
+        if(copy==1){
+            document.getElementById('copytype').innerHTML = "Customer Copy"
+        }else {
+            left +=410;
+            document.getElementById('copytype').innerHTML = "Office Copy"
+        }
+        document.getElementById('paymentMet').innerHTML = paymt;
         printednumber++;
         if (disc !== 0){
             document.getElementById('disamt').innerHTML = disc;
             document.getElementById('grdttl').innerHTML = grandtotal.toFixed(2);
         }
-
-            var restorepage = document.body.innerHTML;
             var prtContent = document.getElementById(strid);
-            var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=800,toolbar=1,scrollbars=1,status=0');
+            var WinPrint = window.open('', '', 'left='+left+',top=0,width=350,height=800,toolbar=0,scrollbars=0,status=0');
             WinPrint.document.write('<html><head><style>#invoice-POS{\n' +
                 '  padding:2mm;\n' +
                 '  margin: 0 auto;\n' +
@@ -382,6 +507,68 @@
             WinPrint.document.close();
             WinPrint.focus();
             WinPrint.print();
+            WinPrint.onafterprint = function (){
+                console.log("Printing completed...");
+            }
+            //WinPrint.close();
+            pass(copy);
+    }
+    function CallPrintPre(strid) {
+        if (disc !== 0){
+            document.getElementById('disamtpre').innerHTML = disc;
+            document.getElementById('grdttlpre').innerHTML = grandtotal.toFixed(2);
+        }
+
+            var restorepage = document.body.innerHTML;
+            var prtContent = document.getElementById(strid);
+            var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=800,toolbar=1,scrollbars=1,status=0');
+            WinPrint.document.write('<html><head><style>#invoice-POS-pre{\n' +
+                '  padding:2mm;\n' +
+                '  margin: 0 auto;\n' +
+                '  width: 74mm;\n' +
+                '  background: #FFF;\n' +
+                '  \n' +
+                '  \n' +
+                '::selection {background: #f31544; color: #FFF;}\n' +
+                '::moz-selection {background: #f31544; color: #FFF;}\n' +
+                'h1{\n' +
+                '  font-size: 1.5em;\n' +
+                '  color: #222;\n' +
+                '}\n' +
+                'h2{font-size: .9em;}\n' +
+                'h3{\n' +
+                '  font-size: 1.2em;\n' +
+                '  font-weight: 300;\n' +
+                '  line-height: 2em;\n' +
+                '}\n' +
+                'p{\n' +
+                '  font-size: .7em;\n' +
+                '  color: #666;\n' +
+                '  line-height: 1.2em;\n' +
+                '}\n' +
+                ' \n' +
+                '#top-pre, #mid-pre,#bot-pre{ /* Targets all id with \'col-\' */\n' +
+                '  border-bottom: 1px solid #EEE;\n' +
+                '}\n' +
+                '\n' +
+                '#top-pre{min-height: 100px;}\n' +
+                '#mid-pre{min-height: 80px;} \n' +
+                '#bot-pre{ min-height: 50px;}\n' +
+                '\n' +
+                '#top-pre .logo{\n' +
+                '  //float: left;\n' +
+                '\theight: 60px;\n' +
+                '\twidth: 60px;\n' +
+                '\tbackground-size: 60px 60px;\n' +
+                '}\n' +
+
+                '}</style></head>');
+            WinPrint.document.write('<body style="fonts-family:verdana; fonts-size:14px;width:110px;height:200px; text-align: center;" >');
+            WinPrint.document.write(prtContent.innerHTML);
+            WinPrint.document.write('</body></html>');
+            WinPrint.document.close();
+            WinPrint.focus();
+            WinPrint.print();
             // WinPrint.close();
             prtContent.innerHTML = "";
             document.body.innerHTML = restorepage;
@@ -389,10 +576,15 @@
 
     }
 
-    function pass() {
-        document.getElementById('prnted').value = printednumber;
-        document.getElementById('nettotal').value = total;
-        document.getElementById('grdamnt').value = grandtotal.toFixed(2);
+    function pass(copy) {
+        if(copy==1){
+            copy++;
+            CallPrint('receipt',copy);
+        }else{
+            document.getElementById('prnted').value = printednumber;
+            document.getElementById('nettotal').value = total;
+            document.getElementById('grdamnt').value = grandtotal.toFixed(2);
+        }
     }
 </script>
 

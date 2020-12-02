@@ -112,7 +112,6 @@ class Bill(models.Model) :
     taxable_amnt = models.FloatField(null=True, blank=True)
     tax_amnt = models.FloatField(null=True, blank=True)
     total_amnt = models.FloatField(null=True, blank=True)
-    sync_ird = models.IntegerField(null=True, blank=True)
     billprt = models.IntegerField(null=True, blank=True)
     billactive = models.IntegerField(null=True, blank=True)
     bill_time = models.TimeField(auto_now=True, null=True)
@@ -123,6 +122,15 @@ class Bill(models.Model) :
     def __str__(self) :
         return self.billnum
 
+class BillSync(models.Model) :
+    bill = models.OneToOneField(Bill, on_delete=models.CASCADE)
+    sync_ird = models.BooleanField(unique=False,blank=True,null=True)
+
+class CBMSdata(models.Model):
+    cbmsusername = models.CharField(max_length=64, null=True, blank=False)
+    cbmspassword = models.CharField(max_length=64, null=True, blank=False)
+    sellerpan = models.CharField(max_length=9,null=True,blank=True)
+    fiscalyear = models.CharField(max_length=8, null=True,blank=True)
 
 class BillNo(models.Model) :
     number = models.IntegerField(unique=True)

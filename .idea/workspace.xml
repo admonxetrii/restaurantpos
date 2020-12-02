@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/template/gen_tax_bill.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/rms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rms.iml" afterDir="false" />
+    <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="Tax And Abbreviated Tax ko kaam">
+      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0007_auto_20201201_0947.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0008_auto_20201201_1015.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0009_auto_20201202_1113.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0010_auto_20201202_1159.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0011_auto_20201202_1205.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rms/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Restaurant/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Restaurant/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rms/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/template/gen_bill.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/gen_bill.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/template/report.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/report.html" afterDir="false" />
@@ -216,7 +219,11 @@
       <workItem from="1605187213218" duration="4263000" />
       <workItem from="1605240918908" duration="3765000" />
       <workItem from="1605636866230" duration="650000" />
-      <workItem from="1606281559649" duration="6025000" />
+      <workItem from="1606281559649" duration="6255000" />
+      <workItem from="1606293768870" duration="3116000" />
+      <workItem from="1606786926368" duration="504000" />
+      <workItem from="1606787496496" duration="9569000" />
+      <workItem from="1606885980556" duration="10177000" />
     </task>
     <task id="LOCAL-00001" summary="Semi Final">
       <created>1584892818229</created>
@@ -295,7 +302,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605188660376</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Tax And Abbreviated Tax ko kaam">
+      <created>1606287758028</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1606287758028</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -308,7 +322,8 @@
     <MESSAGE value="Added Logs" />
     <MESSAGE value="Fixed Order numbers" />
     <MESSAGE value="Aba Documentation ko kaam baaki" />
-    <option name="LAST_COMMIT_MESSAGE" value="Aba Documentation ko kaam baaki" />
+    <MESSAGE value="Tax And Abbreviated Tax ko kaam" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tax And Abbreviated Tax ko kaam" />
   </component>
   <component name="WindowStateProjectService">
     <state x="586" y="218" key="#Inspections" timestamp="1605173007556">
@@ -323,14 +338,14 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="640" y="276" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1605262391439" />
-    <state x="531" y="131" key="CommitChangelistDialog2" timestamp="1605188658629">
+    <state x="531" y="131" key="CommitChangelistDialog2" timestamp="1606287861551">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="531" y="131" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1605188658629" />
-    <state x="740" y="295" key="FileChooserDialogImpl" timestamp="1606283756433">
+    <state x="531" y="131" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1606287861551" />
+    <state x="740" y="295" key="FileChooserDialogImpl" timestamp="1606889820429">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="740" y="295" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1606283756433" />
+    <state x="740" y="295" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1606889820429" />
     <state x="461" y="182" key="SettingsEditor" timestamp="1600758350539">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -347,6 +362,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="656" y="364" key="com.intellij.ide.util.TipDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1600751562647" />
+    <state x="667" y="139" width="585" height="801" key="find.popup" timestamp="1606887337864">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="667" y="139" width="585" height="801" key="find.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1606887337864" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/rms$manage.coverage" NAME="manage Coverage Results" MODIFIED="1583500292974" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

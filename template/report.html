@@ -66,7 +66,7 @@
                                     <td>{{b.bill_date}} {{ b.bill_time }}</td>
                                     <td>{{b.billprt}}</td>
                                     <td>
-                                        {% if b.sync_ird == 1 %}
+                                        {% if b.billsync.sync_ird == 1 %}
                                             <span class=" text-success"><i class="fa fa-check"></i> Synced</span>
                                         {% else %}
                                             <a href="{% url 'cbms' b.id %}"><button class="btn btn-danger">Sync</button></a>

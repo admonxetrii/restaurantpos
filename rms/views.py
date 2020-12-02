@@ -5,8 +5,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from Restaurant.models import MenuCategory, Menu, Table, Order, Bill, BillNo, masterPass, Profilepic, MergeTable, \
-    RestoLogs
+from django.utils.datastructures import MultiValueDictKeyError
+
+from Restaurant.models import MenuCategory, Menu, Table, Order, Bill, BillSync, BillNo, masterPass, Profilepic, MergeTable, RestoLogs, CBMSdata
 from Restaurant.forms import MenuCategoryForm, UserPicForm
 from datetime import datetime
 from plyer import notification
@@ -461,26 +462,33 @@ def removedis1(request, id) :
 
 @login_required(login_url='signin')
 def releaseTable(request, id) :
+    return redirect('/gen-bill/'+str(id))
     table = Table.objects.get(id=id)
     tablename = table.title
-    data = Order.objects.filter(table_id=id)
-    data.delete()
-    fiscal = "2076.077"
-    date = str(datetime.today().strftime('%Y.%m.%d'))
-    nt = request.POST['nettotal']
-    d = request.POST['disper']
-    prnt = request.POST['prnted']
-    tt = request.POST['taxablettl']
-    vt = request.POST['vatamt']
-    gt = request.POST['grdamnt']
-    b = request.POST['billnum']
-    bill = Bill(fiscalyrs=fiscal, billnum=b, bill_date=date, table=tablename, amnt=nt, discount=d, taxable_amnt=tt,
-                tax_amnt=vt, total_amnt=gt, sync_ird=0, billprt=prnt, billactive=1, billuser=request.user,
-                is_realtime=True, payment_method="CASH")
-    bill.save()
+    try:
+        fiscal = CBMSdata.objects.get(id=1).fiscalyear
+        date = str(datetime.today().strftime('%Y.%m.%d'))
+        nt = request.POST['nettotal']
+        d = request.POST['disper']
+        prnt = request.POST['prnted']
+        paymt = request.POST['paymet']
+        tt = request.POST['taxablettl']
+        vt = request.POST['vatamt']
+        gt = request.POST['grdamnt']
+        b = request.POST['billnum']
+        bill = Bill(fiscalyrs=fiscal, billnum=b, bill_date=date, table=tablename, amnt=nt, discount=d, taxable_amnt=tt,
+                    tax_amnt=vt, total_amnt=gt, billprt=1, billactive=1, billuser=request.user,
+                    is_realtime=True, payment_method=paymt)
+        bill.save()
+    except MultiValueDictKeyError as e:
+        messages.add_message(request, messages.ERROR, "Table " + table.title + " was not released due to some errors!!")
+        return redirect('table')
+    billnumber = b
     billno = BillNo.objects.get(id=1)
     billno.number = billno.number + 1
     billno.save()
+    data = Order.objects.filter(table_id=id)
+    data.delete()
     if table.merged == 1 :
         m = MergeTable.objects.get(Q(table1_id=table.id) | Q(table2_id=table.id))
         tab1 = Table.objects.get(id=m.table1_id)
@@ -509,9 +517,13 @@ def releaseTable(request, id) :
     logs = RestoLogs()
     logs.datentime = datetime.now()
     logs.account = request.user
-    logs.activity = "Generated Bill no: #TRP" + str(billno.number)
+    logs.activity = "Generated Bill no: #TRP" + str(billnumber)
     logs.save()
     messages.add_message(request, messages.SUCCESS, "Table " + table.title + " Successfully released!!")
+    resp = sendToCBMSfromBill(request, billnumber)
+    billid = Bill.objects.get(billnum=billnumber)
+    sync = BillSync(bill_id=billid.id, sync_ird=resp)
+    sync.save()
     return redirect('table')
 
 
@@ -964,7 +976,12 @@ def sendToCBMS(request, id) :
         '%Y/%m/%d %H:%M:%S') + "\" }"
     print(payload_bill)
     headers = {'Content-Type' : "application/json"}
-    send_bill = requests.request("POST", serverurl, data=payload_bill, headers=headers)
+    try:
+        send_bill = requests.request("POST", serverurl, data=payload_bill, headers=headers)
+    except requests.exceptions.RequestException as e:
+        print(e)
+        messages.add_message(request, messages.ERROR, "Connection Refused!!! No Internet Connection")
+        return redirect('report')
     r_bill = send_bill.json()
     print(r_bill)
 
@@ -972,11 +989,12 @@ def sendToCBMS(request, id) :
         logs = RestoLogs()
         logs.datentime = datetime.now()
         logs.account = request.user
-        logs.activity = "Sent Bill data to CBMS of bill no\"" + bills.billnum + "\"."
+        logs.activity = "Sent Bill data manually to CBMS of bill no\"" + bills.billnum + "\"."
+        sync = BillSync.objects.get(bill_id=id)
+        sync.sync_ird = 1
+        sync.save()
         logs.save()
         messages.add_message(request, messages.SUCCESS, "Your data was sent successfully!!!")
-        bills.sync_ird = 1
-        bills.save()
     elif r_bill == 100 :
         messages.add_message(request, messages.ERROR, "Error:100 - API credentials do not match !!!")
     elif r_bill == 101 :
@@ -994,17 +1012,63 @@ def sendToCBMS(request, id) :
 
     return redirect('report')
 
+def sendToCBMSfromBill(request, billnum) :
+    bills = Bill.objects.get(billnum=billnum)
+    cbmsdata = CBMSdata.objects.get(id=1)
+    rltm = "true"
+    serverurl = "http://103.1.92.174:9050/api/bill"
+    payload_bill = "{\"username\":\""+cbmsdata.cbmsusername+"\",\"password\":\""+cbmsdata.cbmspassword+"\",\"seller_pan\":\""+cbmsdata.sellerpan+"\",\"buyer_pan\":\"\",\"buyer_name\":\"\",\"fiscal_year\" : \"" + str(
+        bills.fiscalyrs) + "\",\"invoice_number\":\"" + str(bills.billnum) + "\",\"invoice_date\":\"" + str(
+        bills.bill_date) + "\",\"total_sales\":" + str(bills.total_amnt) + ",\"taxable_sales_vat\":" + str(
+        bills.taxable_amnt) + ",\"vat\":" + str(
+        bills.tax_amnt) + ",\"excisable_amount\":0,\"excise\":0,\"taxable_sales_hst\":0,\"hst\":0,\"amount_for_esf\":0,\"esf\":0,\"export_sales\":0,\"tax_exempted_sales\":0,\"isrealtime\":" + rltm + ",\"datetimeclient\":\"" + datetime.today().strftime(
+        '%Y/%m/%d %H:%M:%S') + "\" }"
+    print(payload_bill)
+    headers = {'Content-Type' : "application/json"}
+    try:
+        send_bill = requests.request("POST", serverurl, data=payload_bill, headers=headers)
+    except requests.exceptions.RequestException as e:
+        print(e)
+        messages.add_message(request, messages.ERROR, "Connection Refused!!! No Internet Connection")
+        return 0
+    r_bill = send_bill.json()
+    print(r_bill)
+
+    if r_bill == 200 :
+        logs = RestoLogs()
+        logs.datentime = datetime.now()
+        logs.account = request.user
+        logs.activity = "Sent Bill data to CBMS of bill no\"" + bills.billnum + "\"."
+        logs.save()
+        messages.add_message(request, messages.SUCCESS, "Your data was sent successfully!!!")
+        return 1
+    elif r_bill == 100 :
+        messages.add_message(request, messages.ERROR, "Error:100 - API credentials do not match !!!")
+    elif r_bill == 101 :
+        messages.add_message(request, messages.ERROR, "Error:101 - Bill Already exists!!!")
+    elif r_bill == 102 :
+        messages.add_message(request, messages.ERROR,
+                             "Error:102 - Exception while saving bill details, Please check model fields and values!!!")
+    elif r_bill == 103 :
+        messages.add_message(request, messages.ERROR,
+                             "Error:103 -  Unknown exceptions, Please check API URL and model fields and values !!!")
+    elif r_bill == 104 :
+        messages.add_message(request, messages.ERROR, "Error:104 - Model invalid!!!")
+    else :
+        messages.add_message(request, messages.ERROR, "Internal Server Error!!!")
+
+    return 0
+
 
 def sendAllToCBMS(request) :
-    b = Bill.objects.filter(sync_ird=0)
+    b = BillSync.objects.filter(sync_ird=0)
     if b.count() != 0 :
         serverurl = "http://103.1.92.174:9050/api/bill"
         headers = {'Content-Type' : "application/json"}
-        for bills in b :
-            if bills.is_realtime is True :
-                rltm = "true"
-            else :
-                rltm = "false"
+        for unsyncedbills in b :
+            bills = Bill.objects.get(id=unsyncedbills.bill_id)
+            print(bills)
+            rltm = "false"
             payload_bill = "{\"username\":\"Test_CBMS\",\"password\":\"test@321\",\"seller_pan\":\"999999999\",\"buyer_pan\":\"123456789\",\"buyer_name\":\"\",\"fiscal_year\" : \"" + str(
                 bills.fiscalyrs) + "\",\"invoice_number\":\"" + str(bills.billnum) + "\",\"invoice_date\":\"" + str(
                 bills.bill_date) + "\",\"total_sales\":" + str(bills.total_amnt) + ",\"taxable_sales_vat\":" + str(
@@ -1012,10 +1076,16 @@ def sendAllToCBMS(request) :
                 bills.tax_amnt) + ",\"excisable_amount\":0,\"excise\":0,\"taxable_sales_hst\":0,\"hst\":0,\"amount_for_esf\":0,\"esf\":0,\"export_sales\":0,\"tax_exempted_sales\":0,\"isrealtime\":" + rltm + ",\"datetimeclient\":\"" + datetime.today().strftime(
                 '%Y/%m/%d %H:%M:%S') + "\" }"
             print(payload_bill)
-            send_bill = requests.request("POST", serverurl, data=payload_bill, headers=headers)
+            try:
+                send_bill = requests.request("POST", serverurl, data=payload_bill, headers=headers)
+            except requests.exceptions.RequestException as e:
+                print(e)
+                messages.add_message(request, messages.ERROR, "Connection Refused!!! No Internet Connection")
+                return redirect('report')
             r_bill = send_bill.json()
             print(r_bill)
-
+            unsyncedbills.sync_ird = 1
+            unsyncedbills.save()
         if r_bill == 200 :
             logs = RestoLogs()
             logs.datentime = datetime.now()
@@ -1023,8 +1093,7 @@ def sendAllToCBMS(request) :
             logs.activity = "Sent Multiple Bills data to CBMS."
             logs.save()
             messages.add_message(request, messages.SUCCESS, "Your data was sent successfully!!!")
-            bills.sync_ird = 1
-            bills.save()
+
         elif r_bill == 100 :
             messages.add_message(request, messages.ERROR, "Error:100 - API credentials do not match !!!")
         elif r_bill == 101 :
