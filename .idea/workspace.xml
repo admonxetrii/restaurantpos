@@ -2,20 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0012_profilepic_phonenumber.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0013_auto_20201207_1053.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/CategoryMenu/nonveg_WjdavWy.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/setting.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Restaurant/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Restaurant/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rms/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rms/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rms/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/base/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/base/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/gen_bill.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/gen_bill.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/print_order.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/print_order.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/register.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -232,7 +220,7 @@
       <workItem from="1607016366335" duration="1286000" />
       <workItem from="1607070546908" duration="706000" />
       <workItem from="1607309662668" duration="1408000" />
-      <workItem from="1607311203558" duration="7157000" />
+      <workItem from="1607311203558" duration="7191000" />
     </task>
     <task id="LOCAL-00001" summary="Semi Final">
       <created>1584892818229</created>
@@ -325,7 +313,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606896312472</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="printing">
+      <created>1607321580910</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1607321580911</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

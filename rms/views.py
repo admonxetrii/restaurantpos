@@ -117,8 +117,6 @@ def accountsetting(request) :
     return render(request, 'setting.html', context)
 
 def profilepage(request) :
-    u = User.objects.get(id=request.user.id)
-    print(u.profilepic.phonenumber)
     return render(request, 'profile.html')
 
 
