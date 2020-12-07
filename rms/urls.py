@@ -28,6 +28,7 @@ urlpatterns = [
     path('edit-all-users/',views.saveEditedUser,name='edited_users'),
     path('',views.signin,name='signin'),
     path('register/',views.signup,name='register'),
+    path('setting/',views.accountsetting,name='setting'),
     path('profile/',views.profilepage,name='profile'),
     path('editprofile/',views.edituser,name='edit_profile'),
     path('editpass/',views.editpassword,name='edit_pass'),

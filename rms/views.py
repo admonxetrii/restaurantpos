@@ -71,6 +71,7 @@ def signup(request) :
         fn = request.POST['firstname']
         ln = request.POST['lastname']
         un = request.POST['username']
+        ph = request.POST['phonenumber']
         mp = request.POST['mpass']
         m = masterPass.objects.get(id=1)
         p1 = request.POST['password']
@@ -82,6 +83,7 @@ def signup(request) :
                 u.save()
                 user = User.objects.get(username=un)
                 pic = Profilepic(user_id=user.id)
+                pic.phonenumber=ph
                 pic.save()
                 logs = RestoLogs()
                 logs.datentime = datetime.now()
@@ -99,7 +101,7 @@ def signup(request) :
 
 
 @login_required(login_url='signin')
-def profilepage(request) :
+def accountsetting(request) :
     u = User.objects.get(id=request.user.id)
     picid = u.profilepic.id
     pic = Profilepic.objects.get(id=picid)
@@ -107,12 +109,17 @@ def profilepage(request) :
     if form.is_valid() :
         form.save()
         messages.add_message(request, messages.SUCCESS, "Profile picture changed successfully!!!")
-        return redirect('profile')
+        return redirect('setting')
     context = {
         'form' : form,
         'pic' : pic
     }
-    return render(request, 'profile.html', context)
+    return render(request, 'setting.html', context)
+
+def profilepage(request) :
+    u = User.objects.get(id=request.user.id)
+    print(u.profilepic.phonenumber)
+    return render(request, 'profile.html')
 
 
 def edituser(request) :
@@ -130,7 +137,7 @@ def edituser(request) :
     logs.activity = "Edited their profile information."
     logs.save()
     messages.add_message(request, messages.SUCCESS, "Your account is successfully changed!!!")
-    return redirect('profile')
+    return redirect('setting')
 
 
 def editpassword(request) :
@@ -153,10 +160,10 @@ def editpassword(request) :
             return signout(request)
         else :
             messages.add_message(request, messages.ERROR, "Your confirm password doesn't match!!!")
-            return redirect('profile')
+            return redirect('setting')
     else :
         messages.add_message(request, messages.ERROR, "Your old password doesn't match!!!")
-        return redirect('profile')
+        return redirect('setting')
 
 
 def editMpassword(request) :
@@ -178,10 +185,10 @@ def editMpassword(request) :
             return signout(request)
         else :
             messages.add_message(request, messages.ERROR, "Your confirm master password doesn't match!!!")
-            return redirect('profile')
+            return redirect('setting')
     else :
         messages.add_message(request, messages.ERROR, "Your old master password doesn't match!!!")
-        return redirect('profile')
+        return redirect('setting')
 
 
 def signout(request) :
@@ -462,7 +469,7 @@ def removedis1(request, id) :
 
 @login_required(login_url='signin')
 def releaseTable(request, id) :
-    return redirect('/gen-bill/'+str(id))
+    # return redirect('/gen-bill/'+str(id))
     table = Table.objects.get(id=id)
     tablename = table.title
     try:

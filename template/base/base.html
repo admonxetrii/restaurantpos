@@ -125,7 +125,7 @@
                                 </div>
                                 <a class="dropdown-item" href="{% url 'profile' %}"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{% url 'profile' %}"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                <a class="dropdown-item" href="{% url 'setting' %}"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{% url 'signout' %}"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
                                 <div class="dropdown-divider"></div>
@@ -157,7 +157,12 @@
 
                     <ul id="sidebarnav">
                         <li> <a class="waves-effect waves-dark {% if request.url == '/dashboard/' %} active {% endif %} " href="{% url 'dashboard' %}" aria-expanded="false"><i class="fas fa-utensils"></i><span class="hide-menu">Menu</span></a></li>
-                        <li> <a class="waves-effect waves-dark {% if request.url == '/profile/' %} active {% endif %} " href="{% url 'profile' %}" aria-expanded="false"><i class="fa fa-user"></i><span class="hide-menu">Profile</span></a></li>
+                        <li> <a class="has-arrow waves-effect waves-dark" aria-expanded="false"><i class="fa fa-user"></i><span class="hide-menu">Profile</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{% url 'profile' %}">Profile Page<i class="far fa-user text-success"></i></a></li>
+                                <li><a href="{% url 'setting' %}">Account Settings<i class="ti-settings text-info"></i></a></li>
+                            </ul>
+                        </li>
                         <li> <a class="waves-effect waves-dark {% if request.url == '/table/' %} active {% endif %} " href="{% url 'table' %}" aria-expanded="false"><i class="fa fa-table"></i><span class="hide-menu"></span>Tables</a></li>
 
                         {% if request.user.is_superuser %}

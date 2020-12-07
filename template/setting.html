@@ -1,0 +1,96 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block 'title' %} Account Setting {% endblock %}
+
+{% block 'body' %}
+ <div class="container-fluid">
+            {% include 'component/message.html' %}
+                <h3 class="text-dark mb-4">Profile - {{user}}</h3>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="card shadow mb-3">
+                            <div class="card-header py-3">
+                                <p class="text-danger m-0 font-weight-bold">User Settings</p>
+                            </div>
+                            <div class="card-body">
+                                <form method="post" action="{% url 'edit_profile' %}">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="username"><strong>Username</strong></label><input class="form-control" type="text" value="{{user}}" name="username" disabled></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="first_name"><strong>First Name</strong></label><input class="form-control" type="text" value="{{user.first_name}}" name="firstname"></div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group"><label for="last_name"><strong>Last Name</strong></label><input class="form-control" type="text" value="{{user.last_name}}" name="lastname"></div>
+                                        </div>
+                                    </div>
+                                    {% csrf_token %}
+                                    <div class="form-group"><button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to edit this record?');">Save Settings</button></div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card shadow mb-3">
+                            <div class="card-header py-3">
+                                <p class="text-danger m-0 font-weight-bold">Change Password</p>
+                            </div>
+                            <div class="card-body">
+                                <form action="{% url 'edit_pass' %}" method="post">
+                                    <div class="form-group"><label for="address"><strong>Current password</strong></label><input class="form-control" type="password" placeholder="Current Password" name="oldpass"></div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="city"><strong>New Password</strong></label><input class="form-control" type="password" placeholder="New password" name="pass1"></div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group"><label for="country"><strong>Confirm Password</strong></label><input class="form-control" type="password" placeholder="Repeat password" name="pass2"></div>
+                                        </div>
+                                    </div>
+                                    {% csrf_token %}
+                                    <div class="form-group"><button class="btn btn-danger btn-sm" type="submit">Save&nbsp;Settings</button></div>
+                                </form>
+                            </div>
+                        </div>
+                        {% if request.user.is_superuser %}
+                        <div class="card shadow">
+                            <div class="card-header py-3">
+                                <p class="text-warning m-0 font-weight-bold">Change Master Password</p>
+                            </div>
+                            <div class="card-body">
+                                <form action="{% url 'edit_m_pass' %}" method="post">
+                                    <div class="form-group"><label for="address"><strong>Current password</strong></label><input class="form-control" type="password" placeholder="Current Master Password" name="oldMpass"></div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="city"><strong>New Password</strong></label><input class="form-control" type="password" placeholder="New Master password" name="mpass1"></div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group"><label for="country"><strong>Confirm Password</strong></label><input class="form-control" type="password" placeholder="Repeat Master password" name="mpass2"></div>
+                                        </div>
+                                    </div>
+                                    {% csrf_token %}
+                                    <div class="form-group"><button class="btn btn-warning btn-sm" type="submit">Save&nbsp;Settings</button></div>
+                                </form>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-4 col-xl-4">
+                        <div class="card mb-3">
+                            <div class="card-body text-center shadow">
+                                {% if request.user.profilepic.image %}
+                                    <img class="rounded-circle mb-3 mt-4" src="{{ request.user.profilepic.image.url }}" width="160" height="160">
+                                {% else %}
+                                    <img class="rounded-circle mb-3 mt-4" src="{% static 'assets/images/default-pro-pic.jpg' %}" width="160" height="160">
+                                {% endif %}
+                                <form method="post" enctype="multipart/form-data">
+                                    {{form.as_p}}
+                                    {% csrf_token %}
+                                    <button class="btn btn-danger btn-md" type="submit">Change Photo</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock %}

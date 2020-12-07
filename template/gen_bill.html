@@ -97,6 +97,20 @@
                                                     <td>Grand Total</td>
                                                     <td>Rs. <span id="grandttl" ></span>/-</td>
                                                 </tr>
+                                                <tr class="text-warning tabletitle font-weight-bold h4">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>Paid</td>
+                                                    <td><input type="number" class="form-control border-danger" id="givenamt" onkeyup="returnamount();"></td>
+                                                </tr>
+                                                <tr class="text-danger tabletitle font-weight-bold h4">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>To Return</td>
+                                                    <td>Rs. <span id="returnamt" >0</span>/-</td>
+                                                </tr>
                                             </tfoot>
                                         </table>
                                     </div>
@@ -166,6 +180,7 @@
             <br>Bill No   : <span>#TRP{{billno.number}}</span>
             <br>Date      : <span id="todaydate1"></span>
             <br>Time      : <span id="currtime1"></span>
+            <br>Occupied Time      : <span id="occupiedtimetable"></span>
             <br>Payment Method      : <span id="paymentMet"></span>
             <br>Cashier   : <span>@{{request.user}}</span>
         </p>
@@ -262,6 +277,7 @@
         <p>
             <br>Bill No   : <span>#TRP{{billno.number}}</span>
             <br>Time      : <span id="currtime1pre"></span>
+            <br>Occupied Time      : <span id="occupiedtimepre"></span>
             <br><br><b>This invoice is not considered as original. Please receive original one after payment.</b>
         </p>
       </div>
@@ -392,6 +408,8 @@
     }
     document.getElementById('diffhrs').innerHTML = consumedhrs;
     document.getElementById('diffmin').innerHTML = consumedmin;
+    document.getElementById('occupiedtimepre').innerHTML = consumedhrs+' hrs, '+consumedmin+' min.';
+    document.getElementById('occupiedtimetable').innerHTML = consumedhrs+' hrs, '+consumedmin+' min.';
     </script>
         {% if table.title == 'Karaoke' %}
             <script>
@@ -507,10 +525,7 @@
             WinPrint.document.close();
             WinPrint.focus();
             WinPrint.print();
-            WinPrint.onafterprint = function (){
-                console.log("Printing completed...");
-            }
-            //WinPrint.close();
+            {#WinPrint.onafterprint = function() { WinPrint.close(); pass(copy) };#}
             pass(copy);
     }
     function CallPrintPre(strid) {
@@ -584,6 +599,18 @@
             document.getElementById('prnted').value = printednumber;
             document.getElementById('nettotal').value = total;
             document.getElementById('grdamnt').value = grandtotal.toFixed(2);
+        }
+    }
+
+    function returnamount(){
+        var givencash = document.getElementById("givenamt").value;
+        var retamnt;
+        if (givencash>=grandtotal){
+            retamnt=givencash-grandtotal;
+            document.getElementById("returnamt").innerHTML=retamnt;
+        }
+        else{
+            document.getElementById("returnamt").innerHTML=0;
         }
     }
 </script>

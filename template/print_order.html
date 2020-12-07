@@ -60,7 +60,7 @@
      function CallPrint(strid) {
             var restorepage = document.body.innerHTML;
             var prtContent = document.getElementById(strid);
-            var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=400,toolbar=1,scrollbars=1,status=0');
+            var WinPrint = window.open('', '', 'left=0,top=0,width=350,height=400,toolbar=1,scrollbars=1,status=0');
             WinPrint.document.write('<html><head><title></title></head>');
             WinPrint.document.write('<body style="font-family:verdana; font-size:14px;width:250px;height:200px; position: center;"  >');
             WinPrint.document.write(prtContent.innerHTML);
