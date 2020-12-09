@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0014_order_remarks.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Restaurant/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Restaurant/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rms/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/allitem.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/allitem.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/menu.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/print_order.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/print_order.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/tabledetail.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/tabledetail.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,7 +226,9 @@
       <workItem from="1607016366335" duration="1286000" />
       <workItem from="1607070546908" duration="706000" />
       <workItem from="1607309662668" duration="1408000" />
-      <workItem from="1607311203558" duration="7191000" />
+      <workItem from="1607311203558" duration="7494000" />
+      <workItem from="1607330955192" duration="238000" />
+      <workItem from="1607486077983" duration="3758000" />
     </task>
     <task id="LOCAL-00001" summary="Semi Final">
       <created>1584892818229</created>
@@ -320,7 +328,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607321580911</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="printing">
+      <created>1607321617253</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1607321617253</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

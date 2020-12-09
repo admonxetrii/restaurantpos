@@ -6,49 +6,49 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.utils.datastructures import MultiValueDictKeyError
-
-from Restaurant.models import MenuCategory, Menu, Table, Order, Bill, BillSync, BillNo, masterPass, Profilepic, MergeTable, RestoLogs, CBMSdata
+from Restaurant.models import MenuCategory, Menu, Table, Order, Bill, BillSync, BillNo, masterPass, Profilepic, \
+    MergeTable, RestoLogs, CBMSdata
 from Restaurant.forms import MenuCategoryForm, UserPicForm
 from datetime import datetime
 from plyer import notification
 
 
-def sales(request) :
+def sales(request):
     return render(request, 'sales.html')
 
 
 @login_required(login_url='signin')
-def restrologs(request) :
-    if request.user.is_superuser :
+def restrologs(request):
+    if request.user.is_superuser:
         logs = RestoLogs.objects.all().order_by('-datentime')
         context = {
-            'logs' : logs
+            'logs': logs
         }
         return render(request, 'restrologs.html', context)
     return redirect('dashboard')
 
 
 @login_required(login_url='signin')
-def report(request) :
-    if request.user.is_superuser :
+def report(request):
+    if request.user.is_superuser:
         bill = Bill.objects.all().order_by('-bill_date', '-bill_time')
         context = {
-            'bill' : bill
+            'bill': bill
         }
         return render(request, 'report.html', context)
     return redirect('dashboard')
 
 
-def signin(request) :
-    if request.user.is_authenticated :
+def signin(request):
+    if request.user.is_authenticated:
         return redirect('dashboard')
-    if request.method == 'GET' :
+    if request.method == 'GET':
         return render(request, 'login.html')
-    else :
+    else:
         u = request.POST['username']
         p = request.POST['password']
         user = authenticate(username=u, password=p)
-        if user is not None :
+        if user is not None:
             login(request, user)
             datentime = datetime
             logs = RestoLogs()
@@ -57,17 +57,17 @@ def signin(request) :
             logs.activity = "Signed in!!"
             logs.save()
             return redirect('dashboard')
-        else :
+        else:
             messages.add_message(request, messages.ERROR, "Your username and password doesn't match!!!")
             return redirect('signin')
 
 
-def signup(request) :
-    if request.user.is_authenticated :
+def signup(request):
+    if request.user.is_authenticated:
         return redirect('dashboard')
-    if request.method == 'GET' :
+    if request.method == 'GET':
         return render(request, 'register.html')
-    else :
+    else:
         fn = request.POST['firstname']
         ln = request.POST['lastname']
         un = request.POST['username']
@@ -76,14 +76,14 @@ def signup(request) :
         m = masterPass.objects.get(id=1)
         p1 = request.POST['password']
         p2 = request.POST['password_repeat']
-        if mp == m.password :
-            if p1 == p2 :
+        if mp == m.password:
+            if p1 == p2:
                 u = User(username=un, first_name=fn, last_name=ln)
                 u.set_password(p1)
                 u.save()
                 user = User.objects.get(username=un)
                 pic = Profilepic(user_id=user.id)
-                pic.phonenumber=ph
+                pic.phonenumber = ph
                 pic.save()
                 logs = RestoLogs()
                 logs.datentime = datetime.now()
@@ -92,35 +92,36 @@ def signup(request) :
                 logs.save()
                 messages.add_message(request, messages.SUCCESS, "Your account is registered!!!")
                 return redirect('signin')
-            else :
+            else:
                 messages.add_message(request, messages.ERROR, "Your confirmation password doesn't match!!!")
                 return redirect('register')
-        else :
+        else:
             messages.add_message(request, messages.ERROR, "Your master password doesn't match!!!")
             return redirect('register')
 
 
 @login_required(login_url='signin')
-def accountsetting(request) :
+def accountsetting(request):
     u = User.objects.get(id=request.user.id)
     picid = u.profilepic.id
     pic = Profilepic.objects.get(id=picid)
     form = UserPicForm(request.POST or None, request.FILES or None, instance=pic)
-    if form.is_valid() :
+    if form.is_valid():
         form.save()
         messages.add_message(request, messages.SUCCESS, "Profile picture changed successfully!!!")
         return redirect('setting')
     context = {
-        'form' : form,
-        'pic' : pic
+        'form': form,
+        'pic': pic
     }
     return render(request, 'setting.html', context)
 
-def profilepage(request) :
+
+def profilepage(request):
     return render(request, 'profile.html')
 
 
-def edituser(request) :
+def edituser(request):
     # u = request.POST['username']
     first = request.POST['firstname']
     last = request.POST['lastname']
@@ -138,15 +139,15 @@ def edituser(request) :
     return redirect('setting')
 
 
-def editpassword(request) :
+def editpassword(request):
     p = request.POST['oldpass']
     p1 = request.POST['pass1']
     p2 = request.POST['pass2']
     u = request.user
     user = authenticate(username=u, password=p)
-    if user is not None :
+    if user is not None:
         user = User.objects.get(id=request.user.id)
-        if p1 == p2 :
+        if p1 == p2:
             user.set_password(p1)
             user.save()
             logs = RestoLogs()
@@ -156,22 +157,22 @@ def editpassword(request) :
             logs.save()
             messages.add_message(request, messages.SUCCESS, "Your password is changed, Please Login again")
             return signout(request)
-        else :
+        else:
             messages.add_message(request, messages.ERROR, "Your confirm password doesn't match!!!")
             return redirect('setting')
-    else :
+    else:
         messages.add_message(request, messages.ERROR, "Your old password doesn't match!!!")
         return redirect('setting')
 
 
-def editMpassword(request) :
+def editMpassword(request):
     u = request.user
     p = request.POST['oldMpass']
     p1 = request.POST['mpass1']
     p2 = request.POST['mpass2']
     mp = masterPass.objects.get(id=1)
-    if p == mp.password :
-        if p1 == p2 :
+    if p == mp.password:
+        if p1 == p2:
             mp.password = p1
             mp.save()
             logs = RestoLogs()
@@ -181,15 +182,15 @@ def editMpassword(request) :
             logs.save()
             messages.add_message(request, messages.SUCCESS, "Your master password is changed, Please Login again!!!")
             return signout(request)
-        else :
+        else:
             messages.add_message(request, messages.ERROR, "Your confirm master password doesn't match!!!")
             return redirect('setting')
-    else :
+    else:
         messages.add_message(request, messages.ERROR, "Your old master password doesn't match!!!")
         return redirect('setting')
 
 
-def signout(request) :
+def signout(request):
     logs = RestoLogs()
     logs.datentime = datetime.now()
     logs.account = request.user
@@ -201,10 +202,10 @@ def signout(request) :
 
 
 @login_required(login_url='signin')
-def dash_board(request) :
+def dash_board(request):
     data = MenuCategory.objects.all()
     form = MenuCategoryForm(request.POST or None, request.FILES or None)
-    if form.is_valid() :
+    if form.is_valid():
         form.save()
         logs = RestoLogs()
         logs.datentime = datetime.now()
@@ -215,18 +216,18 @@ def dash_board(request) :
                              "Menu Category \"" + request.POST['title'] + "\" created successfully!!!")
         return redirect('dashboard')
     context = {
-        'form' : form,
-        'category' : data
+        'form': form,
+        'category': data
     }
     return render(request, 'dashboard.html', context)
 
 
 @login_required(login_url='signin')
-def editMenuCategory(request, id) :
+def editMenuCategory(request, id):
     data = MenuCategory.objects.get(pk=id)
     oldtitle = data.title
     form = MenuCategoryForm(request.POST or None, request.FILES or None, instance=data)
-    if form.is_valid() :
+    if form.is_valid():
         form.save()
         logs = RestoLogs()
         logs.datentime = datetime.now()
@@ -236,79 +237,80 @@ def editMenuCategory(request, id) :
         messages.add_message(request, messages.SUCCESS, "Category Updated successfully")
         return redirect('dashboard')
     context = {
-        'form' : form,
-        'cate' : data
+        'form': form,
+        'cate': data
     }
     return render(request, 'edit_menu_category.html', context)
 
 
 @login_required(login_url='signin')
-def tables(request) :
+def tables(request):
     data = MergeTable.objects.all()
     data1 = Table.objects.all()
     context = {
-        'merge' : data,
-        'table' : data1,
+        'merge': data,
+        'table': data1,
     }
     return render(request, 'table.html', context)
 
 
 @login_required(login_url='signin')
-def tableorder(request, id) :
+def tableorder(request, id):
     table = Table.objects.filter(id=id)
     tab = Table.objects.get(id=id)
-    for t in table :
+    for t in table:
         table_merged = t.merged
-        if table_merged == 1 :
+        if table_merged == 1:
             merge = MergeTable.objects.get(Q(table1_id=t.id) | Q(table2_id=t.id))
             table1 = Table.objects.filter(id=merge.table1.id) | Table.objects.filter(id=merge.table2.id)
             data = Order.objects.filter(table_id=merge.table1.id) | Order.objects.filter(table_id=merge.table2.id)
-        else :
+        else:
             table1 = table
             data = Order.objects.filter(table_id=id)
     context = {
-        'order' : data,
-        'table1' : table1,
-        'table' : tab
+        'order': data,
+        'table1': table1,
+        'table': tab
     }
     return render(request, 'tabledetail.html', context)
 
 
 @login_required(login_url='signin')
-def menuitem(request, id) :
+def menuitem(request, id):
     data = Menu.objects.filter(category_id=id)
     cate = MenuCategory.objects.get(id=id)
     allCate = MenuCategory.objects.all()
     tab = Table.objects.filter(reserved=0)
     context = {
-        'menu' : data,
-        'cate' : cate,
-        'table' : tab,
-        'allCate' : allCate
+        'menu': data,
+        'cate': cate,
+        'table': tab,
+        'allCate': allCate
     }
     return render(request, 'menu.html', context)
 
 
 @login_required(login_url='signin')
-def orderitem(request) :
+def orderitem(request):
     m = request.POST['menu']
     t = request.POST['table']
     qty = request.POST['qty']
+    rem = request.POST['remarks']
     now = datetime.now()
     cur_time = now.strftime('%H:%M')
     time = cur_time.split(':')
     table = Table.objects.get(id=t)
-    if table.occupied == 0 :
+    if table.occupied == 0:
         table.occHrs = time[0]
         table.occMin = time[1]
         table.save()
         table.disval = 0
-    if table.merged == 1 :
+    if table.merged == 1:
         merge = MergeTable.objects.get(Q(table1_id=table.id) | Q(table2_id=table.id))
         t = merge.table1.id
     ps = 0
     ob = request.user.id
-    form = Order(table_id=t, menu_id=m, quantity=qty, printsts=ps, orderedby_id=ob)
+    form = Order(table_id=t, menu_id=m, quantity=qty, remarks=rem, printsts=ps, orderedby_id=ob)
     form.save()
     data = Table.objects.get(id=t)
     data.occupied = 1
@@ -328,33 +330,33 @@ def orderitem(request) :
 
 
 @login_required(login_url='signin')
-def printOrd(request, id) :
+def printOrd(request, id):
     table = Table.objects.get(id=id)
-    if table.merged == 1 :
+    if table.merged == 1:
         merge = MergeTable.objects.get(Q(table1_id=table.id) | Q(table2_id=table.id))
         table1 = Table.objects.get(id=merge.table1.id)
         data = Order.objects.filter(table_id=merge.table1.id, printsts=0) | Order.objects.filter(
             table_id=merge.table2.id, printsts=0)
-    else :
+    else:
         table1 = table
         data = Order.objects.filter(table_id=id, printsts=0)
     context = {
-        'order' : data,
-        't' : table1
+        'order': data,
+        't': table1
     }
     return render(request, 'print_order.html', context)
 
 
 @login_required(login_url='signin')
-def printit(request, id) :
+def printit(request, id):
     table = Table.objects.get(id=id)
-    if table.merged == 1 :
+    if table.merged == 1:
         merge = MergeTable.objects.get(Q(table1_id=table.id) | Q(table2_id=table.id))
         data = Order.objects.filter(table_id=merge.table1.id, printsts=0) | Order.objects.filter(
             table_id=merge.table2.id, printsts=0)
-    else :
+    else:
         data = Order.objects.filter(table_id=id)
-    for d in data :
+    for d in data:
         d.printsts = 1
         d.save()
     logs = RestoLogs()
@@ -366,57 +368,58 @@ def printit(request, id) :
 
 
 @login_required(login_url='signin')
-def genBill(request, id) :
+def genBill(request, id):
     billno = BillNo.objects.get(id=1)
     table = Table.objects.get(id=id)
-    if table.merged == 1 :
+    if table.merged == 1:
         merge = MergeTable.objects.get(Q(table1_id=table.id) | Q(table2_id=table.id))
         data = Order.objects.filter(Q(table_id=merge.table1.id) | Q(table_id=merge.table2.id))
-        for t in data :
+        for t in data:
             t.table_id = merge.table1.id
             t.save()
-    else :
+    else:
         data = Order.objects.filter(table_id=id, printsts=1)
     a = 0
-    for d in data :
+    for d in data:
         a += 1
-    if a == 0 :
+    if a == 0:
         return redirect('dashboard')
     context = {
-        'order' : data,
-        'table' : table,
-        'billno' : billno,
+        'order': data,
+        'table': table,
+        'billno': billno,
     }
     return render(request, 'gen_bill.html', context)
 
+
 @login_required(login_url='signin')
-def genTaxBill(request, id) :
+def genTaxBill(request, id):
     billno = BillNo.objects.get(id=1)
     table = Table.objects.get(id=id)
-    if table.merged == 1 :
+    if table.merged == 1:
         merge = MergeTable.objects.get(Q(table1_id=table.id) | Q(table2_id=table.id))
         data = Order.objects.filter(Q(table_id=merge.table1.id) | Q(table_id=merge.table2.id))
-        for t in data :
+        for t in data:
             t.table_id = merge.table1.id
             t.save()
-    else :
+    else:
         data = Order.objects.filter(table_id=id, printsts=1)
     a = 0
-    for d in data :
+    for d in data:
         a += 1
-    if a == 0 :
+    if a == 0:
         return redirect('dashboard')
     context = {
-        'order' : data,
-        'table' : table,
-        'billno' : billno,
+        'order': data,
+        'table': table,
+        'billno': billno,
     }
     return render(request, 'gen_tax_bill.html', context)
 
 
-def printbill(request, id) :
+def printbill(request, id):
     disper = request.POST['disper']
-    if disper == '' :
+    if disper == '':
         disper = 0.0
     table = Table.objects.get(id=id)
     table.disval = float(disper)
@@ -428,9 +431,10 @@ def printbill(request, id) :
     logs.save()
     return redirect('/gen-bill/' + str(id))
 
-def printbill1(request, id) :
+
+def printbill1(request, id):
     disper = request.POST['disper']
-    if disper == '' :
+    if disper == '':
         disper = 0.0
     table = Table.objects.get(id=id)
     table.disval = float(disper)
@@ -443,7 +447,7 @@ def printbill1(request, id) :
     return redirect('/gen-tax-bill/' + str(id))
 
 
-def removedis(request, id) :
+def removedis(request, id):
     table = Table.objects.get(id=id)
     table.disval = 0
     table.save()
@@ -454,7 +458,8 @@ def removedis(request, id) :
     logs.save()
     return redirect('/gen-bill/' + str(id))
 
-def removedis1(request, id) :
+
+def removedis1(request, id):
     table = Table.objects.get(id=id)
     table.disval = 0
     table.save()
@@ -464,9 +469,10 @@ def removedis1(request, id) :
     logs.activity = "Removed discount of Table no: " + table.title
     logs.save()
     return redirect('/gen-tax-bill/' + str(id))
+
 
 @login_required(login_url='signin')
-def releaseTable(request, id) :
+def releaseTable(request, id):
     # return redirect('/gen-bill/'+str(id))
     table = Table.objects.get(id=id)
     tablename = table.title
@@ -494,7 +500,7 @@ def releaseTable(request, id) :
     billno.save()
     data = Order.objects.filter(table_id=id)
     data.delete()
-    if table.merged == 1 :
+    if table.merged == 1:
         m = MergeTable.objects.get(Q(table1_id=table.id) | Q(table2_id=table.id))
         tab1 = Table.objects.get(id=m.table1_id)
         tab1.occupied = 0
@@ -513,7 +519,7 @@ def releaseTable(request, id) :
         t2.save()
 
         m.delete()
-    else :
+    else:
         table.occupied = 0
         table.occHrs = 0
         table.occMin = 0
@@ -533,7 +539,7 @@ def releaseTable(request, id) :
 
 
 @login_required(login_url='signin')
-def closeTable(request, id) :
+def closeTable(request, id):
     table = Table.objects.get(pk=id)
     table.occupied = 0
     table.occHrs = 0
@@ -549,7 +555,7 @@ def closeTable(request, id) :
 
 
 @login_required(login_url='signin')
-def deletefromtable(request, id) :
+def deletefromtable(request, id):
     do = Order.objects.get(pk=id)
     id1 = do.table.id
     do.delete()
@@ -564,7 +570,7 @@ def deletefromtable(request, id) :
 
 
 @login_required(login_url='signin')
-def editqty(request, id) :
+def editqty(request, id):
     data = Order.objects.get(pk=id)
     oldqty = data.quantity
     id1 = data.table.id
@@ -581,7 +587,7 @@ def editqty(request, id) :
 
 
 @login_required(login_url='signin')
-def addMenu(request, id) :
+def addMenu(request, id):
     title = request.POST['title']
     price = request.POST['price']
     add = Menu(title=title, price=price, category_id=id)
@@ -595,16 +601,16 @@ def addMenu(request, id) :
     return redirect('/menu/' + str(id))
 
 
-def reservedTable(request) :
-    if request.user.is_staff :
+def reservedTable(request):
+    if request.user.is_staff:
         table = Table.objects.all()
-        if request.method == 'GET' :
+        if request.method == 'GET':
             context = {
-                'table' : table
+                'table': table
             }
             return render(request, 'reserved.html', context)
         context = {
-            'table' : table
+            'table': table
         }
         id = request.POST['tblid']
         res = Table.objects.get(id=id)
@@ -617,8 +623,8 @@ def reservedTable(request) :
     return redirect('table')
 
 
-def addReservation(request) :
-    if request.user.is_staff :
+def addReservation(request):
+    if request.user.is_staff:
         table = Table.objects.all()
         id = request.POST['table']
         res = Table.objects.get(id=id)
@@ -630,13 +636,13 @@ def addReservation(request) :
         logs.activity = "Added Reservation of Table \"" + res.title + "\"."
         logs.save()
         messages.add_message(request, messages.SUCCESS, "Table - " + res.title + " is reserved")
-        return render(request, 'reserved.html', context={'table' : table})
+        return render(request, 'reserved.html', context={'table': table})
     messages.add_message(request, messages.ERROR, "Not Authorized")
     return redirect('table')
 
 
 @login_required(login_url='signin')
-def addTables(request) :
+def addTables(request):
     t = request.POST['title']
     form = Table(title=t, occupied=0, reserved=0, merged=0, occHrs=0, occMin=0)
     form.save()
@@ -650,7 +656,7 @@ def addTables(request) :
 
 
 @login_required(login_url='signin')
-def editMenu(request, id) :
+def editMenu(request, id):
     data = Menu.objects.get(pk=id)
     id1 = data.category.id
     menuTitle = request.POST['title']
@@ -667,7 +673,7 @@ def editMenu(request, id) :
     return redirect('/menu/' + str(id1))
 
 
-def changeMenuCate(request, id) :
+def changeMenuCate(request, id):
     data = Menu.objects.get(pk=id)
     oldcat = data.category.title
     cate = request.POST['newCategory']
@@ -685,7 +691,7 @@ def changeMenuCate(request, id) :
 
 
 @login_required(login_url='signin')
-def editTable(request, id) :
+def editTable(request, id):
     data = Table.objects.get(pk=id)
     old = data.title
     newtitle = request.POST['newtitle']
@@ -700,7 +706,7 @@ def editTable(request, id) :
 
 
 @login_required(login_url='signin')
-def deletefrommenu(request, id) :
+def deletefrommenu(request, id):
     dm = Menu.objects.get(pk=id)
     itemname = dm.title
     id1 = dm.category.id
@@ -715,7 +721,7 @@ def deletefrommenu(request, id) :
 
 
 @login_required(login_url='signin')
-def deletefrommenucat(request, id) :
+def deletefrommenucat(request, id):
     dm = MenuCategory.objects.get(pk=id)
     menucate = dm.title
     dm.delete()
@@ -729,7 +735,7 @@ def deletefrommenucat(request, id) :
 
 
 @login_required(login_url='signin')
-def deletetable(request, id) :
+def deletetable(request, id):
     t = Table.objects.get(pk=id)
     tablename = t.title
     t.delete()
@@ -742,35 +748,35 @@ def deletetable(request, id) :
     return redirect('table')
 
 
-def forgot(request) :
-    if request.method == 'GET' :
+def forgot(request):
+    if request.method == 'GET':
         user = User.objects.all()
         context = {
-            'user' : user
+            'user': user
         }
         return render(request, 'forgot_password.html', context)
 
 
-def reset_pass(request) :
+def reset_pass(request):
     u = request.POST['user']
     m = request.POST['mpass']
     user = User.objects.get(id=u)
     mp = masterPass.objects.get(id=1)
-    if m == mp.password :
+    if m == mp.password:
         context = {
-            'user' : user
+            'user': user
         }
         return render(request, 'reset.html', context)
-    else :
+    else:
         messages.add_message(request, messages.ERROR, "Your master password doesn't match!!!")
         return redirect('forgot')
 
 
-def reset_pass_complete(request, id) :
+def reset_pass_complete(request, id):
     user = User.objects.get(id=id)
     p1 = request.POST['pass1']
     p2 = request.POST['pass2']
-    if p1 == p2 :
+    if p1 == p2:
         user.set_password(p1)
         user.save()
         logs = RestoLogs()
@@ -780,22 +786,22 @@ def reset_pass_complete(request, id) :
         logs.save()
         messages.add_message(request, messages.SUCCESS, "Your password is changed!!!")
         return redirect('signin')
-    else :
+    else:
         messages.add_message(request, messages.ERROR, "Your confirm password doesn't match!!!")
         context = {
-            'user' : user
+            'user': user
         }
         return render(request, 'reset.html', context)
 
 
 @login_required(login_url='signin')
-def changetable(request, id) :
+def changetable(request, id):
     oldTable = Table.objects.get(id=id)
     oldTablename = oldTable.title
     t = request.POST['newTable']
     newTable = Table.objects.get(id=t)
     orders = Order.objects.filter(table_id=id)
-    for o in orders :
+    for o in orders:
         o.table_id = newTable.id
         o.save()
     newTable.occupied = 1
@@ -819,32 +825,32 @@ def changetable(request, id) :
 
 
 @login_required(login_url='signin')
-def allUsers(request) :
-    if request.user.is_superuser :
+def allUsers(request):
+    if request.user.is_superuser:
         users = User.objects.all()
         context = {
-            'users' : users
+            'users': users
         }
         return render(request, 'users.html', context)
     return redirect('dashboard')
 
 
 @login_required(login_url='signin')
-def editAllUsers(request) :
-    if request.user.is_superuser :
+def editAllUsers(request):
+    if request.user.is_superuser:
         users = User.objects.all()
         context = {
-            'users' : users
+            'users': users
         }
         return render(request, 'editusers.html', context)
     return redirect('dashboard')
 
 
 @login_required(login_url='signin')
-def saveEditedUser(request) :
-    if request.user.is_superuser :
+def saveEditedUser(request):
+    if request.user.is_superuser:
         users = User.objects.all()
-        for u in users :
+        for u in users:
             stf = request.POST['stf_' + str(u.id)]
             adm = request.POST['adm_' + str(u.id)]
             act = request.POST['act_' + str(u.id)]
@@ -881,36 +887,37 @@ def saveEditedUser(request) :
 #     messages.add_message(request,messages.ERROR,"Not Authorized!!!")
 #     return render(request,'editusers.html',context1)
 
-def addmoreitems(request, id) :
+def addmoreitems(request, id):
     request.method = 'GET'
     table = Table.objects.get(id=id)
     menu = Menu.objects.all()
     context = {
-        'menu' : menu,
-        'table' : table
+        'menu': menu,
+        'table': table
     }
     return render(request, 'allitem.html', context)
 
 
-def additemstotable(request, id) :
+def additemstotable(request, id):
     to = int(request.POST['totalordval'])
     m = request.POST.getlist('orderid')
     qty = request.POST.getlist('orderqty')
+    rem = request.POST.getlist('remarks')
     ob = request.user.id
-    for t in range(to) :
-        form = Order(table_id=id, menu_id=m[t], quantity=qty[t], printsts=0, orderedby_id=ob)
+    for t in range(to):
+        form = Order(table_id=id, menu_id=m[t], quantity=qty[t], remarks=rem[t], printsts=0, orderedby_id=ob)
         form.save()
 
     now1 = datetime.now()
     cur_time1 = now1.strftime('%H:%M')
     time1 = cur_time1.split(':')
     table = Table.objects.get(id=id)
-    if table.occupied == 0 :
+    if table.occupied == 0:
         table.occHrs = time1[0]
         table.occMin = time1[1]
         table.occupied = 1
         table.save()
-    else :
+    else:
         table.occupied = 1
         table.save()
     logs = RestoLogs()
@@ -925,7 +932,7 @@ def additemstotable(request, id) :
     return redirect('/table-order/' + str(id))
 
 
-def mergeTable(request) :
+def mergeTable(request):
     t1 = request.POST['tbl1']
     t2 = request.POST['tbl2']
     tbl1 = Table.objects.get(id=t1)
@@ -949,7 +956,7 @@ def mergeTable(request) :
     return redirect('table')
 
 
-def unmergeTable(request, id) :
+def unmergeTable(request, id):
     mt = MergeTable.objects.get(id=id)
     tbl1 = Table.objects.get(id=mt.table1.id)
     tbl1.merged = 0
@@ -966,11 +973,11 @@ def unmergeTable(request, id) :
     return redirect('table')
 
 
-def sendToCBMS(request, id) :
+def sendToCBMS(request, id):
     bills = Bill.objects.get(id=id)
-    if bills.is_realtime is True :
+    if bills.is_realtime is True:
         rltm = "true"
-    else :
+    else:
         rltm = "false"
     serverurl = "http://103.1.92.174:9050/api/bill"
     payload_bill = "{\"username\":\"Test_CBMS\",\"password\":\"test@321\",\"seller_pan\":\"999999999\",\"buyer_pan\":\"123456789\",\"buyer_name\":\"\",\"fiscal_year\" : \"" + str(
@@ -980,7 +987,7 @@ def sendToCBMS(request, id) :
         bills.tax_amnt) + ",\"excisable_amount\":0,\"excise\":0,\"taxable_sales_hst\":0,\"hst\":0,\"amount_for_esf\":0,\"esf\":0,\"export_sales\":0,\"tax_exempted_sales\":0,\"isrealtime\":" + rltm + ",\"datetimeclient\":\"" + datetime.today().strftime(
         '%Y/%m/%d %H:%M:%S') + "\" }"
     print(payload_bill)
-    headers = {'Content-Type' : "application/json"}
+    headers = {'Content-Type': "application/json"}
     try:
         send_bill = requests.request("POST", serverurl, data=payload_bill, headers=headers)
     except requests.exceptions.RequestException as e:
@@ -990,7 +997,7 @@ def sendToCBMS(request, id) :
     r_bill = send_bill.json()
     print(r_bill)
 
-    if r_bill == 200 :
+    if r_bill == 200:
         logs = RestoLogs()
         logs.datentime = datetime.now()
         logs.account = request.user
@@ -1000,36 +1007,37 @@ def sendToCBMS(request, id) :
         sync.save()
         logs.save()
         messages.add_message(request, messages.SUCCESS, "Your data was sent successfully!!!")
-    elif r_bill == 100 :
+    elif r_bill == 100:
         messages.add_message(request, messages.ERROR, "Error:100 - API credentials do not match !!!")
-    elif r_bill == 101 :
+    elif r_bill == 101:
         messages.add_message(request, messages.ERROR, "Error:101 - Bill Already exists!!!")
-    elif r_bill == 102 :
+    elif r_bill == 102:
         messages.add_message(request, messages.ERROR,
                              "Error:102 - Exception while saving bill details, Please check model fields and values!!!")
-    elif r_bill == 103 :
+    elif r_bill == 103:
         messages.add_message(request, messages.ERROR,
                              "Error:103 -  Unknown exceptions, Please check API URL and model fields and values !!!")
-    elif r_bill == 104 :
+    elif r_bill == 104:
         messages.add_message(request, messages.ERROR, "Error:104 - Model invalid!!!")
-    else :
+    else:
         messages.add_message(request, messages.ERROR, "Internal Server Error!!!")
 
     return redirect('report')
 
-def sendToCBMSfromBill(request, billnum) :
+
+def sendToCBMSfromBill(request, billnum):
     bills = Bill.objects.get(billnum=billnum)
     cbmsdata = CBMSdata.objects.get(id=1)
     rltm = "true"
     serverurl = "http://103.1.92.174:9050/api/bill"
-    payload_bill = "{\"username\":\""+cbmsdata.cbmsusername+"\",\"password\":\""+cbmsdata.cbmspassword+"\",\"seller_pan\":\""+cbmsdata.sellerpan+"\",\"buyer_pan\":\"\",\"buyer_name\":\"\",\"fiscal_year\" : \"" + str(
+    payload_bill = "{\"username\":\"" + cbmsdata.cbmsusername + "\",\"password\":\"" + cbmsdata.cbmspassword + "\",\"seller_pan\":\"" + cbmsdata.sellerpan + "\",\"buyer_pan\":\"\",\"buyer_name\":\"\",\"fiscal_year\" : \"" + str(
         bills.fiscalyrs) + "\",\"invoice_number\":\"" + str(bills.billnum) + "\",\"invoice_date\":\"" + str(
         bills.bill_date) + "\",\"total_sales\":" + str(bills.total_amnt) + ",\"taxable_sales_vat\":" + str(
         bills.taxable_amnt) + ",\"vat\":" + str(
         bills.tax_amnt) + ",\"excisable_amount\":0,\"excise\":0,\"taxable_sales_hst\":0,\"hst\":0,\"amount_for_esf\":0,\"esf\":0,\"export_sales\":0,\"tax_exempted_sales\":0,\"isrealtime\":" + rltm + ",\"datetimeclient\":\"" + datetime.today().strftime(
         '%Y/%m/%d %H:%M:%S') + "\" }"
     print(payload_bill)
-    headers = {'Content-Type' : "application/json"}
+    headers = {'Content-Type': "application/json"}
     try:
         send_bill = requests.request("POST", serverurl, data=payload_bill, headers=headers)
     except requests.exceptions.RequestException as e:
@@ -1039,7 +1047,7 @@ def sendToCBMSfromBill(request, billnum) :
     r_bill = send_bill.json()
     print(r_bill)
 
-    if r_bill == 200 :
+    if r_bill == 200:
         logs = RestoLogs()
         logs.datentime = datetime.now()
         logs.account = request.user
@@ -1047,30 +1055,30 @@ def sendToCBMSfromBill(request, billnum) :
         logs.save()
         messages.add_message(request, messages.SUCCESS, "Your data was sent successfully!!!")
         return 1
-    elif r_bill == 100 :
+    elif r_bill == 100:
         messages.add_message(request, messages.ERROR, "Error:100 - API credentials do not match !!!")
-    elif r_bill == 101 :
+    elif r_bill == 101:
         messages.add_message(request, messages.ERROR, "Error:101 - Bill Already exists!!!")
-    elif r_bill == 102 :
+    elif r_bill == 102:
         messages.add_message(request, messages.ERROR,
                              "Error:102 - Exception while saving bill details, Please check model fields and values!!!")
-    elif r_bill == 103 :
+    elif r_bill == 103:
         messages.add_message(request, messages.ERROR,
                              "Error:103 -  Unknown exceptions, Please check API URL and model fields and values !!!")
-    elif r_bill == 104 :
+    elif r_bill == 104:
         messages.add_message(request, messages.ERROR, "Error:104 - Model invalid!!!")
-    else :
+    else:
         messages.add_message(request, messages.ERROR, "Internal Server Error!!!")
 
     return 0
 
 
-def sendAllToCBMS(request) :
+def sendAllToCBMS(request):
     b = BillSync.objects.filter(sync_ird=0)
-    if b.count() != 0 :
+    if b.count() != 0:
         serverurl = "http://103.1.92.174:9050/api/bill"
-        headers = {'Content-Type' : "application/json"}
-        for unsyncedbills in b :
+        headers = {'Content-Type': "application/json"}
+        for unsyncedbills in b:
             bills = Bill.objects.get(id=unsyncedbills.bill_id)
             print(bills)
             rltm = "false"
@@ -1091,7 +1099,7 @@ def sendAllToCBMS(request) :
             print(r_bill)
             unsyncedbills.sync_ird = 1
             unsyncedbills.save()
-        if r_bill == 200 :
+        if r_bill == 200:
             logs = RestoLogs()
             logs.datentime = datetime.now()
             logs.account = request.user
@@ -1099,29 +1107,29 @@ def sendAllToCBMS(request) :
             logs.save()
             messages.add_message(request, messages.SUCCESS, "Your data was sent successfully!!!")
 
-        elif r_bill == 100 :
+        elif r_bill == 100:
             messages.add_message(request, messages.ERROR, "Error:100 - API credentials do not match !!!")
-        elif r_bill == 101 :
+        elif r_bill == 101:
             messages.add_message(request, messages.ERROR, "Error:101 - Bill Already exists!!!")
-        elif r_bill == 102 :
+        elif r_bill == 102:
             messages.add_message(request, messages.ERROR,
                                  "Error:102 - Exception while saving bill details, Please check model fields and values!!!")
-        elif r_bill == 103 :
+        elif r_bill == 103:
             messages.add_message(request, messages.ERROR,
                                  "Error:103 -  Unknown exceptions, Please check API URL and model fields and values !!!")
-        elif r_bill == 104 :
+        elif r_bill == 104:
             messages.add_message(request, messages.ERROR, "Error:104 - Model invalid!!!")
-        else :
+        else:
             messages.add_message(request, messages.ERROR, "Internal Server Error!!!")
-    else :
+    else:
         messages.add_message(request, messages.ERROR, "All Bills are synced!!!")
     return redirect('report')
 
 
-def sendToCBMSmanual(request) :
-    if request.method == 'GET' :
-        return render(request, 'manualdata.html');
-    else :
+def sendToCBMSmanual(request):
+    if request.method == 'GET':
+        return render(request, 'manualdata.html')
+    else:
         un = request.POST['uname']
         pw = request.POST['password']
         sp = request.POST['seller_pan']
@@ -1142,34 +1150,34 @@ def sendToCBMSmanual(request) :
             v) + ",\"excisable_amount\":0,\"excise\":0,\"taxable_sales_hst\":0,\"hst\":0,\"amount_for_esf\":0,\"esf\":0,\"export_sales\":0,\"tax_exempted_sales\":0,\"isrealtime\":true,\"datetimeclient\":\"" + datetime.today().strftime(
             '%Y/%m/%d %H:%M:%S') + "\" }"
         # print(payload_bill)
-        headers = {'Content-Type' : "application/json"}
+        headers = {'Content-Type': "application/json"}
         send_bill = requests.request("POST", serverurl, data=payload_bill, headers=headers)
         r_bill = send_bill.json()
         # print(r_bill)
 
-        if r_bill == 200 :
+        if r_bill == 200:
             messages.add_message(request, messages.SUCCESS, "Your data was sent successfully!!!")
-        elif r_bill == 100 :
+        elif r_bill == 100:
             messages.add_message(request, messages.ERROR, "Error:100 - API credentials do not match !!!")
-        elif r_bill == 101 :
+        elif r_bill == 101:
             messages.add_message(request, messages.ERROR, "Error:101 - Bill Already exists!!!")
-        elif r_bill == 102 :
+        elif r_bill == 102:
             messages.add_message(request, messages.ERROR,
                                  "Error:102 - Exception while saving bill details, Please check model fields and values!!!")
-        elif r_bill == 103 :
+        elif r_bill == 103:
             messages.add_message(request, messages.ERROR,
                                  "Error:103 -  Unknown exceptions, Please check API URL and model fields and values !!!")
-        elif r_bill == 104 :
+        elif r_bill == 104:
             messages.add_message(request, messages.ERROR, "Error:104 - Model invalid!!!")
-        else :
+        else:
             messages.add_message(request, messages.ERROR, "Internal Server Error!!!")
 
     return redirect('report')
 
 
-def eula(request) :
+def eula(request):
     return render(request, "eula.html")
 
 
-def privacyAndPolicy(request) :
+def privacyAndPolicy(request):
     return render(request, "privacy.html")

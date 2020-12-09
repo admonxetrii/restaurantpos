@@ -128,6 +128,11 @@
                         }
                         </script>
                     </div>
+                    <div class="form-group">
+                        <h5>Remarks:</h5>
+                        <textarea class="form-control" name="remarks"></textarea>
+                    </div>
+
                     {{ form.as_p }}
                     {% csrf_token %}
                 <button type="submit" class="btn btn-info btn-block waves-effect waves-light">Order</button>

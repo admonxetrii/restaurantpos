@@ -17,21 +17,20 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" border="1px;">
                         <thead>
                         <tr>
-                            <th>SN.</th>
-                            <th>Category</th>
-                            <th>Item</th>
                             <th>Qty</th>
+                            <th>Item</th>
+                            <th width="30px">Category</th>
+                            <th>Remarks</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {{ forloop.counter }}
                         <script type="text/javascript"> var total = 0; </script>
                         {% for o in order %}
                         <tr>
-                            <td>{{forloop.counter}}</td>
-                            <td>{{o.menu.category.title}}</td>
-                            <td><b>{{o.menu.title}}</b></td>
                             <td><b style="font-size: 20px;">{{o.quantity}}</b></td>
+                            <td><b>{{o.menu.title}}</b></td>
+                            <td>{{o.menu.category.title}}</td>
+                            <td><b>{{ o.remarks }}</b></td>
                         </tr>
                         {% endfor %}
                         </tbody>

@@ -93,6 +93,7 @@ class Order(models.Model) :
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
     quantity = models.IntegerField(null=False, blank=False)
+    remarks = models.CharField(max_length=500,null=True, blank=True)
     printsts = models.IntegerField(null=True, blank=True)
     orderedby = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 

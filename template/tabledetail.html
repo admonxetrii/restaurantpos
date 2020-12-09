@@ -19,6 +19,7 @@
                                 <th>SN.</th>
                                 <th>Item</th>
                                 <th>Quantity</th>
+                                <th>Remarks</th>
                                 <th>Actions</th>
                                 <th>Printed?</th>
                                 {% if request.user.is_staff %}
@@ -37,6 +38,7 @@
                                 <td>{{forloop.counter}}</td>
                                 <td>{{o.menu.title}}</td>
                                 <td>{{o.quantity}}</td>
+                                <td>{{o.remarks}}</td>
                                 <td>
                                 {% if request.user.is_superuser %}
                                     <a href="{% url 'delitem' o.id %}" onclick="return confirm('Are you sure?');"  style="color: #ff032d;"><button class="btn btn-secondary btn-sm"><i class="fa fa-trash"></i> Remove</button></a>
@@ -62,6 +64,7 @@
                                 <td>{{forloop.counter}}</td>
                                 <td>{{o.menu.title}}</td>
                                 <td>{{o.quantity}} | <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#editqty{{ o.id }}"><i class="fa fa-edit"></i></button></td>
+                                <td>{{ o.remarks }}</td>
                                 <td><a href="{% url 'delitem' o.id %}" onclick="return confirm('Are you sure?');"  style="color: #ff032d;"><button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Remove</button></a></td>
                                 <td>
                                     <span style="color: red;"><i class="fa fa-times"></i> No</span>
@@ -81,6 +84,7 @@
                             {% endfor %}
                             <tr>
                                 <td colspan="2"><a href="{% url 'addmoreitems' table.id  %}"><button class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add more items</button></a></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                             {% if request.user.is_staff %}
