@@ -1,4 +1,5 @@
 import requests
+from django.core.exceptions import MultipleObjectsReturned
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -10,7 +11,6 @@ from Restaurant.models import MenuCategory, Menu, Table, Order, Bill, BillSync, 
     MergeTable, RestoLogs, CBMSdata
 from Restaurant.forms import MenuCategoryForm, UserPicForm
 from datetime import datetime
-from plyer import notification
 
 
 def sales(request):
@@ -321,11 +321,6 @@ def orderitem(request):
     logs.activity = "Ordered " + qty + " \"" + Menu.objects.get(id=m).title + "\" in table \"" + t + "\"."
     logs.save()
     messages.add_message(request, messages.SUCCESS, "Your order has been placed.")
-    menudetail = Menu.objects.get(pk=m)
-    title = "New order in table " + data.title + "!"
-    msgs = str(request.user) + " added " + str(menudetail.title) + "!"
-    print(title + msgs)
-    notification.notify(title=title, message=msgs, timeout=20)
     return redirect('/table-order/' + t)
 
 
@@ -531,7 +526,7 @@ def releaseTable(request, id):
     logs.activity = "Generated Bill no: #TRP" + str(billnumber)
     logs.save()
     messages.add_message(request, messages.SUCCESS, "Table " + table.title + " Successfully released!!")
-    resp = sendToCBMSfromBill(request, billnumber)
+    resp = sendToCBMSfromBill(request,billnumber)
     billid = Bill.objects.get(billnum=billnumber)
     sync = BillSync(bill_id=billid.id, sync_ird=resp)
     sync.save()
@@ -782,7 +777,7 @@ def reset_pass_complete(request, id):
         logs = RestoLogs()
         logs.datentime = datetime.now()
         logs.account = "System"
-        logs.activity = "Changed password of \"" + user + "\"."
+        logs.activity = "Changed password of \"" + str(user) + "\"."
         logs.save()
         messages.add_message(request, messages.SUCCESS, "Your password is changed!!!")
         return redirect('signin')
@@ -818,9 +813,6 @@ def changetable(request, id):
     logs.account = request.user
     logs.activity = "Changed Table from \"" + oldTablename + "\" to \"" + newTablename + "\"."
     logs.save()
-    title = oldTable.title + " changed to " + newTable.title
-    msgs = str(request.user) + " transfered them"
-    notification.notify(title=title, message=msgs, timeout=20)
     return redirect('table')
 
 
@@ -926,9 +918,6 @@ def additemstotable(request, id):
     logs.activity = "Added Multiple orders at Table \"" + table.title
     logs.save()
     messages.add_message(request, messages.SUCCESS, "Your order has been placed.")
-    title = "Multiple Orders in " + table.title
-    msgs = str(request.user) + " added multiple order!!"
-    notification.notify(title=title, message=msgs, timeout=20)
     return redirect('/table-order/' + str(id))
 
 
@@ -986,7 +975,7 @@ def sendToCBMS(request, id):
         bills.taxable_amnt) + ",\"vat\":" + str(
         bills.tax_amnt) + ",\"excisable_amount\":0,\"excise\":0,\"taxable_sales_hst\":0,\"hst\":0,\"amount_for_esf\":0,\"esf\":0,\"export_sales\":0,\"tax_exempted_sales\":0,\"isrealtime\":" + rltm + ",\"datetimeclient\":\"" + datetime.today().strftime(
         '%Y/%m/%d %H:%M:%S') + "\" }"
-    print(payload_bill)
+    # print(payload_bill)
     headers = {'Content-Type': "application/json"}
     try:
         send_bill = requests.request("POST", serverurl, data=payload_bill, headers=headers)
@@ -995,7 +984,7 @@ def sendToCBMS(request, id):
         messages.add_message(request, messages.ERROR, "Connection Refused!!! No Internet Connection")
         return redirect('report')
     r_bill = send_bill.json()
-    print(r_bill)
+    # print(r_bill)
 
     if r_bill == 200:
         logs = RestoLogs()
@@ -1025,7 +1014,7 @@ def sendToCBMS(request, id):
     return redirect('report')
 
 
-def sendToCBMSfromBill(request, billnum):
+def sendToCBMSfromBill(request,billnum):
     bills = Bill.objects.get(billnum=billnum)
     cbmsdata = CBMSdata.objects.get(id=1)
     rltm = "true"
@@ -1036,16 +1025,16 @@ def sendToCBMSfromBill(request, billnum):
         bills.taxable_amnt) + ",\"vat\":" + str(
         bills.tax_amnt) + ",\"excisable_amount\":0,\"excise\":0,\"taxable_sales_hst\":0,\"hst\":0,\"amount_for_esf\":0,\"esf\":0,\"export_sales\":0,\"tax_exempted_sales\":0,\"isrealtime\":" + rltm + ",\"datetimeclient\":\"" + datetime.today().strftime(
         '%Y/%m/%d %H:%M:%S') + "\" }"
-    print(payload_bill)
+    # print(payload_bill)
     headers = {'Content-Type': "application/json"}
     try:
         send_bill = requests.request("POST", serverurl, data=payload_bill, headers=headers)
     except requests.exceptions.RequestException as e:
-        print(e)
+        # print(e)
         messages.add_message(request, messages.ERROR, "Connection Refused!!! No Internet Connection")
         return 0
     r_bill = send_bill.json()
-    print(r_bill)
+    # print(r_bill)
 
     if r_bill == 200:
         logs = RestoLogs()
@@ -1080,7 +1069,7 @@ def sendAllToCBMS(request):
         headers = {'Content-Type': "application/json"}
         for unsyncedbills in b:
             bills = Bill.objects.get(id=unsyncedbills.bill_id)
-            print(bills)
+            # print(bills)
             rltm = "false"
             payload_bill = "{\"username\":\"Test_CBMS\",\"password\":\"test@321\",\"seller_pan\":\"999999999\",\"buyer_pan\":\"123456789\",\"buyer_name\":\"\",\"fiscal_year\" : \"" + str(
                 bills.fiscalyrs) + "\",\"invoice_number\":\"" + str(bills.billnum) + "\",\"invoice_date\":\"" + str(
@@ -1088,15 +1077,15 @@ def sendAllToCBMS(request):
                 bills.taxable_amnt) + ",\"vat\":" + str(
                 bills.tax_amnt) + ",\"excisable_amount\":0,\"excise\":0,\"taxable_sales_hst\":0,\"hst\":0,\"amount_for_esf\":0,\"esf\":0,\"export_sales\":0,\"tax_exempted_sales\":0,\"isrealtime\":" + rltm + ",\"datetimeclient\":\"" + datetime.today().strftime(
                 '%Y/%m/%d %H:%M:%S') + "\" }"
-            print(payload_bill)
+            # print(payload_bill)
             try:
                 send_bill = requests.request("POST", serverurl, data=payload_bill, headers=headers)
             except requests.exceptions.RequestException as e:
-                print(e)
+                # print(e)
                 messages.add_message(request, messages.ERROR, "Connection Refused!!! No Internet Connection")
                 return redirect('report')
             r_bill = send_bill.json()
-            print(r_bill)
+            # print(r_bill)
             unsyncedbills.sync_ird = 1
             unsyncedbills.save()
         if r_bill == 200:

@@ -123,14 +123,14 @@
                                     <div class="clearfix"></div>
                                     <hr>
                                     <div class="text-right">
-                                        <form action="{% url 'releaseTable' table.id %}" method="post">
+                                        <form action="{% url 'releaseTable' table.id %}" onsubmit="releaseTable.disabled = true; return true;" method="post">
                                             <input type="text" name="nettotal" id="nettotal" hidden />
                                             <input type="text" name="taxablettl" value="0" hidden />
                                             <input type="text" name="disper" value="{{ table.disval }}" hidden />
                                             <input type="text" name="vatamt" value="0" hidden />
                                             <input type="text" name="grdamnt" id="grdamnt" hidden />
                                             <input type="text" name="prnted" id="prnted" hidden />
-                                            <input type="text" name="billnum" value="TRP{{billno.number}}" hidden />
+                                            <input type="text" name="billnum" value="{{ billno.billid }}{{billno.number}}" hidden />
                                             {% csrf_token %}
                                             <div class="form-group">
                                                 <b class="text-danger">Payment Method : </b>
@@ -142,7 +142,7 @@
                                                         <option value="ewallet">E-wallet</option>
                                                     </select>
                                              </div>
-                                        <span onclick="CallPrint('receipt',1);"><input class="btn btn-success" id="releaseTable" style="float: right;" type="submit" value="Release Table" /></span>
+                                        <span onclick="CallPrint('receipt',1); "><input class="btn btn-success" name="releaseTable" id="releaseTable" style="float: right;" type="submit" value="Release Table" /></span>
                                         </form>
                                         <script type="text/javascript">var printednumber = 0</script>
                                         <button style="margin-right: 10px;" id="btnPrint" class="btn btn-danger " type="button" onclick="CallPrintPre('receiptpre')"> <span><i class="fa fa-print"></i> Print Receipt</span> </button>

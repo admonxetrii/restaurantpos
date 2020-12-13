@@ -106,7 +106,7 @@ class Order(models.Model) :
 
 class Bill(models.Model) :
     fiscalyrs = models.CharField(max_length=50, null=True, blank=True)
-    billnum = models.CharField(max_length=50, null=True, blank=True)
+    billnum = models.CharField(max_length=50, null=True, blank=True, unique=True)
     bill_date = models.CharField(max_length=50, null=True)
     table = models.CharField(max_length=50, null=True, blank=True)
     amnt = models.FloatField(null=True, blank=True)
@@ -136,6 +136,7 @@ class CBMSdata(models.Model):
 
 class BillNo(models.Model) :
     number = models.IntegerField(unique=True)
+    billid = models.CharField(max_length=3, null=True)
 
 
 class masterPass(models.Model) :
