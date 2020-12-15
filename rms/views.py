@@ -310,7 +310,7 @@ def orderitem(request):
         t = merge.table1.id
     ps = 0
     ob = request.user.id
-    form = Order(table_id=t, menu_id=m, quantity=qty, remarks=rem, printsts=ps, orderedby_id=ob)
+    form = Order(table_id=t, menu_id=m, quantity=qty, remarks=rem, printsts=ps, orderedby_id=ob, servests = 0)
     form.save()
     data = Table.objects.get(id=t)
     data.occupied = 1
@@ -561,6 +561,36 @@ def deletefromtable(request, id):
         id=id1).title
     logs.save()
     messages.add_message(request, messages.ERROR, "Item removed successfully")
+    return redirect('/table-order/' + str(id1))\
+
+@login_required(login_url='signin')
+def serveitem(request, id):
+    do = Order.objects.get(pk=id)
+    id1 = do.table.id
+    do.servests = 1
+    do.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Served item \"" + Menu.objects.get(id=do.menu.id).title + "\" of Table no: " + Table.objects.get(
+        id=id1).title
+    logs.save()
+    messages.add_message(request, messages.SUCCESS, "Item served successfully")
+    return redirect('/table-order/' + str(id1))\
+
+@login_required(login_url='signin')
+def unserveitem(request, id):
+    do = Order.objects.get(pk=id)
+    id1 = do.table.id
+    do.servests = 0
+    do.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Unerved item \"" + Menu.objects.get(id=do.menu.id).title + "\" of Table no: " + Table.objects.get(
+        id=id1).title
+    logs.save()
+    messages.add_message(request, messages.ERROR, "Item unserved successfully")
     return redirect('/table-order/' + str(id1))
 
 
@@ -897,7 +927,7 @@ def additemstotable(request, id):
     rem = request.POST.getlist('remarks')
     ob = request.user.id
     for t in range(to):
-        form = Order(table_id=id, menu_id=m[t], quantity=qty[t], remarks=rem[t], printsts=0, orderedby_id=ob)
+        form = Order(table_id=id, menu_id=m[t], quantity=qty[t], remarks=rem[t], printsts=0, orderedby_id=ob, servests = 0)
         form.save()
 
     now1 = datetime.now()

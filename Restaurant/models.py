@@ -94,7 +94,8 @@ class Order(models.Model) :
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
     quantity = models.IntegerField(null=False, blank=False)
     remarks = models.CharField(max_length=500,null=True, blank=True)
-    printsts = models.IntegerField(null=True, blank=True)
+    printsts = models.BooleanField(null=True, blank=True)
+    servests = models.BooleanField(null=True, blank=True)
     orderedby = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self) :
