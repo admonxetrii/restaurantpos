@@ -468,7 +468,7 @@ def removedis1(request, id):
 
 @login_required(login_url='signin')
 def releaseTable(request, id):
-    # return redirect('/gen-bill/'+str(id))
+    # return redirect('/gen-tax-bill/'+str(id))
     table = Table.objects.get(id=id)
     tablename = table.title
     try:

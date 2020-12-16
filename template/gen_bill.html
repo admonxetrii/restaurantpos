@@ -23,7 +23,6 @@
                                             <h3>To,</h3>
                                             <h4 class="font-bold">Table - <input type="text" id="tablename" value="{{ table.title }}" hidden>{{table.title}}</h4>
                                             <p><b>Occupied Time :</b> <i class="fa fa-clock"></i> <span id="diffhrs"></span> hrs, <span id="diffmin"></span> min.</p>
-
                                             <p class="m-t-30"><b>Invoice Date :</b> <i class="fa fa-calendar"></i> <span id="todaydate"></span></p>
                                             <p><b>Invoice Time :</b> <i class="fa fa-clock-o"></i> <span id="currtime"></span></p>
                                         </address>
@@ -101,7 +100,7 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
-                                                    <td>Paid</td>
+                                                    <td>Vendor amount</td>
                                                     <td><input type="number" class="form-control border-danger" id="givenamt" onkeyup="returnamount();"></td>
                                                 </tr>
                                                 <tr class="text-danger tabletitle font-weight-bold h4">
@@ -177,7 +176,7 @@
       <div class="info" style="text-align: left !important;">
         <p>
             <br><span style="font-weight: bold">Pan No    : 304231173</span>
-            <br>Bill No   : <span>#TRP{{billno.number}}</span>
+            <br>Bill No   : <span>#{{ billno.billid }}{{billno.number}}</span>
             <br>Date      : <span id="todaydate1"></span>
             <br>Time      : <span id="currtime1"></span>
             <br>Occupied Time      : <span id="occupiedtimetable"></span>
@@ -250,7 +249,7 @@
         <hr>
 					<div id="legalcopy">
                         <p class="legal"><strong>Thank you for being here!</strong> <br> All Rights Reserved! ©Tropical Rest <span id="curyrs1"></span>
-                                        <br>POS System Designed by Pycemon Tech Pvt. Ltd.
+                                        <br>POS System Designed by Pycemon Tech.
 						</p>
 					</div>
 
@@ -474,7 +473,9 @@
         printednumber++;
         if (disc !== 0){
             document.getElementById('disamt').innerHTML = disc;
+            document.getElementById('disamtpre').innerHTML = disc;
             document.getElementById('grdttl').innerHTML = grandtotal.toFixed(2);
+            document.getElementById('grdttlpre').innerHTML = grandtotal.toFixed(2);
         }
             var prtContent = document.getElementById(strid);
             var WinPrint = window.open('', '', 'left='+left+',top=0,width=350,height=800,toolbar=0,scrollbars=0,status=0');
@@ -525,7 +526,6 @@
             WinPrint.document.close();
             WinPrint.focus();
             WinPrint.print();
-            {#WinPrint.onafterprint = function() { WinPrint.close(); pass(copy) };#}
             pass(copy);
     }
     function CallPrintPre(strid) {
@@ -534,7 +534,6 @@
             document.getElementById('grdttlpre').innerHTML = grandtotal.toFixed(2);
         }
 
-            var restorepage = document.body.innerHTML;
             var prtContent = document.getElementById(strid);
             var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=800,toolbar=1,scrollbars=1,status=0');
             WinPrint.document.write('<html><head><style>#invoice-POS-pre{\n' +
@@ -584,11 +583,6 @@
             WinPrint.document.close();
             WinPrint.focus();
             WinPrint.print();
-            // WinPrint.close();
-            prtContent.innerHTML = "";
-            document.body.innerHTML = restorepage;
-            pass();
-
     }
 
     function pass(copy) {
@@ -607,15 +601,13 @@
         var retamnt;
         if (givencash>=grandtotal){
             retamnt=givencash-grandtotal;
-            document.getElementById("returnamt").innerHTML=retamnt;
+            document.getElementById("returnamt").innerHTML=(retamnt).toFixed(2);
         }
         else{
             document.getElementById("returnamt").innerHTML=0;
         }
     }
 </script>
-
-
 
 
 {% endblock %}
