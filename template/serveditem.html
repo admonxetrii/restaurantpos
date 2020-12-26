@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+{% block 'title' %} Total item sales {% endblock %}
+{% load static %}
+{% block 'body' %}
+
+    <div class="row">
+        <div class="col-12">
+        {% include 'component/message.html' %}
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Total Item Served</h2>
+                    <h6 class="card-subtitle">Export data to Copy, CSV, Excel, PDF & Print</h6>
+                    <div class="table-responsive m-t-40">
+                        <table id="example23"
+                            class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Sn.</th>
+                                    <th>Item</th>
+                                    <th>Quantity</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Sn.</th>
+                                    <th>Item</th>
+                                    <th>Quantity</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                 {{forloop.counter}}
+                                 {% for i in item %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{i.menu.title}}</td>
+                                    <td>{{i.quantity}}</td>
+                                    <td>{{i.date}}</td>
+                                    <td><span id="amnt{{ i.id }}"></span></td>
+                                    <script type="text/javascript">
+                                        var total{{ i.id }} = {{i.quantity}} * {{i.menu.price}};
+                                        document.getElementById('amnt{{ i.id }}').innerHTML = total{{ i.id }};
+                                    </script>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

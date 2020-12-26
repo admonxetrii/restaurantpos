@@ -23,6 +23,8 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('report/',views.report,name='report'),
+    path('total-items/',views.serveditem,name='serverditem'),
+    path('unserved-items/',views.unserveditems,name='unserveditems'),
     path('users/',views.allUsers,name='users'),
     path('edit-users/',views.editAllUsers,name='edit_users'),
     path('edit-all-users/',views.saveEditedUser,name='edited_users'),
@@ -54,6 +56,7 @@ urlpatterns = [
     path('table-order/<int:id>',views.tableorder,name='tableorder'),
     path('item-delete/<int:id>',views.deletefromtable,name='delitem'),
     path('item-serve/<int:id>',views.serveitem,name='serveitem'),
+    path('item-unprint/<int:id>',views.unprint,name='printsts'),
     path('item-unserve/<int:id>',views.unserveitem,name='unserveitem'),
     path('menu-delete/<int:id>',views.deletefrommenu,name='delmenu'),
     path('category-delete/<int:id>',views.deletefrommenucat,name='delmenucat'),

@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %}
+{% block 'title' %} Ongoing orders {% endblock %}
+{% load static %}
+{% block 'body' %}
+
+    <div class="row">
+        <div class="col-8">
+        {% include 'component/message.html' %}
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Items to be served</h2>
+                    <div class="table-responsive m-t-40">
+                        <table id="myTable" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Sn.</th>
+                                    <th>Item</th>
+                                    <th>Table</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Sn.</th>
+                                    <th>Item</th>
+                                    <th>Table</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                 {{forloop.counter}}
+                                 {% for i in item %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{i.menu.title}}</td>
+                                    <td><a href="{% url 'tableorder' i.table.id %}" class="text-danger font-weight-bolder">{{i.table.title}}</a></td>
+                                    <td>{{i.quantity}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

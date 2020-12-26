@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static '/assets/images/logo.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/images/logo.png' %}">
     <title>{% block 'title' %}{% endblock %} - Tropical Rest</title>
     <!-- This page CSS -->
     {% block 'css' %} {% endblock %}
@@ -61,7 +61,7 @@
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{% url 'dashboard' %}">
+                    <a class="navbar-brand" href="{% url 'table' %}">
                         <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
@@ -164,10 +164,14 @@
                             </ul>
                         </li>
                         <li> <a class="waves-effect waves-dark {% if request.url == '/table/' %} active {% endif %} " href="{% url 'table' %}" aria-expanded="false"><i class="fa fa-table"></i><span class="hide-menu"></span>Tables</a></li>
+                        {% if request.user.is_staff %}
+                            <li> <a class="waves-effect waves-dark {% if request.url == '/report/' %} active {% endif %} " href="{% url 'report' %}" aria-expanded="false"><i class="fa fa-dollar-sign"></i><span class="hide-menu"></span>Reports</a></li>
+                            <li> <a class="waves-effect waves-dark {% if request.url == '/total-item/' %} active {% endif %} " href="{% url 'serverditem' %}" aria-expanded="false"><i class="fa fa-clipboard-check"></i><span class="hide-menu"></span>Total Item</a></li>
+                            <li> <a class="waves-effect waves-dark {% if request.url == '/unserved-items/' %} active {% endif %} " href="{% url 'unserveditems' %}" aria-expanded="false"><i class="fa fa-clipboard"></i><span class="hide-menu"></span>Unserved Items</a></li>
+                        {% endif %}
 
                         {% if request.user.is_superuser %}
                             <li> <a class="waves-effect waves-dark {% if request.url == '/users/' %} active {% endif %} " href="{% url 'users' %}" aria-expanded="false"><i class="fa fa-users"></i><span class="hide-menu"></span>Users</a></li>
-                            <li> <a class="waves-effect waves-dark {% if request.url == '/report/' %} active {% endif %} " href="{% url 'report' %}" aria-expanded="false"><i class="fa fa-dollar-sign"></i><span class="hide-menu"></span>Reports</a></li>
                             <li> <a class="waves-effect waves-dark {% if request.url == '/logs/' %} active {% endif %} " href="{% url 'logs' %}" aria-expanded="false"><i class="fa fa-clipboard-list"></i><span class="hide-menu"></span>Logs</a></li>
                         {% endif %}
                     </ul>

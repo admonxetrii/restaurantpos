@@ -4,78 +4,87 @@ from django.contrib.auth.models import User
 
 
 # Create your models here.
-def mycustomvalidator(value) :
-    if len(value) > 1 :
+def mycustomvalidator(value):
+    if len(value) > 1:
         return True
-    else :
+    else:
         raise ValidationError("Must have more than 1 characters.")
 
 
-def val2(value) :
-    if '@' in value or '#' in value or '*' in value :
+def val2(value):
+    if '@' in value or '#' in value or '*' in value:
         raise ValidationError("Title cannot have special charaters.")
-    else :
+    else:
         return True
 
 
-class Profilepic(models.Model) :
+class Profilepic(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='User/', null=False, blank=False)
-    phonenumber = models.CharField(max_length=10,null=True,blank=True)
+    phonenumber = models.CharField(max_length=10, null=True, blank=True)
 
-    def __str__(self) :
+    def __str__(self):
         return self.user.username
 
-    def delete(self, *args, **kwargs) :
+    def delete(self, *args, **kwargs):
         self.image.delete()
         super().delete(*args, **kwargs)
 
-    def save(self, *args, **kwargs) :
+    def save(self, *args, **kwargs):
         # delete old file when replacing by updating the file
-        try :
+        try:
             this = Profilepic.objects.get(id=self.id)
-            if this.image != self.image :
+            if this.image != self.image:
                 this.image.delete(save=False)
-        except :
+        except:
             pass  # when new photo then we do nothing, normal case
         super(Profilepic, self).save(*args, **kwargs)
 
 
-class MenuCategory(models.Model) :
+class MenuCategory(models.Model):
     title = models.CharField(max_length=100, unique=True, validators=[mycustomvalidator, val2])
     image = models.ImageField(upload_to='CategoryMenu/', null=True, blank=True)
 
-    def __str__(self) :
+    def __str__(self):
         return self.title
 
-    def delete(self, *args, **kwargs) :
+    def delete(self, *args, **kwargs):
         self.image.delete()
         super().delete(*args, **kwargs)
 
-    def save(self, *args, **kwargs) :
+    def save(self, *args, **kwargs):
         # delete old file when replacing by updating the file
-        try :
+        try:
             this = MenuCategory.objects.get(id=self.id)
-            if this.image != self.image :
+            if this.image != self.image:
                 this.image.delete(save=False)
-        except :
+        except:
             pass  # when new photo then we do nothing, normal case
         super(MenuCategory, self).save(*args, **kwargs)
 
 
-class Menu(models.Model) :
+class Menu(models.Model):
     title = models.CharField(max_length=200, unique=True, validators=[mycustomvalidator, val2])
     price = models.IntegerField(null=False, blank=False)
     category = models.ForeignKey(MenuCategory, on_delete=models.CASCADE)
 
-    def __str__(self) :
+    def __str__(self):
         return self.title
 
-    class Meta :
+    class Meta:
         db_table = "menu"
 
 
-class Table(models.Model) :
+class TotalServedItem(models.Model):
+    date = models.DateField(null=True, blank=True)
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    quantity = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return self.menu.title
+
+
+class Table(models.Model):
     title = models.CharField(max_length=100, unique=True, validators=[mycustomvalidator, val2])
     occupied = models.IntegerField(null=True, blank=True)
     occHrs = models.IntegerField(null=True, blank=True)
@@ -84,28 +93,28 @@ class Table(models.Model) :
     merged = models.IntegerField(null=True, blank=True)
     disval = models.FloatField(null=True, blank=True)
 
-    def __str__(self) :
+    def __str__(self):
         return self.title
 
 
-class Order(models.Model) :
+class Order(models.Model):
     order_date = models.DateField(auto_now=True)
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
     quantity = models.IntegerField(null=False, blank=False)
-    remarks = models.CharField(max_length=500,null=True, blank=True)
+    remarks = models.CharField(max_length=500, null=True, blank=True)
     printsts = models.BooleanField(null=True, blank=True)
     servests = models.BooleanField(null=True, blank=True)
     orderedby = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
-    def __str__(self) :
+    def __str__(self):
         table = self.table.title
         dash = " - "
         menu = self.menu.title
         return table + dash + menu
 
 
-class Bill(models.Model) :
+class Bill(models.Model):
     fiscalyrs = models.CharField(max_length=50, null=True, blank=True)
     billnum = models.CharField(max_length=50, null=True, blank=True, unique=True)
     bill_date = models.CharField(max_length=50, null=True)
@@ -122,25 +131,28 @@ class Bill(models.Model) :
     is_realtime = models.BooleanField(null=True, blank=True)
     payment_method = models.CharField(max_length=50, null=True, blank=True)
 
-    def __str__(self) :
+    def __str__(self):
         return self.billnum
 
-class BillSync(models.Model) :
+
+class BillSync(models.Model):
     bill = models.OneToOneField(Bill, on_delete=models.CASCADE)
-    sync_ird = models.BooleanField(unique=False,blank=True,null=True)
+    sync_ird = models.BooleanField(unique=False, blank=True, null=True)
+
 
 class CBMSdata(models.Model):
     cbmsusername = models.CharField(max_length=64, null=True, blank=False)
     cbmspassword = models.CharField(max_length=64, null=True, blank=False)
-    sellerpan = models.CharField(max_length=9,null=True,blank=True)
-    fiscalyear = models.CharField(max_length=8, null=True,blank=True)
+    sellerpan = models.CharField(max_length=9, null=True, blank=True)
+    fiscalyear = models.CharField(max_length=8, null=True, blank=True)
 
-class BillNo(models.Model) :
+
+class BillNo(models.Model):
     number = models.IntegerField(unique=True)
     billid = models.CharField(max_length=3, null=True)
 
 
-class masterPass(models.Model) :
+class masterPass(models.Model):
     password = models.CharField(max_length=50)
 
 
@@ -156,7 +168,7 @@ class masterPass(models.Model) :
 #     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
 #     inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)
 
-class MergeTable(models.Model) :
+class MergeTable(models.Model):
     table1 = models.ForeignKey(Table, on_delete=models.CASCADE, related_name='table1')
     table2 = models.ForeignKey(Table, on_delete=models.CASCADE, related_name='table2')
 
@@ -165,7 +177,7 @@ class MergeTable(models.Model) :
 #     table = models.ForeignKey(Table,on_delete=models.CASCADE)
 #     disval = models.FloatField(null=True,blank=True)
 
-class RestoLogs(models.Model) :
+class RestoLogs(models.Model):
     datentime = models.CharField(max_length=50)
     account = models.CharField(max_length=50)
     activity = models.TextField(max_length=250)

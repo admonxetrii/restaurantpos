@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.utils.datastructures import MultiValueDictKeyError
 from Restaurant.models import MenuCategory, Menu, Table, Order, Bill, BillSync, BillNo, masterPass, Profilepic, \
-    MergeTable, RestoLogs, CBMSdata
+    MergeTable, RestoLogs, CBMSdata, TotalServedItem
 from Restaurant.forms import MenuCategoryForm, UserPicForm
 from datetime import datetime
 
@@ -29,13 +29,35 @@ def restrologs(request):
 
 
 @login_required(login_url='signin')
+def unserveditems(request):
+    if request.user.is_staff:
+        item = Order.objects.filter(servests=0)
+        context = {
+            'item': item
+        }
+        return render(request, 'unserveditem.html', context)
+    return redirect('dashboard')
+
+
+@login_required(login_url='signin')
 def report(request):
-    if request.user.is_superuser:
+    if request.user.is_staff:
         bill = Bill.objects.all().order_by('-bill_date', '-bill_time')
         context = {
             'bill': bill
         }
         return render(request, 'report.html', context)
+    return redirect('dashboard')
+
+
+@login_required(login_url='signin')
+def serveditem(request):
+    if request.user.is_staff:
+        item = TotalServedItem.objects.all().order_by('-date', '-quantity')
+        context = {
+            'item': item
+        }
+        return render(request, 'serveditem.html', context)
     return redirect('dashboard')
 
 
@@ -310,7 +332,7 @@ def orderitem(request):
         t = merge.table1.id
     ps = 0
     ob = request.user.id
-    form = Order(table_id=t, menu_id=m, quantity=qty, remarks=rem, printsts=ps, orderedby_id=ob, servests = 0)
+    form = Order(table_id=t, menu_id=m, quantity=qty, remarks=rem, printsts=ps, orderedby_id=ob, servests=0)
     form.save()
     data = Table.objects.get(id=t)
     data.occupied = 1
@@ -526,7 +548,7 @@ def releaseTable(request, id):
     logs.activity = "Generated Bill no: #TRP" + str(billnumber)
     logs.save()
     messages.add_message(request, messages.SUCCESS, "Table " + table.title + " Successfully released!!")
-    resp = sendToCBMSfromBill(request,billnumber)
+    resp = sendToCBMSfromBill(request, billnumber)
     billid = Bill.objects.get(billnum=billnumber)
     sync = BillSync(bill_id=billid.id, sync_ird=resp)
     sync.save()
@@ -553,6 +575,21 @@ def closeTable(request, id):
 def deletefromtable(request, id):
     do = Order.objects.get(pk=id)
     id1 = do.table.id
+    date = datetime.today().date()
+    todaytotalitem = TotalServedItem.objects.filter(date=date)
+    if todaytotalitem:
+        flag = 0
+        for t in todaytotalitem:
+            if t.menu.id == do.menu.id:
+                flag = 1
+                t.quantity = t.quantity - do.quantity
+                t.save()
+                if t.quantity <= 0:
+                    t.delete()
+        if flag == 0:
+            messages.add_message(request, messages.ERROR, "Nothing is served today")
+    else:
+        messages.add_message(request, messages.ERROR, "Nothing is served today")
     do.delete()
     logs = RestoLogs()
     logs.datentime = datetime.now()
@@ -561,7 +598,8 @@ def deletefromtable(request, id):
         id=id1).title
     logs.save()
     messages.add_message(request, messages.ERROR, "Item removed successfully")
-    return redirect('/table-order/' + str(id1))\
+    return redirect('/table-order/' + str(id1))
+
 
 @login_required(login_url='signin')
 def serveitem(request, id):
@@ -569,14 +607,31 @@ def serveitem(request, id):
     id1 = do.table.id
     do.servests = 1
     do.save()
+    print(do.quantity)
+    date = datetime.today().date()
+    todaytotalitem = TotalServedItem.objects.filter(date=date)
+    if todaytotalitem:
+        flag = 0
+        for t in todaytotalitem:
+            if t.menu.id == do.menu.id:
+                flag = 1
+                t.quantity = t.quantity + do.quantity
+                t.save()
+        if flag == 0:
+            newitem = TotalServedItem(date=date, menu=do.menu, quantity=do.quantity)
+            newitem.save()
+    else:
+        newitem = TotalServedItem(date=date, menu=do.menu, quantity=do.quantity)
+        newitem.save()
     logs = RestoLogs()
     logs.datentime = datetime.now()
     logs.account = request.user
-    logs.activity = "Served item \"" + Menu.objects.get(id=do.menu.id).title + "\" of Table no: " + Table.objects.get(
+    logs.activity = "Served item \"" + Menu.objects.get(
+        id=do.menu.id).title + "\" of Table no: " + Table.objects.get(
         id=id1).title
     logs.save()
     messages.add_message(request, messages.SUCCESS, "Item served successfully")
-    return redirect('/table-order/' + str(id1))\
+    return redirect('/table-order/' + str(id1))
 
 @login_required(login_url='signin')
 def unserveitem(request, id):
@@ -584,13 +639,44 @@ def unserveitem(request, id):
     id1 = do.table.id
     do.servests = 0
     do.save()
+    date = datetime.today().date()
+    todaytotalitem = TotalServedItem.objects.filter(date=date)
+    if todaytotalitem:
+        flag = 0
+        for t in todaytotalitem:
+            if t.menu.id == do.menu.id:
+                flag = 1
+                t.quantity = t.quantity - do.quantity
+                t.save()
+                if t.quantity <= 0:
+                    t.delete()
+        if flag == 0:
+            messages.add_message(request, messages.ERROR, "Nothing is served today")
+    else:
+        messages.add_message(request, messages.ERROR, "Nothing is served today")
     logs = RestoLogs()
     logs.datentime = datetime.now()
     logs.account = request.user
-    logs.activity = "Unerved item \"" + Menu.objects.get(id=do.menu.id).title + "\" of Table no: " + Table.objects.get(
+    logs.activity = "Unerved item \"" + Menu.objects.get(
+        id=do.menu.id).title + "\" of Table no: " + Table.objects.get(
         id=id1).title
     logs.save()
     messages.add_message(request, messages.ERROR, "Item unserved successfully")
+    return redirect('/table-order/' + str(id1))
+
+@login_required(login_url='signin')
+def unprint(request, id):
+    do = Order.objects.get(pk=id)
+    id1 = do.table.id
+    do.printsts = 0
+    do.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Unprinted item \"" + Menu.objects.get(
+        id=do.menu.id).title + "\" of Table no: " + Table.objects.get(
+        id=id1).title
+    logs.save()
     return redirect('/table-order/' + str(id1))
 
 
@@ -600,7 +686,9 @@ def editqty(request, id):
     oldqty = data.quantity
     id1 = data.table.id
     newqty = request.POST['qty']
+    remarks = request.POST['remarks']
     data.quantity = newqty
+    data.remarks = remarks
     data.save()
     logs = RestoLogs()
     logs.datentime = datetime.now()
@@ -927,7 +1015,8 @@ def additemstotable(request, id):
     rem = request.POST.getlist('remarks')
     ob = request.user.id
     for t in range(to):
-        form = Order(table_id=id, menu_id=m[t], quantity=qty[t], remarks=rem[t], printsts=0, orderedby_id=ob, servests = 0)
+        form = Order(table_id=id, menu_id=m[t], quantity=qty[t], remarks=rem[t], printsts=0, orderedby_id=ob,
+                     servests=0)
         form.save()
 
     now1 = datetime.now()
@@ -1044,7 +1133,7 @@ def sendToCBMS(request, id):
     return redirect('report')
 
 
-def sendToCBMSfromBill(request,billnum):
+def sendToCBMSfromBill(request, billnum):
     bills = Bill.objects.get(billnum=billnum)
     cbmsdata = CBMSdata.objects.get(id=1)
     rltm = "true"

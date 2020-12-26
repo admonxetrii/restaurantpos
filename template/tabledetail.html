@@ -37,11 +37,19 @@
                                 <tr>
                                 <td>{{forloop.counter}}</td>
                                 <td>{{o.menu.title}}</td>
-                                <td>{{o.quantity}}</td>
+                                <td>
+                                    <b>{{o.quantity}}</b> {% if o.printsts == 0 %} |
+                                        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#editqty{{ o.id }}"><i class="fa fa-edit"></i></button>
+                                    {% endif %}
+                                </td>
                                 <td>{{o.remarks}}</td>
                             {% if o.printsts == 1 %}
                                 <td>
-                                    <span style="color: green;"><i class="fa fa-check"></i> Yes</span>
+                                {% if o.servests == 0 %}
+                                    <a href="{% url 'printsts' o.id %}"> <span class="text-success"><i class="fa fa-check"></i> Yes</span></a>
+                                {% else %}
+                                    <span class="text-success"><i class="fa fa-check"></i> Yes</span>
+                                {% endif %}
                                 </td>
                             {% else %}
                                 <td>
@@ -196,6 +204,10 @@
                             document.getElementById('ordervalue{{ o.id }}').value = value;
                         }
                         </script>
+                    </div>
+                    <div class="form-group">
+                        <label for="remarks">Remarks:</label>
+                        <input type="text" class="form-control" name="remarks" id="remarks" value="{{ o.remarks }}" >
                     </div>
                     {% csrf_token %}
                     <button class="btn btn-info btn-block" type="submit" onsubmit="return confirm('Are you sure want to change quantity?')"><i class="fa fa-edit"></i> Edit Quantity</button>
