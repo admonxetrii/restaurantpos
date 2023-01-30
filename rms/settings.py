@@ -24,7 +24,7 @@ SECRET_KEY = 'q-$*nhcppa)dzj+^uhi^%=zvrzp4h!8r957@_=r7j=9#3$*v!e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','192.168.0.104','192.168.254.3','192.168.254.141']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 
@@ -76,9 +76,9 @@ WSGI_APPLICATION = 'rms.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'resmansys',
+        'NAME': 'pos',
         'USER': 'root',
-        'PASSWORD': 'nouseofit',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3307',
     }
@@ -123,8 +123,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
+MEDIA_URL='/media/'
+STATICFILES_DIRS=[BASE_DIR +"/static",]
+STATIC_ROOT='/home/hanumanc/tropical.hanumanconstruction.com/static'
+MEDIA_ROOT='/home/hanumanc/tropical.hanumanconstruction.com/media'
 

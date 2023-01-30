@@ -89,6 +89,13 @@
                                                         {% endif %}
                                                     </td>
                                                 </tr>
+                                                <tr class="tabletitle h5">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>Service Charge (0%)</td>
+                                                    <td>Rs. <span id="srvcChrg" ></span>/-</td>
+                                                </tr>
                                                 <tr class="tabletitle font-weight-bold h4">
                                                     <td></td>
                                                     <td></td>
@@ -127,6 +134,7 @@
                                             <input type="text" name="taxablettl" value="0" hidden />
                                             <input type="text" name="disper" value="{{ table.disval }}" hidden />
                                             <input type="text" name="vatamt" value="0" hidden />
+                                            <input type="text" name="serviceChargeAmount" id="servcChrge" hidden />
                                             <input type="text" name="grdamnt" id="grdamnt" hidden />
                                             <input type="text" name="prnted" id="prnted" hidden />
                                             <input type="text" name="billnum" value="{{ billno.billid }}{{billno.number}}" hidden />
@@ -235,7 +243,12 @@
                             <tr>
                                 <td style="text-align: right;">Discount</td>
                                 <td>=</td>
-                                <td><span id="disamt">0.0</span>%</td>
+                                <td><span id="disamt">0.0</span>% | Rs. <span id="disamtRs">0</span>/-</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">Service Charge</td>
+                                <td>=</td>
+                                <td><span id="srvcChrg1">0</span>% | Rs. <span id="srvcChrgRs">0</span>/-</td>
                             </tr>
                             <tr>
                                 <td style="text-align: right;"><h3>Grand Total</h3></td>
@@ -331,7 +344,12 @@
                             <tr>
                                 <td style="text-align: right;">Discount</td>
                                 <td>=</td>
-                                <td><span id="disamtpre">0.0</span>%</td>
+                                <td><span id="disamtpre">0.0</span>% | Rs. <span id="disamtRspre">0</span>/-</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">Service Charge</td>
+                                <td>=</td>
+                                <td><span id="srvcChrgpre">0</span>% | Rs. <span id="srvcChrgRspre">0</span>/-</td>
                             </tr>
                             <tr>
                                 <td style="text-align: right;"><h3>Grand Total</h3></td>
@@ -450,11 +468,20 @@
     document.getElementById('totalamt').innerHTML = total;
     document.getElementById('totalamt1').innerHTML = total;
     document.getElementById('totalamt1pre').innerHTML = total;
-    var grandtotal = total-(disc/100)*total;
+    var serviceChrg = (0*total);
+    document.getElementById('srvcChrg').innerHTML = serviceChrg.toFixed(2);
+    document.getElementById('srvcChrgRs').innerHTML = serviceChrg.toFixed(2);
+    document.getElementById('srvcChrgRspre').innerHTML = serviceChrg.toFixed(2);
+    var disamtRs = (disc/100)*total;
+    document.getElementById('disamtRs').innerText = disamtRs.toFixed(2);
+    document.getElementById('disamtRspre').innerText = disamtRs.toFixed(2);
+    var grandtotalpre = total-disamtRs;
+    var grandtotal = grandtotalpre + serviceChrg;
     document.getElementById('grandttl').innerHTML = grandtotal;
     document.getElementById('grdttl').innerHTML = grandtotal;
     document.getElementById('grdttlpre').innerHTML = grandtotal;
     document.getElementById('nettotal').value = total;
+    document.getElementById('')
     document.getElementById('grdamnt').value = grandtotal.toFixed(2);
     function CallPrint(strid,copy) {
         var left=0;
@@ -591,7 +618,8 @@
             CallPrint('receipt',copy);
         }else{
             document.getElementById('prnted').value = printednumber;
-            document.getElementById('nettotal').value = total;
+            document.getElementById('nettotal').value = total.toFixed(2);
+            document.getElementById('servcChrge').value = serviceChrg.toFixed(2);
             document.getElementById('grdamnt').value = grandtotal.toFixed(2);
         }
     }

@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>edit_menu.html</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #a9b7c6;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #e8bf6a;}
+.s3 { color: #bababa;}
+.s4 { color: #a5c261;}
+.s5 { color: #cc7832;}
+.s6 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+edit_menu.html</font>
+</center></td></tr></table>
+<pre><span class="s0">{% extends 'base/base.html' %}</span>
+<span class="s0">{% block 'title' %} Edit Quantity {% endblock %}</span>
+
+<span class="s0">{% block 'body' %}</span>
+<span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;container-fluid&quot;</span><span class="s2">&gt;</span>
+    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;d-sm-flex justify-content-between align-items-center mb-4&quot;</span><span class="s2">&gt;</span>
+        <span class="s2">&lt;h3 </span><span class="s3">class</span><span class="s4">=&quot;text-dark mb-0&quot;</span><span class="s2">&gt;</span><span class="s0">Edit Menu - </span><span class="s2">&lt;span </span><span class="s3">style</span><span class="s4">=&quot;</span><span class="s3">color</span><span class="s0">: </span><span class="s4">red</span><span class="s5">;</span><span class="s4">&quot;</span><span class="s2">&gt;</span><span class="s0">{{menu}}</span><span class="s2">&lt;/span&gt; </span><span class="s0">in category - </span><span class="s2">&lt;span </span><span class="s3">style</span><span class="s4">=&quot;</span><span class="s3">color</span><span class="s0">: </span><span class="s4">green&quot;</span><span class="s2">&gt;</span><span class="s0">{{category}}</span><span class="s2">&lt;/span&gt;&lt;/h3&gt;</span>
+<span class="s6">&lt;!--        &lt;a class=&quot;btn btn-primary btn-sm d-none d-sm-inline-block&quot; role=&quot;button&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;fas fa-download fa-sm text-white-50&quot;&gt;&lt;/i&gt;&amp;nbsp;Generate Report&lt;/a&gt;--&gt;</span>
+    <span class="s2">&lt;/div&gt;</span>
+<span class="s2">&lt;/div&gt;</span>
+<span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;container-fluid&quot;</span><span class="s2">&gt;</span>
+    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;row&quot;</span><span class="s2">&gt;</span>
+        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col-md-2&quot;</span><span class="s2">&gt;</span>
+            <span class="s2">&lt;form </span><span class="s3">method</span><span class="s4">=&quot;post&quot;</span><span class="s2">&gt;</span>
+                <span class="s0">{{form.as_p}}</span>
+                <span class="s0">{% csrf_token %}</span>
+                <span class="s2">&lt;button </span><span class="s3">class</span><span class="s4">=&quot;btn btn-primary&quot; </span><span class="s3">type</span><span class="s4">=&quot;submit&quot;</span><span class="s2">&gt;&lt;i </span><span class="s3">class</span><span class="s4">=&quot;fa fa-edit&quot;</span><span class="s2">&gt;&lt;/i&gt;</span><span class="s0">Add Menu</span><span class="s2">&lt;/button&gt;</span>
+            <span class="s2">&lt;/form&gt;</span>
+        <span class="s2">&lt;/div&gt;</span>
+    <span class="s2">&lt;/div&gt;</span>
+<span class="s2">&lt;/div&gt;</span>
+<span class="s0">{% endblock %}</span></pre>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>urls.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #629755; font-style: italic;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #cc7832;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+urls.py</font>
+</center></td></tr></table>
+<pre><span class="s0">&quot;&quot;&quot;restomansys URL Configuration 
+ 
+The `urlpatterns` list routes URLs to views. For more information please see: 
+    https://docs.djangoproject.com/en/3.0/topics/http/urls/ 
+Examples: 
+Function views 
+    1. Add an import:  from my_app import views 
+    2. Add a URL to urlpatterns:  path('', views.home, name='home') 
+Class-based views 
+    1. Add an import:  from other_app.views import Home 
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home') 
+Including another URLconf 
+    1. Import the include() function: from django.urls import include, path 
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls')) 
+&quot;&quot;&quot;</span>
+<span class="s2">from </span><span class="s1">django.contrib </span><span class="s2">import </span><span class="s1">admin</span>
+<span class="s2">from </span><span class="s1">django.urls </span><span class="s2">import </span><span class="s1">path</span>
+<span class="s2">from </span><span class="s1">django.conf </span><span class="s2">import </span><span class="s1">settings</span>
+<span class="s2">from </span><span class="s1">django.conf.urls.static </span><span class="s2">import </span><span class="s1">static</span>
+
+<span class="s2">from </span><span class="s1">. </span><span class="s2">import </span><span class="s1">views</span>
+
+<span class="s1">urlpatterns = [</span>
+    <span class="s1">path(</span><span class="s3">'admin/'</span><span class="s2">, </span><span class="s1">admin.site.urls)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'report/'</span><span class="s2">,</span><span class="s1">views.report</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'report'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">''</span><span class="s2">,</span><span class="s1">views.signin</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'signin'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'register/'</span><span class="s2">,</span><span class="s1">views.signup</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'register'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'profile/'</span><span class="s2">,</span><span class="s1">views.profilepage</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'profile'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'editprofile/'</span><span class="s2">,</span><span class="s1">views.edituser</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'edit_profile'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'editpass/'</span><span class="s2">,</span><span class="s1">views.editpassword</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'edit_pass'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'signout/'</span><span class="s2">,</span><span class="s1">views.signout</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'signout'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'dashboard/'</span><span class="s2">,</span><span class="s1">views.dash_board</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'dashboard'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'table/'</span><span class="s2">,</span><span class="s1">views.tables</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'table'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'menu/&lt;int:id&gt;'</span><span class="s2">,</span><span class="s1">views.menuitem</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'menu'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'gen-bill/&lt;int:id&gt;'</span><span class="s2">,</span><span class="s1">views.genBill</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'genbill'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'release-table/&lt;int:id&gt;'</span><span class="s2">,</span><span class="s1">views.releaseTable</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'releaseTable'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'table-order/&lt;int:id&gt;'</span><span class="s2">,</span><span class="s1">views.tableorder</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'tableorder'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'item-delete/&lt;int:id&gt;'</span><span class="s2">,</span><span class="s1">views.deletefromtable</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'delitem'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'menu-delete/&lt;int:id&gt;'</span><span class="s2">,</span><span class="s1">views.deletefrommenu</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'delmenu'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'category-delete/&lt;int:id&gt;'</span><span class="s2">,</span><span class="s1">views.deletefrommenucat</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'delmenucat'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'table-delete/&lt;int:id&gt;'</span><span class="s2">,</span><span class="s1">views.deletetable</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'deleteTable'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'item-edit/&lt;int:id&gt;'</span><span class="s2">,</span><span class="s1">views.editqty</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'editqty'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'menu-edit/&lt;int:id&gt;'</span><span class="s2">,</span><span class="s1">views.editMenu</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'editMenu'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'category-edit/&lt;int:id&gt;'</span><span class="s2">,</span><span class="s1">views.editMenuCategory</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'editMenuCategory'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'table-edit/&lt;int:id&gt;'</span><span class="s2">,</span><span class="s1">views.editTable</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'editTable'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'order/'</span><span class="s2">,</span><span class="s1">views.orderitem</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'order'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'add-menu/'</span><span class="s2">,</span><span class="s1">views.addMenu</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'addMenu'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'add-category/'</span><span class="s2">,</span><span class="s1">views.addMenuCategory</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'addMenuCategory'</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">path(</span><span class="s3">'add-table/'</span><span class="s2">,</span><span class="s1">views.addTables</span><span class="s2">,</span><span class="s1">name=</span><span class="s3">'addTables'</span><span class="s1">)</span><span class="s2">,</span>
+<span class="s1">]  + static(settings.MEDIA_URL</span><span class="s2">, </span><span class="s1">document_root=settings.MEDIA_ROOT)</span>
+</pre>
+</body>
+</html>

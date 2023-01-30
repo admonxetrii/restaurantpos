@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>table.html</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #a9b7c6;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #e8bf6a;}
+.s3 { color: #bababa;}
+.s4 { color: #a5c261;}
+.s5 { color: #6897bb;}
+.s6 { color: #cc7832;}
+.s7 { color: #808080;}
+.s8 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+table.html</font>
+</center></td></tr></table>
+<pre><span class="s0">{% extends 'base/base.html' %}</span>
+<span class="s0">{% block 'title' %} Dashboard {% endblock %}</span>
+
+<span class="s0">{% block 'body' %}</span>
+
+<span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;container-fluid&quot;</span><span class="s2">&gt;</span>
+    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;d-sm-flex justify-content-between align-items-center mb-4&quot;</span><span class="s2">&gt;</span>
+        <span class="s2">&lt;h3 </span><span class="s3">class</span><span class="s4">=&quot;text-dark mb-0&quot;</span><span class="s2">&gt;</span><span class="s0">Tables</span><span class="s2">&lt;/h3&gt;</span>
+        <span class="s0">{% include 'component/message.html' %}</span>
+    <span class="s2">&lt;/div&gt;</span>
+    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;row justify-content-center&quot;</span><span class="s2">&gt;</span>
+        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col-md-6&quot;</span><span class="s2">&gt;</span>
+            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;row text-center&quot;</span><span class="s2">&gt;</span>
+                <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col-md-4&quot;</span><span class="s2">&gt;</span>
+                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;text-dark font-weight-bold h3 mb-0&quot;</span><span class="s2">&gt;</span><span class="s0">Total Tables </span><span class="s2">&lt;br&gt; &lt;span  </span><span class="s3">id</span><span class="s4">=&quot;ttbl&quot; </span><span class="s3">style</span><span class="s4">=&quot;</span><span class="s3">color</span><span class="s0">: </span><span class="s5">#2e59d9</span><span class="s4">&quot;</span><span class="s2">&gt;&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="s2">&lt;/div&gt;</span>
+                <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col-md-4&quot;</span><span class="s2">&gt;</span>
+                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;text-dark font-weight-bold h3 mb-0&quot;</span><span class="s2">&gt;</span><span class="s0">Occupied Tables </span><span class="s2">&lt;br&gt;&lt;span </span><span class="s3">id</span><span class="s4">=&quot;otbl&quot; </span><span class="s3">style</span><span class="s4">=&quot;</span><span class="s3">color</span><span class="s0">: </span><span class="s5">#e74a3b</span><span class="s4">&quot;</span><span class="s2">&gt;&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="s2">&lt;/div&gt;</span>
+                <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col-md-4&quot;</span><span class="s2">&gt;</span>
+                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;text-dark font-weight-bold h3 mb-0&quot;</span><span class="s2">&gt;</span><span class="s0">Available Tables </span><span class="s2">&lt;br&gt; &lt;span </span><span class="s3">id</span><span class="s4">=&quot;atbl&quot; </span><span class="s3">style</span><span class="s4">=&quot;</span><span class="s3">color</span><span class="s0">: </span><span class="s5">#1cc88a</span><span class="s4">&quot;</span><span class="s2">&gt;&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="s2">&lt;/div&gt;</span>
+            <span class="s2">&lt;/div&gt;</span>
+        <span class="s2">&lt;/div&gt;</span>
+    <span class="s2">&lt;/div&gt;</span>
+    <span class="s2">&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;</span>
+    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;row&quot;</span><span class="s2">&gt;</span>
+        <span class="s2">&lt;script&gt; </span><span class="s6">var </span><span class="s1">ttbl=</span><span class="s5">0</span><span class="s6">; var </span><span class="s1">atbl=</span><span class="s5">0</span><span class="s6">; var </span><span class="s1">otbl=</span><span class="s5">0</span><span class="s6">;</span><span class="s2">&lt;/script&gt;</span>
+<span class="s0">{% for t in table %}</span>
+        <span class="s2">&lt;script&gt; </span><span class="s1">ttbl = ttbl + </span><span class="s5">1 </span><span class="s6">;</span><span class="s2">&lt;/script&gt;</span>
+        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col-md-3 col-xl-2 mb-2&quot;</span><span class="s2">&gt;</span>
+            <span class="s0">{% if t.occupied == 1 %}</span>
+            <span class="s2">&lt;script&gt;</span><span class="s1">otbl=otbl+</span><span class="s5">1</span><span class="s6">;</span><span class="s2">&lt;/script&gt;</span>
+            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;card shadow border-left-danger py-2&quot;</span><span class="s2">&gt;</span>
+                <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;card-body&quot;</span><span class="s2">&gt;</span>
+                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;row align-items-center no-gutters&quot;</span><span class="s2">&gt;</span>
+                        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col mr-2&quot;</span><span class="s2">&gt;</span>
+<span class="s7">&lt;!--                            &lt;div class=&quot;text-uppercase text-primary font-weight-bold text-xs mb-1&quot;&gt;&lt;span&gt;{{i.title}}&lt;/span&gt;&lt;/div&gt;--&gt;</span>
+                            <span class="s2">&lt;a </span><span class="s3">href</span><span class="s4">=&quot;{% url 'tableorder' t.id %}&quot; </span><span class="s3">class</span><span class="s4">=&quot;col-md-6 col-xl-3 mb-4&quot;</span><span class="s2">&gt;</span>
+                                 <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;text-dark font-weight-bold h2 mb-0&quot;</span><span class="s2">&gt;&lt;span&gt;</span><span class="s0">{{t.title}} </span><span class="s2">&lt;/span&gt;&lt;/div&gt;</span>
+                            <span class="s2">&lt;/a&gt;</span>
+                            <span class="s0">{% if request.user.is_superuser %}</span>
+                            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot; h6 mb-0&quot;</span><span class="s2">&gt;</span>
+                                <span class="s2">&lt;a </span><span class="s3">href</span><span class="s4">=&quot;{% url 'editTable' t.id %}&quot;</span><span class="s2">&gt;&lt;button </span><span class="s3">class</span><span class="s4">=&quot;btn btn-info btn-sm&quot;</span><span class="s2">&gt;&lt;i </span><span class="s3">class</span><span class="s4">=&quot;fa fa-edit&quot;</span><span class="s2">&gt;&lt;/i&gt; </span><span class="s0">Edit</span><span class="s2">&lt;/button&gt;&lt;/a&gt;</span>
+                                <span class="s0">|</span>
+                                <span class="s2">&lt;a </span><span class="s3">href</span><span class="s4">=&quot;{% url 'deleteTable' t.id %}&quot;</span><span class="s2">&gt;&lt;button </span><span class="s3">class</span><span class="s4">=&quot;btn btn-danger btn-sm&quot; </span><span class="s3">onclick</span><span class="s4">=&quot;</span><span class="s6">return </span><span class="s1">confirm(</span><span class="s8">'Are you sure want to delete this category?'</span><span class="s0">)</span><span class="s6">;</span><span class="s4">&quot;</span><span class="s2">&gt;&lt;i </span><span class="s3">class</span><span class="s4">=&quot;fa fa-trash&quot;</span><span class="s2">&gt;&lt;/i&gt; </span><span class="s0">Delete</span><span class="s2">&lt;/button&gt;&lt;/a&gt;</span>
+                            <span class="s2">&lt;/div&gt;</span>
+                            <span class="s0">{% endif %}</span>
+                        <span class="s2">&lt;/div&gt;</span>
+                    <span class="s2">&lt;/div&gt;</span>
+                <span class="s2">&lt;/div&gt;</span>
+            <span class="s2">&lt;/div&gt;</span>
+            <span class="s0">{% else %}</span>
+            <span class="s2">&lt;script&gt;</span><span class="s1">atbl+=</span><span class="s5">1</span><span class="s6">;</span><span class="s2">&lt;/script&gt;</span>
+            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;card shadow border-left-success py-2&quot;</span><span class="s2">&gt;</span>
+                <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;card-body&quot;</span><span class="s2">&gt;</span>
+                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;row align-items-center no-gutters&quot;</span><span class="s2">&gt;</span>
+                        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col mr-2&quot;</span><span class="s2">&gt;</span>
+<span class="s7">&lt;!--                            &lt;div class=&quot;text-uppercase text-primary font-weight-bold text-xs mb-1&quot;&gt;&lt;span&gt;{{i.title}}&lt;/span&gt;&lt;/div&gt;--&gt;</span>
+                            <span class="s2">&lt;a </span><span class="s3">href</span><span class="s4">=&quot;{% url 'tableorder' t.id %}&quot; </span><span class="s3">class</span><span class="s4">=&quot;col-md-6 col-xl-3 mb-4&quot;</span><span class="s2">&gt;</span>
+                                 <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;text-dark font-weight-bold h2 mb-0&quot;</span><span class="s2">&gt;&lt;span&gt;</span><span class="s0">{{t.title}}</span><span class="s2">&lt;/span&gt;&lt;/div&gt;</span>
+                            <span class="s2">&lt;/a&gt;</span>
+                            <span class="s0">{% if request.user.is_superuser %}</span>
+                            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot; h6 mb-0&quot;</span><span class="s2">&gt;</span>
+                                <span class="s2">&lt;a </span><span class="s3">href</span><span class="s4">=&quot;{% url 'editTable' t.id %}&quot;</span><span class="s2">&gt;&lt;button </span><span class="s3">class</span><span class="s4">=&quot;btn btn-info btn-sm&quot;</span><span class="s2">&gt;&lt;i </span><span class="s3">class</span><span class="s4">=&quot;fa fa-edit&quot;</span><span class="s2">&gt;&lt;/i&gt; </span><span class="s0">Edit</span><span class="s2">&lt;/button&gt;&lt;/a&gt;</span>
+                                <span class="s0">|</span>
+                                <span class="s2">&lt;a </span><span class="s3">href</span><span class="s4">=&quot;{% url 'deleteTable' t.id %}&quot;</span><span class="s2">&gt;&lt;button </span><span class="s3">class</span><span class="s4">=&quot;btn btn-danger btn-sm&quot; </span><span class="s3">onclick</span><span class="s4">=&quot;</span><span class="s6">return </span><span class="s1">confirm(</span><span class="s8">'Are you sure want to delete this category?'</span><span class="s0">)</span><span class="s6">;</span><span class="s4">&quot;</span><span class="s2">&gt;&lt;i </span><span class="s3">class</span><span class="s4">=&quot;fa fa-trash&quot;</span><span class="s2">&gt;&lt;/i&gt; </span><span class="s0">Delete</span><span class="s2">&lt;/button&gt;&lt;/a&gt;</span>
+                            <span class="s2">&lt;/div&gt;</span>
+                            <span class="s0">{% endif %}</span>
+                        <span class="s2">&lt;/div&gt;</span>
+                    <span class="s2">&lt;/div&gt;</span>
+                <span class="s2">&lt;/div&gt;</span>
+            <span class="s2">&lt;/div&gt;</span>
+            <span class="s0">{% endif %}</span>
+        <span class="s2">&lt;/div&gt;</span>
+<span class="s0">{% endfor %}</span>
+        <span class="s2">&lt;script&gt;</span>
+            <span class="s1">document.getElementById(</span><span class="s8">'ttbl'</span><span class="s0">).innerHTML = ttbl</span><span class="s6">;</span>
+            <span class="s1">document.getElementById(</span><span class="s8">'otbl'</span><span class="s0">).innerHTML = otbl</span><span class="s6">;</span>
+            <span class="s1">document.getElementById(</span><span class="s8">'atbl'</span><span class="s0">).innerHTML = atbl</span><span class="s6">;</span>
+        <span class="s2">&lt;/script&gt;</span>
+        <span class="s0">{% if request.user.is_superuser %}</span>
+        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col-md-3 col-xl-2 mb-2&quot;</span><span class="s2">&gt;</span>
+            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;card shadow border-left-info py-2&quot;</span><span class="s2">&gt;</span>
+                <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;card-body&quot;</span><span class="s2">&gt;</span>
+                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;row align-items-center no-gutters&quot;</span><span class="s2">&gt;</span>
+                        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col mr-2&quot;</span><span class="s2">&gt;</span>
+                            <span class="s2">&lt;a </span><span class="s3">href</span><span class="s4">=&quot;{% url 'addTables' %}&quot; </span><span class="s3">class</span><span class="s4">=&quot;col-md-6 col-xl-3 mb-4&quot;</span><span class="s2">&gt;</span>
+                                <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;text-dark font-weight-bold h3 mb-0&quot;</span><span class="s2">&gt;</span>
+                                    <span class="s2">&lt;span&gt;&lt;i </span><span class="s3">class</span><span class="s4">=&quot;fa fa-table&quot;</span><span class="s2">&gt;&lt;/i&gt; </span><span class="s0">Add Table</span><span class="s2">&lt;/span&gt;</span>
+                                <span class="s2">&lt;/div&gt;</span>
+                            <span class="s2">&lt;/a&gt;</span>
+                        <span class="s2">&lt;/div&gt;</span>
+                    <span class="s2">&lt;/div&gt;</span>
+                <span class="s2">&lt;/div&gt;</span>
+            <span class="s2">&lt;/div&gt;</span>
+        <span class="s2">&lt;/div&gt;</span>
+        <span class="s0">{% endif %}</span>
+    <span class="s2">&lt;/div&gt;</span>
+<span class="s2">&lt;/div&gt;</span>
+
+<span class="s0">{% endblock %}</span></pre>
+</body>
+</html>

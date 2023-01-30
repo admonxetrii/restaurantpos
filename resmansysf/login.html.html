@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>login.html</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #a9b7c6;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #e8bf6a;}
+.s3 { color: #bababa;}
+.s4 { color: #a5c261;}
+.s5 { color: #287bde;}
+.s6 { color: #6a8759;}
+.s7 { color: #cc7832;}
+.s8 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+login.html</font>
+</center></td></tr></table>
+<pre><span class="s0">{% extends 'base/base2.html' %}</span>
+<span class="s0">{% block 'title' %} Login {% endblock %}</span>
+<span class="s0">{% load static %}</span>
+<span class="s0">{% block 'body' %}</span>
+    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;container&quot;</span><span class="s2">&gt;</span>
+        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;row justify-content-center &quot;</span><span class="s2">&gt;</span>
+            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col-md-9 col-lg-12 col-xl-10&quot;</span><span class="s2">&gt;</span>
+                <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;card shadow-lg o-hidden border-0 my-5 align-self-center&quot;</span><span class="s2">&gt;</span>
+                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;card-body p-0 &quot;</span><span class="s2">&gt;</span>
+                        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;row&quot;</span><span class="s2">&gt;</span>
+                            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col-lg-6 d-none d-lg-flex&quot;</span><span class="s2">&gt;</span>
+                                <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;flex-grow-1 bg-login-image&quot; </span><span class="s3">style</span><span class="s4">=&quot;</span><span class="s3">background-image</span><span class="s0">: </span><span class="s2">url</span><span class="s0">(</span><span class="s5">&amp;quot;{% static </span><span class="s6">'assets/img/basic/image1.JPG' </span><span class="s5">%}&amp;quot;</span><span class="s0">)</span><span class="s7">;</span><span class="s4">&quot;</span><span class="s2">&gt;&lt;/div&gt;</span>
+                            <span class="s2">&lt;/div&gt;</span>
+                            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col-lg-6&quot;</span><span class="s2">&gt;</span>
+                                <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;p-5&quot;</span><span class="s2">&gt;</span>
+                                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;text-center&quot;</span><span class="s2">&gt;</span>
+                                        <span class="s2">&lt;h2 </span><span class="s3">class</span><span class="s4">=&quot;text-bold text-dark&quot;</span><span class="s2">&gt;</span><span class="s0">Tropical Rest - POS</span><span class="s2">&lt;/h2&gt;</span>
+                                        <span class="s2">&lt;h4 </span><span class="s3">class</span><span class="s4">=&quot;text-dark mb-4&quot;</span><span class="s2">&gt;</span><span class="s0">Please Login!</span><span class="s2">&lt;/h4&gt;</span>
+                                        <span class="s0">{% include 'component/message.html' %}</span>
+                                    <span class="s2">&lt;/div&gt;</span>
+                                    <span class="s2">&lt;form </span><span class="s3">class</span><span class="s4">=&quot;user&quot; </span><span class="s3">method</span><span class="s4">=&quot;post&quot;</span><span class="s2">&gt;</span>
+                                        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-group&quot;</span><span class="s2">&gt;&lt;input </span><span class="s3">class</span><span class="s4">=&quot;form-control form-control-user&quot; </span><span class="s3">type</span><span class="s4">=&quot;text&quot; </span><span class="s3">id</span><span class="s4">=&quot;username&quot; </span><span class="s3">aria-describedby</span><span class="s4">=&quot;emailHelp&quot; </span><span class="s3">placeholder</span><span class="s4">=&quot;Enter Username...&quot; </span><span class="s3">name</span><span class="s4">=&quot;username&quot;</span><span class="s2">&gt;&lt;/div&gt;</span>
+                                        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-group&quot;</span><span class="s2">&gt;&lt;input </span><span class="s3">class</span><span class="s4">=&quot;form-control form-control-user&quot; </span><span class="s3">type</span><span class="s4">=&quot;password&quot; </span><span class="s3">id</span><span class="s4">=&quot;password&quot; </span><span class="s3">placeholder</span><span class="s4">=&quot;Password&quot; </span><span class="s3">name</span><span class="s4">=&quot;password&quot;</span><span class="s2">&gt;&lt;/div&gt;</span>
+                                        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-group&quot;</span><span class="s2">&gt;</span>
+                                            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;custom-control custom-checkbox small&quot;</span><span class="s2">&gt;</span>
+                                                <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-check&quot;</span><span class="s2">&gt;&lt;input </span><span class="s3">class</span><span class="s4">=&quot;form-check-input custom-control-input&quot; </span><span class="s3">type</span><span class="s4">=&quot;checkbox&quot; </span><span class="s3">id</span><span class="s4">=&quot;formCheck-1&quot;</span><span class="s2">&gt;&lt;label </span><span class="s3">class</span><span class="s4">=&quot;form-check-label custom-control-label&quot; </span><span class="s3">for</span><span class="s4">=&quot;formCheck-1&quot;</span><span class="s2">&gt;</span><span class="s0">Remember Me</span><span class="s2">&lt;/label&gt;&lt;/div&gt;</span>
+                                            <span class="s2">&lt;/div&gt;</span>
+                                        <span class="s2">&lt;/div&gt;</span>
+                                        <span class="s0">{% csrf_token %}</span>
+                                        <span class="s2">&lt;button </span><span class="s3">class</span><span class="s4">=&quot;btn btn-primary btn-block text-white btn-user&quot; </span><span class="s3">type</span><span class="s4">=&quot;submit&quot;</span><span class="s2">&gt;</span><span class="s0">Login</span><span class="s2">&lt;/button&gt;</span>
+                                        <span class="s2">&lt;hr/&gt;</span>
+                                        <span class="s8">&lt;!--</span>
+                                            <span class="s8">&lt;a class=&quot;btn btn-primary btn-block text-white btn-google btn-user&quot; role=&quot;button&quot;&gt;&lt;i class=&quot;fab fa-google&quot;&gt;&lt;/i&gt;&amp;nbsp; Login with Google&lt;/a&gt; 
+                                            &lt;a class=&quot;btn btn-primary btn-block text-white btn-facebook btn-user&quot; role=&quot;button&quot;&gt;&lt;i class=&quot;fab fa-facebook-f&quot;&gt;&lt;/i&gt;&amp;nbsp; Login with Facebook&lt;/a&gt; 
+                                         --&gt;</span>
+                                        <span class="s8">&lt;!-- &lt;hr&gt; --&gt;</span>
+                                    <span class="s2">&lt;/form&gt;</span>
+                                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;text-center&quot;</span><span class="s2">&gt;&lt;a </span><span class="s3">class</span><span class="s4">=&quot;small&quot; </span><span class="s3">href</span><span class="s4">=&quot;#&quot;</span><span class="s2">&gt;</span><span class="s0">Forgot Password?</span><span class="s2">&lt;/a&gt;&lt;/div&gt;</span>
+                                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;text-center&quot;</span><span class="s2">&gt;&lt;a </span><span class="s3">class</span><span class="s4">=&quot;small&quot; </span><span class="s3">href</span><span class="s4">=&quot;{% url 'register' %}&quot;</span><span class="s2">&gt;</span><span class="s0">Create an Account!</span><span class="s2">&lt;/a&gt;&lt;/div&gt;</span>
+                                <span class="s2">&lt;/div&gt;</span>
+                            <span class="s2">&lt;/div&gt;</span>
+                        <span class="s2">&lt;/div&gt;</span>
+                    <span class="s2">&lt;/div&gt;</span>
+                <span class="s2">&lt;/div&gt;</span>
+            <span class="s2">&lt;/div&gt;</span>
+        <span class="s2">&lt;/div&gt;</span>
+    <span class="s2">&lt;/div&gt;</span>
+<span class="s0">{% endblock %}</span></pre>
+</body>
+</html>

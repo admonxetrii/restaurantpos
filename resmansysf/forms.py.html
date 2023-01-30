@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>forms.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+forms.py</font>
+</center></td></tr></table>
+<pre><span class="s0">from </span><span class="s1">django </span><span class="s0">import </span><span class="s1">forms</span>
+<span class="s0">from </span><span class="s1">.models </span><span class="s0">import </span><span class="s1">Menu</span><span class="s0">,</span><span class="s1">Order</span><span class="s0">,</span><span class="s1">Table</span><span class="s0">,</span><span class="s1">MenuCategory</span>
+
+
+<span class="s0">class </span><span class="s1">OrderForm(forms.ModelForm) :</span>
+    <span class="s1">quantity = forms.IntegerField(widget=forms.NumberInput(attrs={</span><span class="s2">'class' </span><span class="s1">: </span><span class="s2">'form-control'</span><span class="s1">}))</span>
+
+    <span class="s0">class </span><span class="s1">Meta :</span>
+        <span class="s1">model = Order</span>
+        <span class="s1">fields = [</span><span class="s2">'quantity'</span><span class="s0">,</span><span class="s1">]</span>
+
+<span class="s0">class </span><span class="s1">MenuForm(forms.ModelForm) :</span>
+    <span class="s1">title = forms.CharField(widget=forms.TextInput(attrs={</span><span class="s2">'class' </span><span class="s1">: </span><span class="s2">'form-control'</span><span class="s1">}))</span>
+    <span class="s1">price = forms.IntegerField(widget=forms.NumberInput(attrs={</span><span class="s2">'class'</span><span class="s1">:</span><span class="s2">'form-control'</span><span class="s0">,</span><span class="s2">'min'</span><span class="s1">:</span><span class="s2">'1'</span><span class="s1">}))</span>
+    <span class="s1">category = forms.ModelChoiceField(queryset=MenuCategory.objects.all()</span><span class="s0">,</span><span class="s1">widget=forms.Select(attrs={</span><span class="s2">'class'</span><span class="s1">:</span><span class="s2">'form-control'</span><span class="s1">}))</span>
+
+    <span class="s0">class </span><span class="s1">Meta:</span>
+        <span class="s1">model = Menu</span>
+        <span class="s1">fields = </span><span class="s2">'__all__'</span>
+
+<span class="s0">class </span><span class="s1">MenuCategoryForm(forms.ModelForm) :</span>
+    <span class="s1">title = forms.CharField(widget=forms.TextInput(attrs={</span><span class="s2">'class' </span><span class="s1">: </span><span class="s2">'form-control'</span><span class="s1">}))</span>
+
+    <span class="s0">class </span><span class="s1">Meta:</span>
+        <span class="s1">model = MenuCategory</span>
+        <span class="s1">fields = </span><span class="s2">'__all__'</span>
+
+<span class="s0">class </span><span class="s1">TableForm(forms.ModelForm) :</span>
+    <span class="s1">title = forms.CharField(widget=forms.TextInput(attrs={</span><span class="s2">'class' </span><span class="s1">: </span><span class="s2">'form-control'</span><span class="s1">}))</span>
+
+    <span class="s0">class </span><span class="s1">Meta:</span>
+        <span class="s1">model = Table</span>
+        <span class="s1">fields = [</span><span class="s2">'title'</span><span class="s0">,</span><span class="s1">]</span>
+</pre>
+</body>
+</html>

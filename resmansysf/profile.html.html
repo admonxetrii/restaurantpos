@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>profile.html</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #a9b7c6;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #e8bf6a;}
+.s3 { color: #bababa;}
+.s4 { color: #a5c261;}
+.s5 { color: #cc7832;}
+.s6 { color: #6a8759;}
+.s7 { color: #6d9cbe;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+profile.html</font>
+</center></td></tr></table>
+<pre><span class="s0">{% extends 'base/base.html' %}</span>
+<span class="s0">{% load static %}</span>
+<span class="s0">{% block 'title' %} Profile {% endblock %}</span>
+
+<span class="s0">{% block 'body' %}</span>
+ <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;container-fluid&quot;</span><span class="s2">&gt;</span>
+                <span class="s2">&lt;h3 </span><span class="s3">class</span><span class="s4">=&quot;text-dark mb-4&quot;</span><span class="s2">&gt;</span><span class="s0">Profile - {{user}}</span><span class="s2">&lt;/h3&gt;</span>
+                <span class="s0">{% include 'component/message.html' %}</span>
+                <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;row mb-3&quot;</span><span class="s2">&gt;</span>
+                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col&quot;</span><span class="s2">&gt;</span>
+                        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;card shadow mb-3&quot;</span><span class="s2">&gt;</span>
+                            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;card-header py-3&quot;</span><span class="s2">&gt;</span>
+                                <span class="s2">&lt;p </span><span class="s3">class</span><span class="s4">=&quot;text-primary m-0 font-weight-bold&quot;</span><span class="s2">&gt;</span><span class="s0">User Settings</span><span class="s2">&lt;/p&gt;</span>
+                            <span class="s2">&lt;/div&gt;</span>
+                            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;card-body&quot;</span><span class="s2">&gt;</span>
+                                <span class="s2">&lt;form </span><span class="s3">method</span><span class="s4">=&quot;post&quot; </span><span class="s3">action</span><span class="s4">=&quot;{% url 'edit_profile' %}&quot;</span><span class="s2">&gt;</span>
+                                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-row&quot;</span><span class="s2">&gt;</span>
+                                        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col&quot;</span><span class="s2">&gt;</span>
+                                            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-group&quot;</span><span class="s2">&gt;&lt;label </span><span class="s3">for</span><span class="s4">=&quot;username&quot;</span><span class="s2">&gt;&lt;strong&gt;</span><span class="s0">Username</span><span class="s2">&lt;/strong&gt;&lt;/label&gt;&lt;input </span><span class="s3">class</span><span class="s4">=&quot;form-control&quot; </span><span class="s3">type</span><span class="s4">=&quot;text&quot; </span><span class="s3">value</span><span class="s4">=&quot;{{user}}&quot; </span><span class="s3">name</span><span class="s4">=&quot;username&quot; </span><span class="s3">disabled</span><span class="s2">&gt;&lt;/div&gt;</span>
+                                        <span class="s2">&lt;/div&gt;</span>
+                                    <span class="s2">&lt;/div&gt;</span>
+                                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-row&quot;</span><span class="s2">&gt;</span>
+                                        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col&quot;</span><span class="s2">&gt;</span>
+                                            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-group&quot;</span><span class="s2">&gt;&lt;label </span><span class="s3">for</span><span class="s4">=&quot;first_name&quot;</span><span class="s2">&gt;&lt;strong&gt;</span><span class="s0">First Name</span><span class="s2">&lt;/strong&gt;&lt;/label&gt;&lt;input </span><span class="s3">class</span><span class="s4">=&quot;form-control&quot; </span><span class="s3">type</span><span class="s4">=&quot;text&quot; </span><span class="s3">value</span><span class="s4">=&quot;{{user.first_name}}&quot; </span><span class="s3">name</span><span class="s4">=&quot;firstname&quot;</span><span class="s2">&gt;&lt;/div&gt;</span>
+                                        <span class="s2">&lt;/div&gt;</span>
+                                        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col&quot;</span><span class="s2">&gt;</span>
+                                            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-group&quot;</span><span class="s2">&gt;&lt;label </span><span class="s3">for</span><span class="s4">=&quot;last_name&quot;</span><span class="s2">&gt;&lt;strong&gt;</span><span class="s0">Last Name</span><span class="s2">&lt;/strong&gt;&lt;/label&gt;&lt;input </span><span class="s3">class</span><span class="s4">=&quot;form-control&quot; </span><span class="s3">type</span><span class="s4">=&quot;text&quot; </span><span class="s3">value</span><span class="s4">=&quot;{{user.last_name}}&quot; </span><span class="s3">name</span><span class="s4">=&quot;lastname&quot;</span><span class="s2">&gt;&lt;/div&gt;</span>
+                                        <span class="s2">&lt;/div&gt;</span>
+                                    <span class="s2">&lt;/div&gt;</span>
+                                    <span class="s0">{% csrf_token %}</span>
+                                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-group&quot;</span><span class="s2">&gt;&lt;button </span><span class="s3">class</span><span class="s4">=&quot;btn btn-primary btn-sm&quot; </span><span class="s3">type</span><span class="s4">=&quot;submit&quot; </span><span class="s3">onclick</span><span class="s4">=&quot;</span><span class="s5">return </span><span class="s1">confirm(</span><span class="s6">'Are you sure you want to edit this record?'</span><span class="s0">)</span><span class="s5">;</span><span class="s4">&quot;</span><span class="s2">&gt;</span><span class="s0">Save Settings</span><span class="s2">&lt;/button&gt;&lt;/div&gt;</span>
+                                <span class="s2">&lt;/form&gt;</span>
+                            <span class="s2">&lt;/div&gt;</span>
+                        <span class="s2">&lt;/div&gt;</span>
+                        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;card shadow&quot;</span><span class="s2">&gt;</span>
+                            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;card-header py-3&quot;</span><span class="s2">&gt;</span>
+                                <span class="s2">&lt;p </span><span class="s3">class</span><span class="s4">=&quot;text-primary m-0 font-weight-bold&quot;</span><span class="s2">&gt;</span><span class="s0">Change Password</span><span class="s2">&lt;/p&gt;</span>
+                            <span class="s2">&lt;/div&gt;</span>
+                            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;card-body&quot;</span><span class="s2">&gt;</span>
+                                <span class="s2">&lt;form </span><span class="s3">action</span><span class="s4">=&quot;{% url 'edit_pass' %}&quot; </span><span class="s3">method</span><span class="s4">=&quot;post&quot;</span><span class="s2">&gt;</span>
+                                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-group&quot;</span><span class="s2">&gt;&lt;label </span><span class="s3">for</span><span class="s4">=&quot;address&quot;</span><span class="s2">&gt;&lt;strong&gt;</span><span class="s0">Current password</span><span class="s2">&lt;/strong&gt;&lt;/label&gt;&lt;input </span><span class="s3">class</span><span class="s4">=&quot;form-control&quot; </span><span class="s3">type</span><span class="s4">=&quot;password&quot; </span><span class="s3">placeholder</span><span class="s4">=&quot;Current Passowrd&quot; </span><span class="s3">name</span><span class="s4">=&quot;oldpass&quot;</span><span class="s2">&gt;&lt;/div&gt;</span>
+                                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-row&quot;</span><span class="s2">&gt;</span>
+                                        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col&quot;</span><span class="s2">&gt;</span>
+                                            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-group&quot;</span><span class="s2">&gt;&lt;label </span><span class="s3">for</span><span class="s4">=&quot;city&quot;</span><span class="s2">&gt;&lt;strong&gt;</span><span class="s0">New Password</span><span class="s2">&lt;/strong&gt;&lt;/label&gt;&lt;input </span><span class="s3">class</span><span class="s4">=&quot;form-control&quot; </span><span class="s3">type</span><span class="s4">=&quot;password&quot; </span><span class="s3">placeholder</span><span class="s4">=&quot;New password&quot; </span><span class="s3">name</span><span class="s4">=&quot;pass1&quot;</span><span class="s2">&gt;&lt;/div&gt;</span>
+                                        <span class="s2">&lt;/div&gt;</span>
+                                        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col&quot;</span><span class="s2">&gt;</span>
+                                            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-group&quot;</span><span class="s2">&gt;&lt;label </span><span class="s3">for</span><span class="s4">=&quot;country&quot;</span><span class="s2">&gt;&lt;strong&gt;</span><span class="s0">Confirm Password</span><span class="s2">&lt;/strong&gt;&lt;/label&gt;&lt;input </span><span class="s3">class</span><span class="s4">=&quot;form-control&quot; </span><span class="s3">type</span><span class="s4">=&quot;password&quot; </span><span class="s3">placeholder</span><span class="s4">=&quot;Repeat password&quot; </span><span class="s3">name</span><span class="s4">=&quot;pass2&quot;</span><span class="s2">&gt;&lt;/div&gt;</span>
+                                        <span class="s2">&lt;/div&gt;</span>
+                                    <span class="s2">&lt;/div&gt;</span>
+                                    <span class="s0">{% csrf_token %}</span>
+                                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-group&quot;</span><span class="s2">&gt;&lt;button </span><span class="s3">class</span><span class="s4">=&quot;btn btn-primary btn-sm&quot; </span><span class="s3">type</span><span class="s4">=&quot;submit&quot;</span><span class="s2">&gt;</span><span class="s0">Save</span><span class="s7">&amp;nbsp;</span><span class="s0">Settings</span><span class="s2">&lt;/button&gt;&lt;/div&gt;</span>
+                                <span class="s2">&lt;/form&gt;</span>
+                            <span class="s2">&lt;/div&gt;</span>
+                        <span class="s2">&lt;/div&gt;</span>
+                    <span class="s2">&lt;/div&gt;</span>
+                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;col-lg-4 col-xl-4&quot;</span><span class="s2">&gt;</span>
+                        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;card mb-3&quot;</span><span class="s2">&gt;</span>
+                            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;card-body text-center shadow&quot;</span><span class="s2">&gt;&lt;img </span><span class="s3">class</span><span class="s4">=&quot;rounded-circle mb-3 mt-4&quot; </span><span class="s3">src</span><span class="s4">=&quot;{% static 'assets/img/basic/image5.JPG' %}&quot; </span><span class="s3">width</span><span class="s4">=&quot;160&quot; </span><span class="s3">height</span><span class="s4">=&quot;160&quot;</span><span class="s2">&gt;</span>
+                                <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;mb-3&quot;</span><span class="s2">&gt;&lt;button </span><span class="s3">class</span><span class="s4">=&quot;btn btn-primary btn-sm&quot; </span><span class="s3">type</span><span class="s4">=&quot;button&quot;</span><span class="s2">&gt;</span><span class="s0">Change Photo</span><span class="s2">&lt;/button&gt;&lt;/div&gt;</span>
+                            <span class="s2">&lt;/div&gt;</span>
+                        <span class="s2">&lt;/div&gt;</span>
+                    <span class="s2">&lt;/div&gt;</span>
+                <span class="s2">&lt;/div&gt;</span>
+            <span class="s2">&lt;/div&gt;</span>
+<span class="s0">{% endblock %}</span></pre>
+</body>
+</html>

@@ -92,7 +92,9 @@
                                 </div>
                                 {% endif %}
                             </div>
-                        <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#change{{t.id}}"><i class="fa fa-edit"></i> Change</button>
+                            {% if request.user.is_staff %}
+                                <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#change{{t.id}}"><i class="fa fa-edit"></i> Change</button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

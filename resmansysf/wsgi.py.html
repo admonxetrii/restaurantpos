@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>wsgi.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #629755; font-style: italic;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #cc7832;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+wsgi.py</font>
+</center></td></tr></table>
+<pre><span class="s0">&quot;&quot;&quot; 
+WSGI config for restomansys project. 
+ 
+It exposes the WSGI callable as a module-level variable named ``application``. 
+ 
+For more information on this file, see 
+https://docs.djangoproject.com/en/3.0/howto/deployment/wsgi/ 
+&quot;&quot;&quot;</span>
+
+<span class="s2">import </span><span class="s1">os</span>
+
+<span class="s2">from </span><span class="s1">django.core.wsgi </span><span class="s2">import </span><span class="s1">get_wsgi_application</span>
+
+<span class="s1">os.environ.setdefault(</span><span class="s3">'DJANGO_SETTINGS_MODULE'</span><span class="s2">, </span><span class="s3">'restomansys.settings'</span><span class="s1">)</span>
+
+<span class="s1">application = get_wsgi_application()</span>
+</pre>
+</body>
+</html>

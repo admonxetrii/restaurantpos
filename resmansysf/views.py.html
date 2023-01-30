@@ -1,0 +1,328 @@
+<html>
+<head>
+<title>views.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #808080;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+views.py</font>
+</center></td></tr></table>
+<pre><span class="s0">from </span><span class="s1">django.shortcuts </span><span class="s0">import </span><span class="s1">render</span><span class="s0">, </span><span class="s1">HttpResponse</span><span class="s0">, </span><span class="s1">redirect</span><span class="s0">, </span><span class="s1">get_object_or_404</span>
+<span class="s0">from </span><span class="s1">django.http </span><span class="s0">import </span><span class="s1">HttpResponseRedirect</span>
+<span class="s0">from </span><span class="s1">django.contrib.auth.models </span><span class="s0">import </span><span class="s1">User</span>
+<span class="s0">from </span><span class="s1">django.contrib.auth </span><span class="s0">import </span><span class="s1">authenticate</span><span class="s0">, </span><span class="s1">login</span><span class="s0">, </span><span class="s1">logout</span>
+<span class="s0">from </span><span class="s1">django.contrib </span><span class="s0">import </span><span class="s1">messages</span>
+<span class="s0">from </span><span class="s1">django.contrib.auth.decorators </span><span class="s0">import </span><span class="s1">login_required</span>
+<span class="s0">from </span><span class="s1">Restaurant.models </span><span class="s0">import </span><span class="s1">MenuCategory</span><span class="s0">, </span><span class="s1">Menu</span><span class="s0">, </span><span class="s1">Table</span><span class="s0">, </span><span class="s1">Order</span><span class="s0">, </span><span class="s1">Bill</span>
+<span class="s0">from </span><span class="s1">Restaurant.forms </span><span class="s0">import </span><span class="s1">OrderForm</span><span class="s0">, </span><span class="s1">MenuForm</span><span class="s0">, </span><span class="s1">MenuCategoryForm</span><span class="s0">, </span><span class="s1">TableForm</span>
+
+
+<span class="s1">@login_required(login_url=</span><span class="s2">'signin'</span><span class="s1">)</span>
+<span class="s0">def </span><span class="s1">report(request) :</span>
+    <span class="s0">return </span><span class="s1">render(request</span><span class="s0">, </span><span class="s2">'blank.html'</span><span class="s1">)</span>
+
+
+<span class="s0">def </span><span class="s1">signin(request) :</span>
+    <span class="s0">if </span><span class="s1">request.user.is_authenticated :</span>
+        <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'dashboard'</span><span class="s1">)</span>
+    <span class="s0">if </span><span class="s1">request.method == </span><span class="s2">'GET' </span><span class="s1">:</span>
+        <span class="s0">return </span><span class="s1">render(request</span><span class="s0">, </span><span class="s2">'login.html'</span><span class="s1">)</span>
+    <span class="s0">else </span><span class="s1">:</span>
+        <span class="s1">u = request.POST[</span><span class="s2">'username'</span><span class="s1">]</span>
+        <span class="s1">p = request.POST[</span><span class="s2">'password'</span><span class="s1">]</span>
+        <span class="s1">user = authenticate(username=u</span><span class="s0">, </span><span class="s1">password=p)</span>
+        <span class="s0">if </span><span class="s1">user </span><span class="s0">is not None </span><span class="s1">:</span>
+            <span class="s1">login(request</span><span class="s0">, </span><span class="s1">user)</span>
+            <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'dashboard'</span><span class="s1">)</span>
+        <span class="s0">else </span><span class="s1">:</span>
+            <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.ERROR</span><span class="s0">, </span><span class="s2">&quot;Your username and password doesn't match!!!&quot;</span><span class="s1">)</span>
+            <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'signin'</span><span class="s1">)</span>
+
+
+<span class="s0">def </span><span class="s1">signup(request) :</span>
+    <span class="s0">if </span><span class="s1">request.user.is_authenticated :</span>
+        <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'dashboard'</span><span class="s1">)</span>
+    <span class="s0">if </span><span class="s1">request.method == </span><span class="s2">'GET' </span><span class="s1">:</span>
+        <span class="s0">return </span><span class="s1">render(request</span><span class="s0">, </span><span class="s2">'register.html'</span><span class="s1">)</span>
+    <span class="s0">else </span><span class="s1">:</span>
+        <span class="s1">fn = request.POST[</span><span class="s2">'firstname'</span><span class="s1">]</span>
+        <span class="s1">ln = request.POST[</span><span class="s2">'lastname'</span><span class="s1">]</span>
+        <span class="s1">u = request.POST[</span><span class="s2">'username'</span><span class="s1">]</span>
+        <span class="s1">e = request.POST.get(</span><span class="s2">'email'</span><span class="s1">)</span>
+        <span class="s1">mp = request.POST[</span><span class="s2">'mpass'</span><span class="s1">]</span>
+        <span class="s1">p1 = request.POST[</span><span class="s2">'password'</span><span class="s1">]</span>
+        <span class="s1">p2 = request.POST[</span><span class="s2">'password_repeat'</span><span class="s1">]</span>
+        <span class="s0">if </span><span class="s1">mp == </span><span class="s2">'tropical321' </span><span class="s1">:</span>
+            <span class="s0">if </span><span class="s1">p1 == p2 :</span>
+                <span class="s1">u = User(username=u</span><span class="s0">, </span><span class="s1">first_name=fn</span><span class="s0">, </span><span class="s1">last_name=ln)</span>
+                <span class="s1">u.set_password(p1)</span>
+                <span class="s1">u.save()</span>
+                <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.SUCCESS</span><span class="s0">, </span><span class="s2">&quot;Your account is registered!!!&quot;</span><span class="s1">)</span>
+                <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'signin'</span><span class="s1">)</span>
+            <span class="s0">else </span><span class="s1">:</span>
+                <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.ERROR</span><span class="s0">, </span><span class="s2">&quot;Your confirmation password doesn't match!!!&quot;</span><span class="s1">)</span>
+                <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'register'</span><span class="s1">)</span>
+        <span class="s0">else </span><span class="s1">:</span>
+            <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.ERROR</span><span class="s0">, </span><span class="s2">&quot;Your master password doesn't match!!!&quot;</span><span class="s1">)</span>
+            <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'register'</span><span class="s1">)</span>
+
+
+<span class="s1">@login_required(login_url=</span><span class="s2">'signin'</span><span class="s1">)</span>
+<span class="s0">def </span><span class="s1">profilepage(request) :</span>
+    <span class="s0">return </span><span class="s1">render(request</span><span class="s0">, </span><span class="s2">'profile.html'</span><span class="s1">)</span>
+
+
+<span class="s0">def </span><span class="s1">edituser(request) :</span>
+    <span class="s3"># u = request.POST['username']</span>
+    <span class="s1">f = request.POST[</span><span class="s2">'firstname'</span><span class="s1">]</span>
+    <span class="s1">l = request.POST[</span><span class="s2">'lastname'</span><span class="s1">]</span>
+    <span class="s1">user = User.objects.get(pk=request.user.id)</span>
+    <span class="s3"># user.username=u</span>
+    <span class="s1">user.first_name = f</span>
+    <span class="s1">user.last_name = l</span>
+    <span class="s1">user.save()</span>
+    <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.SUCCESS</span><span class="s0">, </span><span class="s2">&quot;Your account is successfully changed!!!&quot;</span><span class="s1">)</span>
+    <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'profile'</span><span class="s1">)</span>
+
+
+<span class="s0">def </span><span class="s1">editpassword(request) :</span>
+    <span class="s3"># p=request.POST['oldpass']</span>
+    <span class="s3"># p1=request.POST['pass1']</span>
+    <span class="s3"># p2=request.POST['pass2']</span>
+    <span class="s3"># if p1==p2:</span>
+    <span class="s3">#     user = User.objects.get(pk=request.user.id)</span>
+    <span class="s3">#     if p==user.password:</span>
+    <span class="s3">#         user.password=p1</span>
+    <span class="s3">#         user.save()</span>
+    <span class="s3">#         messages.add_message(request,messages.SUCCESS,&quot;Your password is successfully changed!!!&quot;)</span>
+    <span class="s3">#         return redirect('profile')</span>
+    <span class="s3">#     else:</span>
+    <span class="s3">#         messages.add_message(request,messages.ERROR,&quot;Your Old password doesn't match!!!&quot;)</span>
+    <span class="s3">#         return redirect('profile')</span>
+    <span class="s3"># else:</span>
+    <span class="s3">#     messages.add_message(request, messages.ERROR, &quot;Your Confirm password doesn't match!!!&quot;)</span>
+    <span class="s3">#     return redirect('profile')</span>
+    <span class="s0">pass</span>
+
+
+<span class="s0">def </span><span class="s1">signout(request) :</span>
+    <span class="s1">logout(request)</span>
+    <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.SUCCESS</span><span class="s0">, </span><span class="s2">&quot;You've been logged out!&quot;</span><span class="s1">)</span>
+    <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'signin'</span><span class="s1">)</span>
+
+
+<span class="s1">@login_required(login_url=</span><span class="s2">'signin'</span><span class="s1">)</span>
+<span class="s0">def </span><span class="s1">dash_board(request) :</span>
+    <span class="s1">data = MenuCategory.objects.all()</span>
+    <span class="s1">context = {</span>
+        <span class="s2">'category' </span><span class="s1">: data</span>
+    <span class="s1">}</span>
+    <span class="s0">return </span><span class="s1">render(request</span><span class="s0">, </span><span class="s2">'dashboard.html'</span><span class="s0">, </span><span class="s1">context)</span>
+
+
+<span class="s1">@login_required(login_url=</span><span class="s2">'signin'</span><span class="s1">)</span>
+<span class="s0">def </span><span class="s1">tables(request) :</span>
+    <span class="s1">data = Table.objects.all()</span>
+    <span class="s1">data2 = Order.objects.all()</span>
+    <span class="s1">context = {</span>
+        <span class="s2">'table' </span><span class="s1">: data</span><span class="s0">,</span>
+        <span class="s2">'occupied' </span><span class="s1">: data2</span>
+    <span class="s1">}</span>
+    <span class="s0">return </span><span class="s1">render(request</span><span class="s0">, </span><span class="s2">'table.html'</span><span class="s0">, </span><span class="s1">context)</span>
+
+
+<span class="s0">def </span><span class="s1">tableorder(request</span><span class="s0">, </span><span class="s1">id) :</span>
+    <span class="s1">data = Order.objects.filter(table_id=id)</span>
+    <span class="s1">table = Table.objects.filter(id=id)</span>
+    <span class="s1">context = {</span>
+        <span class="s2">'order' </span><span class="s1">: data</span><span class="s0">,</span>
+        <span class="s2">'table' </span><span class="s1">: table</span>
+    <span class="s1">}</span>
+    <span class="s0">return </span><span class="s1">render(request</span><span class="s0">, </span><span class="s2">'tabledetail.html'</span><span class="s0">, </span><span class="s1">context)</span>
+
+
+<span class="s0">def </span><span class="s1">menuitem(request</span><span class="s0">, </span><span class="s1">id) :</span>
+    <span class="s1">data = Menu.objects.filter(category_id=id)</span>
+    <span class="s1">cate = MenuCategory.objects.filter(id=id)</span>
+    <span class="s1">tab = Table.objects.all()</span>
+    <span class="s1">context = {</span>
+        <span class="s2">'menu' </span><span class="s1">: data</span><span class="s0">,</span>
+        <span class="s2">'cate' </span><span class="s1">: cate</span><span class="s0">,</span>
+        <span class="s2">'table' </span><span class="s1">: tab</span>
+    <span class="s1">}</span>
+    <span class="s0">return </span><span class="s1">render(request</span><span class="s0">, </span><span class="s2">'menu.html'</span><span class="s0">, </span><span class="s1">context)</span>
+
+
+<span class="s0">def </span><span class="s1">orderitem(request) :</span>
+    <span class="s1">m = request.POST[</span><span class="s2">'menu'</span><span class="s1">]</span>
+    <span class="s1">t = request.POST[</span><span class="s2">'table'</span><span class="s1">]</span>
+    <span class="s1">qty = request.POST[</span><span class="s2">'qty'</span><span class="s1">]</span>
+    <span class="s1">form = Order(table_id=t</span><span class="s0">, </span><span class="s1">menu_id=m</span><span class="s0">, </span><span class="s1">quantity=qty)</span>
+    <span class="s1">form.save()</span>
+    <span class="s1">data = Table.objects.get(id=t)</span>
+    <span class="s1">data.occupied = </span><span class="s4">1</span>
+    <span class="s1">data.save()</span>
+    <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.SUCCESS</span><span class="s0">, </span><span class="s2">&quot;Your order has been placed.&quot;</span><span class="s1">)</span>
+    <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'table'</span><span class="s1">)</span>
+
+
+<span class="s0">def </span><span class="s1">genBill(request</span><span class="s0">, </span><span class="s1">id) :</span>
+    <span class="s1">data = Order.objects.filter(table_id=id)</span>
+    <span class="s1">table = Table.objects.filter(id=id)</span>
+    <span class="s1">context = {</span>
+        <span class="s2">'order' </span><span class="s1">: data</span><span class="s0">,</span>
+        <span class="s2">'table' </span><span class="s1">: table</span>
+    <span class="s1">}</span>
+    <span class="s0">return </span><span class="s1">render(request</span><span class="s0">, </span><span class="s2">'gen_bill.html'</span><span class="s0">, </span><span class="s1">context)</span>
+
+
+<span class="s0">def </span><span class="s1">releaseTable(request</span><span class="s0">, </span><span class="s1">id) :</span>
+    <span class="s1">data = Order.objects.filter(table_id=id)</span>
+    <span class="s1">data.delete()</span>
+    <span class="s1">t = request.POST[</span><span class="s2">'totalamount'</span><span class="s1">]</span>
+    <span class="s1">bill = Bill(table_id=id</span><span class="s0">, </span><span class="s1">total=t)</span>
+    <span class="s1">bill.save()</span>
+    <span class="s1">table = Table.objects.get(id=id)</span>
+    <span class="s1">table.occupied=</span><span class="s4">0</span>
+    <span class="s1">table.save()</span>
+    <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.SUCCESS</span><span class="s0">, </span><span class="s2">&quot;Table Successfully released!!&quot;</span><span class="s1">)</span>
+    <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'table'</span><span class="s1">)</span>
+
+
+<span class="s0">def </span><span class="s1">deletefromtable(request</span><span class="s0">, </span><span class="s1">id) :</span>
+    <span class="s1">do = Order.objects.get(pk=id)</span>
+    <span class="s1">id1 = do.table.id</span>
+    <span class="s1">do.delete()</span>
+    <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.ERROR</span><span class="s0">, </span><span class="s2">&quot;Item removed successfully&quot;</span><span class="s1">)</span>
+    <span class="s0">return </span><span class="s1">tableorder(request</span><span class="s0">, </span><span class="s1">id1)</span>
+
+
+<span class="s0">def </span><span class="s1">editqty(request</span><span class="s0">, </span><span class="s1">id) :</span>
+    <span class="s1">data = Order.objects.get(pk=id)</span>
+    <span class="s1">id1 = data.table.id</span>
+    <span class="s1">tableName = data.table.title</span>
+    <span class="s1">menuName = data.menu.title</span>
+    <span class="s1">form = OrderForm(request.POST </span><span class="s0">or None, </span><span class="s1">instance=data)</span>
+    <span class="s0">if </span><span class="s1">form.is_valid() :</span>
+        <span class="s1">form.save()</span>
+        <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.SUCCESS</span><span class="s0">, </span><span class="s2">&quot;Update successfully&quot;</span><span class="s1">)</span>
+        <span class="s0">return </span><span class="s1">tableorder(request</span><span class="s0">, </span><span class="s1">id1)</span>
+    <span class="s1">context = {</span>
+        <span class="s2">'form' </span><span class="s1">: form</span><span class="s0">,</span>
+        <span class="s2">'menu' </span><span class="s1">: menuName</span><span class="s0">,</span>
+        <span class="s2">'table' </span><span class="s1">: tableName</span>
+    <span class="s1">}</span>
+    <span class="s0">return </span><span class="s1">render(request</span><span class="s0">, </span><span class="s2">'editqty.html'</span><span class="s0">, </span><span class="s1">context)</span>
+
+
+<span class="s0">def </span><span class="s1">addMenu(request) :</span>
+    <span class="s1">form = MenuForm(request.POST </span><span class="s0">or None</span><span class="s1">)</span>
+    <span class="s0">if </span><span class="s1">form.is_valid() :</span>
+        <span class="s1">form.save()</span>
+        <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.SUCCESS</span><span class="s0">, </span><span class="s2">&quot;Menu Item created successfully!!!&quot;</span><span class="s1">)</span>
+        <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'dashboard'</span><span class="s1">)</span>
+    <span class="s1">context = {</span>
+        <span class="s2">'form' </span><span class="s1">: form</span>
+    <span class="s1">}</span>
+    <span class="s0">return </span><span class="s1">render(request</span><span class="s0">, </span><span class="s2">'add_menu.html'</span><span class="s0">, </span><span class="s1">context)</span>
+
+
+<span class="s0">def </span><span class="s1">addMenuCategory(request) :</span>
+    <span class="s1">form = MenuCategoryForm(request.POST </span><span class="s0">or None, </span><span class="s1">request.FILES </span><span class="s0">or None</span><span class="s1">)</span>
+    <span class="s0">if </span><span class="s1">form.is_valid() :</span>
+        <span class="s1">form.save()</span>
+        <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.SUCCESS</span><span class="s0">, </span><span class="s2">&quot;Menu Category created successfully!!!&quot;</span><span class="s1">)</span>
+        <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'dashboard'</span><span class="s1">)</span>
+    <span class="s1">context = {</span>
+        <span class="s2">'form' </span><span class="s1">: form</span>
+    <span class="s1">}</span>
+    <span class="s0">return </span><span class="s1">render(request</span><span class="s0">, </span><span class="s2">'add_category.html'</span><span class="s0">, </span><span class="s1">context)</span>
+
+
+<span class="s0">def </span><span class="s1">addTables(request) :</span>
+    <span class="s0">if </span><span class="s1">request.method==</span><span class="s2">'GET'</span><span class="s1">:</span>
+        <span class="s0">return </span><span class="s1">render(request</span><span class="s0">,</span><span class="s2">'add_table.html'</span><span class="s1">)</span>
+    <span class="s1">t = request.POST[</span><span class="s2">'tbltitle'</span><span class="s1">]</span>
+    <span class="s1">o = request.POST[</span><span class="s2">'tbloccupied'</span><span class="s1">]</span>
+    <span class="s1">form = Table(title = t</span><span class="s0">, </span><span class="s1">occupied = o)</span>
+    <span class="s1">form.save()</span>
+    <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.SUCCESS</span><span class="s0">, </span><span class="s2">&quot;Table created successfully!!!&quot;</span><span class="s1">)</span>
+    <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'table'</span><span class="s1">)</span>
+
+
+<span class="s0">def </span><span class="s1">editMenu(request</span><span class="s0">, </span><span class="s1">id) :</span>
+    <span class="s1">data = Menu.objects.get(pk=id)</span>
+    <span class="s1">id1 = data.category.id</span>
+    <span class="s1">categoryName = data.category.title</span>
+    <span class="s1">menuName = data.title</span>
+    <span class="s1">form = MenuForm(request.POST </span><span class="s0">or None, </span><span class="s1">instance=data)</span>
+    <span class="s0">if </span><span class="s1">form.is_valid() :</span>
+        <span class="s1">form.save()</span>
+        <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.SUCCESS</span><span class="s0">, </span><span class="s2">&quot;Menu Update successfully&quot;</span><span class="s1">)</span>
+        <span class="s0">return </span><span class="s1">menuitem(request</span><span class="s0">, </span><span class="s1">id1)</span>
+    <span class="s1">context = {</span>
+        <span class="s2">'form' </span><span class="s1">: form</span><span class="s0">,</span>
+        <span class="s2">'menu' </span><span class="s1">: menuName</span><span class="s0">,</span>
+        <span class="s2">'category' </span><span class="s1">: categoryName</span>
+    <span class="s1">}</span>
+    <span class="s0">return </span><span class="s1">render(request</span><span class="s0">, </span><span class="s2">'edit_menu.html'</span><span class="s0">, </span><span class="s1">context)</span>
+
+
+<span class="s0">def </span><span class="s1">editMenuCategory(request</span><span class="s0">, </span><span class="s1">id) :</span>
+    <span class="s1">data = MenuCategory.objects.get(pk=id)</span>
+    <span class="s1">form = MenuCategoryForm(request.POST </span><span class="s0">or None, </span><span class="s1">request.FILES </span><span class="s0">or None, </span><span class="s1">instance=data)</span>
+    <span class="s0">if </span><span class="s1">form.is_valid() :</span>
+        <span class="s1">form.save()</span>
+        <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.SUCCESS</span><span class="s0">, </span><span class="s2">&quot;Category Updated successfully&quot;</span><span class="s1">)</span>
+        <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'dashboard'</span><span class="s1">)</span>
+    <span class="s1">context = {</span>
+        <span class="s2">'form' </span><span class="s1">: form</span><span class="s0">,</span>
+        <span class="s2">'cate' </span><span class="s1">: data</span>
+    <span class="s1">}</span>
+    <span class="s0">return </span><span class="s1">render(request</span><span class="s0">, </span><span class="s2">'edit_menu_category.html'</span><span class="s0">, </span><span class="s1">context)</span>
+
+<span class="s0">def </span><span class="s1">editTable(request</span><span class="s0">, </span><span class="s1">id) :</span>
+    <span class="s1">data = Table.objects.get(pk=id)</span>
+    <span class="s1">form = TableForm(request.POST </span><span class="s0">or None,  </span><span class="s1">instance=data)</span>
+    <span class="s0">if </span><span class="s1">form.is_valid() :</span>
+        <span class="s1">form.save()</span>
+        <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.SUCCESS</span><span class="s0">, </span><span class="s2">&quot;Table Updated successfully&quot;</span><span class="s1">)</span>
+        <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'table'</span><span class="s1">)</span>
+    <span class="s1">context = {</span>
+        <span class="s2">'form' </span><span class="s1">: form</span><span class="s0">,</span>
+        <span class="s2">'table' </span><span class="s1">: data</span>
+    <span class="s1">}</span>
+    <span class="s0">return </span><span class="s1">render(request</span><span class="s0">, </span><span class="s2">'edit_table.html'</span><span class="s0">, </span><span class="s1">context)</span>
+
+
+<span class="s0">def </span><span class="s1">deletefrommenu(request</span><span class="s0">, </span><span class="s1">id) :</span>
+    <span class="s1">dm = Menu.objects.get(pk=id)</span>
+    <span class="s1">id1 = dm.category.id</span>
+    <span class="s1">dm.delete()</span>
+    <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.ERROR</span><span class="s0">, </span><span class="s2">&quot;Item deleted successfully&quot;</span><span class="s1">)</span>
+    <span class="s0">return </span><span class="s1">menuitem(request</span><span class="s0">, </span><span class="s1">id1)</span>
+
+
+<span class="s0">def </span><span class="s1">deletefrommenucat(request</span><span class="s0">, </span><span class="s1">id) :</span>
+    <span class="s1">dm = MenuCategory.objects.get(pk=id)</span>
+    <span class="s1">dm.delete()</span>
+    <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.ERROR</span><span class="s0">, </span><span class="s2">&quot;Item deleted successfully&quot;</span><span class="s1">)</span>
+    <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'dashboard'</span><span class="s1">)</span>
+
+<span class="s0">def </span><span class="s1">deletetable(request</span><span class="s0">, </span><span class="s1">id) :</span>
+    <span class="s1">t = Table.objects.get(pk=id)</span>
+    <span class="s1">t.delete()</span>
+    <span class="s1">messages.add_message(request</span><span class="s0">, </span><span class="s1">messages.ERROR</span><span class="s0">, </span><span class="s2">&quot;Table deleted successfully&quot;</span><span class="s1">)</span>
+    <span class="s0">return </span><span class="s1">redirect(</span><span class="s2">'table'</span><span class="s1">)</span>
+</pre>
+</body>
+</html>

@@ -123,6 +123,7 @@ class Bill(models.Model):
     discount = models.FloatField(null=True, blank=True)
     taxable_amnt = models.FloatField(null=True, blank=True)
     tax_amnt = models.FloatField(null=True, blank=True)
+    service_amnt = models.FloatField(null=True, blank=True)
     total_amnt = models.FloatField(null=True, blank=True)
     billprt = models.IntegerField(null=True, blank=True)
     billactive = models.IntegerField(null=True, blank=True)

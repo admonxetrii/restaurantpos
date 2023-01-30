@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>base2.html</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #e8bf6a;}
+.s1 { color: #bababa;}
+.s2 { color: #a9b7c6;}
+.s3 { color: #a9b7c6;}
+.s4 { color: #a5c261;}
+.s5 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+base2.html</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;!DOCTYPE </span><span class="s1">html</span><span class="s0">&gt;</span>
+<span class="s3">{% load static %}</span>
+<span class="s0">&lt;html&gt;</span>
+
+<span class="s0">&lt;head&gt;</span>
+    <span class="s0">&lt;meta </span><span class="s1">charset</span><span class="s4">=&quot;utf-8&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;meta </span><span class="s1">name</span><span class="s4">=&quot;viewport&quot; </span><span class="s1">content</span><span class="s4">=&quot;width=device-width, initial-scale=1.0, shrink-to-fit=no&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;title&gt;</span><span class="s3">{% block 'title' %}{% endblock %} - Restaurant Management System</span><span class="s0">&lt;/title&gt;</span>
+    <span class="s0">&lt;meta </span><span class="s1">name</span><span class="s4">=&quot;description&quot; </span><span class="s1">content</span><span class="s4">=&quot;This is a Point on sale system that is used to keep track of activities that is being held in a restaurant&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;link </span><span class="s1">rel</span><span class="s4">=&quot;stylesheet&quot; </span><span class="s1">href</span><span class="s4">=&quot;{% static 'assets/bootstrap/css/bootstrap.min.css' %}&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;link </span><span class="s1">rel</span><span class="s4">=&quot;stylesheet&quot; </span><span class="s1">href</span><span class="s4">=&quot;https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;link </span><span class="s1">rel</span><span class="s4">=&quot;stylesheet&quot; </span><span class="s1">href</span><span class="s4">=&quot;{% static 'assets/fonts/fontawesome-all.min.css' %}&quot;</span><span class="s0">&gt;</span>
+<span class="s0">&lt;/head&gt;</span>
+
+<span class="s0">&lt;body </span><span class="s1">class</span><span class="s4">=&quot;bg-gradient-primary&quot;</span><span class="s0">&gt;</span>
+
+<span class="s5">&lt;!--        body        --&gt;</span>
+
+            <span class="s3">{% block 'body' %}</span>
+
+
+            <span class="s3">{% endblock %}</span>
+
+<span class="s5">&lt;!--        end body--&gt;</span>
+
+
+ <span class="s0">&lt;script </span><span class="s1">src</span><span class="s4">=&quot;{% static 'assets/js/jquery.min.js' %}&quot;</span><span class="s0">&gt;&lt;/script&gt;</span>
+    <span class="s0">&lt;script </span><span class="s1">src</span><span class="s4">=&quot;{% static 'assets/bootstrap/js/bootstrap.min.js' %}&quot;</span><span class="s0">&gt;&lt;/script&gt;</span>
+    <span class="s0">&lt;script </span><span class="s1">src</span><span class="s4">=&quot;{% static 'assets/js/chart.min.js' %}&quot;</span><span class="s0">&gt;&lt;/script&gt;</span>
+    <span class="s0">&lt;script </span><span class="s1">src</span><span class="s4">=&quot;https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js&quot;</span><span class="s0">&gt;&lt;/script&gt;</span>
+    <span class="s0">&lt;script </span><span class="s1">src</span><span class="s4">=&quot;{% static 'assets/js/script.min.js' %}&quot;</span><span class="s0">&gt;&lt;/script&gt;</span>
+<span class="s0">&lt;/body&gt;</span>
+
+<span class="s0">&lt;/html&gt;</span></pre>
+</body>
+</html>

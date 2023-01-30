@@ -1,0 +1,13 @@
+asgiref==3.5.2
+certifi==2022.5.18.1
+charset-normalizer==2.0.12
+Django==3.2.13
+django-mathfilters==1.0.0
+idna==3.3
+mysqlclient==2.1.0
+Pillow==9.1.1
+pytz==2022.1
+requests==2.27.1
+sqlparse==0.4.2
+typing_extensions==4.2.0
+urllib3==1.26.9

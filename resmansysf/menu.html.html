@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>menu.html</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #a9b7c6;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #e8bf6a;}
+.s3 { color: #bababa;}
+.s4 { color: #a5c261;}
+.s5 { color: #cc7832;}
+.s6 { color: #6a8759;}
+.s7 { color: #808080;}
+.s8 { color: #6d9cbe;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+menu.html</font>
+</center></td></tr></table>
+<pre><span class="s0">{% extends 'base/base.html' %}</span>
+<span class="s0">{% block 'title' %} Blank Page {% endblock %}</span>
+
+<span class="s0">{% block 'body' %}</span>
+<span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;container-fluid&quot;</span><span class="s2">&gt;</span>
+    <span class="s2">&lt;h3 </span><span class="s3">class</span><span class="s4">=&quot;text-dark mb-1 font-weight-bolder&quot;</span><span class="s2">&gt;</span><span class="s0">{% for c in cate %} {{c.title}} {% endfor %}</span><span class="s2">&lt;/h3&gt;</span>
+    <span class="s0">{% include 'component/message.html' %}</span>
+    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;divider&quot;</span><span class="s2">&gt;&lt;p&gt;&lt;/p&gt;&lt;/div&gt;</span>
+<span class="s2">&lt;/div&gt;</span>
+<span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;container-fluid&quot;</span><span class="s2">&gt;</span>
+    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;table-responsive&quot;</span><span class="s2">&gt;</span>
+        <span class="s2">&lt;table </span><span class="s3">class</span><span class="s4">=&quot;table table-bordered&quot; </span><span class="s3">id</span><span class="s4">=&quot;dataTable&quot; </span><span class="s3">width</span><span class="s4">=&quot;100%&quot; </span><span class="s3">cellspacing</span><span class="s4">=&quot;0&quot;</span><span class="s2">&gt;</span>
+            <span class="s2">&lt;thead&gt;</span>
+            <span class="s2">&lt;tr&gt;</span>
+                <span class="s2">&lt;th&gt;</span><span class="s0">SN.</span><span class="s2">&lt;/th&gt;</span>
+                <span class="s2">&lt;th&gt;</span><span class="s0">Name</span><span class="s2">&lt;/th&gt;</span>
+                <span class="s2">&lt;th&gt;</span><span class="s0">Price</span><span class="s2">&lt;/th&gt;</span>
+                <span class="s2">&lt;th&gt;</span><span class="s0">Action</span><span class="s2">&lt;/th&gt;</span>
+                <span class="s0">{% if request.user.is_superuser %}</span>
+                <span class="s2">&lt;th&gt;</span><span class="s0">Edit/Delete</span><span class="s2">&lt;/th&gt;</span>
+                <span class="s0">{% endif %}</span>
+            <span class="s2">&lt;/tr&gt;</span>
+            <span class="s2">&lt;/thead&gt;</span>
+            <span class="s2">&lt;tbody&gt;</span>
+            <span class="s0">{{ forloop.counter }}</span>
+            <span class="s0">{% for m in menu %}</span>
+            <span class="s2">&lt;tr&gt;</span>
+                <span class="s2">&lt;td&gt;</span><span class="s0">{{forloop.counter}}</span><span class="s2">&lt;/td&gt;</span>
+                <span class="s2">&lt;td&gt;</span><span class="s0">{{m.title}}</span><span class="s2">&lt;/td&gt;</span>
+                <span class="s2">&lt;td&gt;</span><span class="s0">Rs. {{m.price}}-/</span><span class="s2">&lt;/td&gt;</span>
+                <span class="s2">&lt;td&gt;</span>
+                    <span class="s2">&lt;button </span><span class="s3">class</span><span class="s4">=&quot;btn btn-primary btn-sm&quot; </span><span class="s3">data-toggle</span><span class="s4">=&quot;modal&quot; </span><span class="s3">data-target</span><span class="s4">=&quot;#order{{m.id}}&quot;</span><span class="s2">&gt;&lt;i</span>
+                            <span class="s3">class</span><span class="s4">=&quot;fa fa-plus&quot;</span><span class="s2">&gt;&lt;/i&gt;</span><span class="s0">Order</span>
+                    <span class="s2">&lt;/button&gt;</span>
+                <span class="s2">&lt;/td&gt;</span>
+                <span class="s0">{% if request.user.is_superuser %}</span>
+                <span class="s2">&lt;td&gt;&lt;a </span><span class="s3">href</span><span class="s4">=&quot;{% url 'editMenu' m.id %}&quot;</span><span class="s2">&gt;&lt;button </span><span class="s3">class</span><span class="s4">=&quot;btn btn-primary btn-sm&quot;</span><span class="s2">&gt;&lt;i </span><span class="s3">class</span><span class="s4">=&quot;fa fa-edit&quot;</span><span class="s2">&gt;&lt;/i&gt; </span><span class="s0">Edit</span><span class="s2">&lt;/button&gt;&lt;/a&gt;</span>
+                    <span class="s0">| </span><span class="s2">&lt;a </span><span class="s3">href</span><span class="s4">=&quot;{% url 'delmenu' m.id %}&quot;</span><span class="s2">&gt;&lt;button </span><span class="s3">class</span><span class="s4">=&quot;btn btn-danger btn-sm&quot; </span><span class="s3">onclick</span><span class="s4">=&quot;</span><span class="s5">return </span><span class="s1">confirm(</span><span class="s6">'Are you sure want to delete this item?'</span><span class="s0">)</span><span class="s5">;</span><span class="s4">&quot;</span><span class="s2">&gt;&lt;i </span><span class="s3">class</span><span class="s4">=&quot;fa fa-trash&quot;</span><span class="s2">&gt;&lt;/i&gt; </span><span class="s0">Delete</span><span class="s2">&lt;/button&gt;&lt;/a&gt;&lt;/td&gt;</span>
+                <span class="s0">{% endif %}</span>
+            <span class="s2">&lt;/tr&gt;</span>
+            <span class="s0">{% endfor %}</span>
+            <span class="s2">&lt;/tbody&gt;</span>
+        <span class="s2">&lt;/table&gt;</span>
+        <span class="s2">&lt;div&gt;</span>
+            <span class="s0">{% if request.user.is_superuser %}</span>
+            <span class="s2">&lt;a </span><span class="s3">href</span><span class="s4">=&quot;{% url 'addMenu' %}&quot;</span><span class="s2">&gt;&lt;button </span><span class="s3">class</span><span class="s4">=&quot;btn btn-primary&quot;</span><span class="s2">&gt;&lt;i </span><span class="s3">class</span><span class="s4">=&quot;fa fa-plus&quot;</span><span class="s2">&gt;&lt;/i&gt; </span><span class="s0">Add Menu Items</span><span class="s2">&lt;/button&gt;&lt;/a&gt;</span>
+            <span class="s0">{% endif %}</span>
+        <span class="s2">&lt;/div&gt;</span>
+    <span class="s2">&lt;/div&gt;</span>
+<span class="s2">&lt;/div&gt;</span>
+
+<span class="s7">&lt;!--model--&gt;</span>
+<span class="s0">{% for m in menu %}</span>
+
+<span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;modal fade&quot; </span><span class="s3">id</span><span class="s4">=&quot;order{{m.id}}&quot; </span><span class="s3">tabindex</span><span class="s4">=&quot;-1&quot; </span><span class="s3">role</span><span class="s4">=&quot;dialog&quot; </span><span class="s3">aria-labelledby</span><span class="s4">=&quot;exampleModalCenterTitle&quot;</span>
+     <span class="s3">aria-hidden</span><span class="s4">=&quot;true&quot;</span><span class="s2">&gt;</span>
+    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;modal-dialog modal-dialog-centered&quot; </span><span class="s3">role</span><span class="s4">=&quot;document&quot;</span><span class="s2">&gt;</span>
+        <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;modal-content&quot;</span><span class="s2">&gt;</span>
+            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;modal-header&quot;</span><span class="s2">&gt;</span>
+                <span class="s2">&lt;h5 </span><span class="s3">class</span><span class="s4">=&quot;modal-title&quot; </span><span class="s3">id</span><span class="s4">=&quot;exampleModalLongTitle&quot;</span><span class="s2">&gt;</span><span class="s0">Order - {{m.title}}</span><span class="s2">&lt;/h5&gt;</span>
+                <span class="s2">&lt;button </span><span class="s3">type</span><span class="s4">=&quot;button&quot; </span><span class="s3">class</span><span class="s4">=&quot;close&quot; </span><span class="s3">data-dismiss</span><span class="s4">=&quot;modal&quot; </span><span class="s3">aria-label</span><span class="s4">=&quot;Close&quot;</span><span class="s2">&gt;</span>
+                    <span class="s2">&lt;span </span><span class="s3">aria-hidden</span><span class="s4">=&quot;true&quot;</span><span class="s2">&gt;</span><span class="s8">&amp;times;</span><span class="s2">&lt;/span&gt;</span>
+                <span class="s2">&lt;/button&gt;</span>
+            <span class="s2">&lt;/div&gt;</span>
+            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;modal-body&quot;</span><span class="s2">&gt;</span>
+                <span class="s2">&lt;h5&gt;</span><span class="s0">Select Table to Order:</span><span class="s2">&lt;/h5&gt;</span>
+                <span class="s2">&lt;form </span><span class="s3">method</span><span class="s4">=&quot;post&quot; </span><span class="s3">action</span><span class="s4">=&quot;{% url 'order' %}&quot;</span><span class="s2">&gt;</span>
+                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-group&quot;</span><span class="s2">&gt;</span>
+                        <span class="s2">&lt;label </span><span class="s3">for</span><span class="s4">=&quot;id_table&quot;</span><span class="s2">&gt;&lt;/label&gt;</span>
+                        <span class="s2">&lt;select </span><span class="s3">name</span><span class="s4">=&quot;table&quot; </span><span class="s3">id</span><span class="s4">=&quot;id_table&quot; </span><span class="s3">required</span><span class="s4">=&quot;&quot; </span><span class="s3">class</span><span class="s4">=&quot;form-control&quot;</span><span class="s2">&gt;</span>
+                            <span class="s2">&lt;option </span><span class="s3">value</span><span class="s4">=&quot;&quot; </span><span class="s3">selected</span><span class="s2">&gt;</span><span class="s0">-------</span><span class="s2">&lt;/option&gt;</span>
+                            <span class="s0">{% for t in table %}</span>
+                            <span class="s2">&lt;option </span><span class="s3">value</span><span class="s4">=&quot;{{t.id}}&quot;</span><span class="s2">&gt;</span><span class="s0">{{t.title}}</span><span class="s2">&lt;/option&gt;</span>
+                            <span class="s0">{% endfor %}</span>
+                        <span class="s2">&lt;/select&gt;</span>
+                    <span class="s2">&lt;/div&gt;</span>
+                    <span class="s2">&lt;label </span><span class="s3">for</span><span class="s4">=&quot;id_menu&quot;</span><span class="s2">&gt;&lt;/label&gt;</span>
+                    <span class="s2">&lt;select </span><span class="s3">name</span><span class="s4">=&quot;menu&quot; </span><span class="s3">required</span><span class="s4">=&quot;&quot; </span><span class="s3">id</span><span class="s4">=&quot;id_menu&quot; </span><span class="s3">hidden class</span><span class="s4">=&quot;form-control&quot;</span><span class="s2">&gt;</span>
+                        <span class="s2">&lt;option </span><span class="s3">value</span><span class="s4">=&quot;{{m.id}}&quot; </span><span class="s3">selected</span><span class="s4">=&quot;&quot;</span><span class="s2">&gt;</span><span class="s0">{{m.title}}</span><span class="s2">&lt;/option&gt;</span>
+                    <span class="s2">&lt;/select&gt;</span>
+                    <span class="s2">&lt;label </span><span class="s3">for</span><span class="s4">=&quot;qty&quot;</span><span class="s2">&gt;</span><span class="s0">Quantity:</span><span class="s2">&lt;/label&gt;</span>
+                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-group&quot;</span><span class="s2">&gt;</span>
+                        <span class="s2">&lt;input </span><span class="s3">type</span><span class="s4">=&quot;number&quot; </span><span class="s3">min</span><span class="s4">=&quot;1&quot; </span><span class="s3">max</span><span class="s4">=&quot;10&quot; </span><span class="s3">id</span><span class="s4">=&quot;qty&quot; </span><span class="s3">name</span><span class="s4">=&quot;qty&quot; </span><span class="s3">required</span><span class="s4">=&quot;&quot; </span><span class="s3">class</span><span class="s4">=&quot;form-control&quot;</span><span class="s2">&gt;</span>
+                    <span class="s2">&lt;/div&gt;</span>
+                    <span class="s0">{{ form.as_p }}</span>
+                    <span class="s0">{% csrf_token %}</span>
+                    <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;form-group&quot;</span><span class="s2">&gt;</span>
+                        <span class="s2">&lt;button </span><span class="s3">type</span><span class="s4">=&quot;submit&quot; </span><span class="s3">class</span><span class="s4">=&quot;btn btn-primary form-control&quot;</span><span class="s2">&gt;</span><span class="s0">Order</span><span class="s2">&lt;/button&gt;</span>
+                    <span class="s2">&lt;/div&gt;</span>
+                <span class="s2">&lt;/form&gt;</span>
+            <span class="s2">&lt;/div&gt;</span>
+            <span class="s2">&lt;div </span><span class="s3">class</span><span class="s4">=&quot;modal-footer&quot;</span><span class="s2">&gt;</span>
+                <span class="s2">&lt;button </span><span class="s3">type</span><span class="s4">=&quot;button&quot; </span><span class="s3">class</span><span class="s4">=&quot;btn btn-secondary&quot; </span><span class="s3">data-dismiss</span><span class="s4">=&quot;modal&quot;</span><span class="s2">&gt;</span><span class="s0">Close</span><span class="s2">&lt;/button&gt;</span>
+            <span class="s2">&lt;/div&gt;</span>
+        <span class="s2">&lt;/div&gt;</span>
+    <span class="s2">&lt;/div&gt;</span>
+<span class="s2">&lt;/div&gt;</span>
+
+<span class="s0">{% endfor %}</span>
+
+
+<span class="s0">{% endblock %}</span></pre>
+</body>
+</html>

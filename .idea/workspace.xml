@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0017_auto_20201226_1136.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0018_totalserveditem.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Restaurant/migrations/0019_auto_20201226_1342.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/serveditem.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/unserveditem.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/rms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rms.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Restaurant/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Restaurant/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rms/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rms/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rms/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rms/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/base/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/base/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/tabledetail.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/tabledetail.html" afterDir="false" />
-    </list>
+    <list default="true" id="5d09c909-db26-4b91-874d-bfbb8290106c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,96 +13,30 @@
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="TypeScript File" />
-        <option value="CSS File" />
-        <option value="JavaScript File" />
-        <option value="HTML File" />
-      </list>
-    </option>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="JupyterTrust" id="51578916-04b2-4f5b-9ac0-808e05dc13f2" />
-  <component name="PackageJsonUpdateNotifier">
-    <dismissed value="$PROJECT_DIR$/static/assets/package.json" />
-  </component>
-  <component name="ProjectId" id="1YfFdOvlxMtd1OEdpyNGzM3s9IR" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="2L3R3iytiP6CGJeg25Oguir9TJP" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="F:/Pycemon/hanumanconstruction" />
-    <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.path.for.package.eslint" value="project" />
-    <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
-    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\PyCharm 2019.3.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\2020march\desktop\django\rms\static\assets\images" />
-      <recent name="C:\Users\admon\Desktop\django\rms\static\assets\images" />
-      <recent name="C:\Users\admon\Desktop\django\rms\static" />
-      <recent name="C:\Users\admon\Desktop\django\rms\static\assets\node_modules\switchery\dist" />
-      <recent name="C:\Users\admon\Desktop\django\rms\static\dist\js\pages" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\2020march\desktop\django\tropical\rms\static\assets\node_modules\jquery-sparkline" />
-      <recent name="E:\2020march\desktop\django\rms\static\assets\images" />
-      <recent name="E:\2020march\desktop\django\rms\static\assets\images\background" />
-      <recent name="E:\2020march\desktop\django\rms\static\assets\node_modules" />
-      <recent name="C:\Users\admon\Desktop\django\rms\Restaurant\migrations" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Python.manage">
-    <configuration name="manage" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="rms" />
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/Pycemon/POS",
+    "settings.editor.selected.configurable": "terminal"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="POS" type="Python.DjangoServer" factoryName="Django server">
+      <module name="POS" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="rms" type="Python.DjangoServer" factoryName="Django server">
-      <module name="rms" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-        <env name="DJANGO_SETTINGS_MODULE" value="rms.settings" />
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
@@ -132,285 +54,17 @@
       <option name="customRunCommand" value="" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.manage" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
-  <component name="SvnConfiguration">
-    <configuration />
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="4e99e921-99ff-488d-a23e-91f2826474db" name="Default Changelist" comment="" />
-      <created>1583325828614</created>
+      <changelist id="5d09c909-db26-4b91-874d-bfbb8290106c" name="Changes" comment="" />
+      <created>1675097582725</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1583325828614</updated>
-      <workItem from="1583325834724" duration="29935000" />
-      <workItem from="1583381824129" duration="21202000" />
-      <workItem from="1583419495599" duration="7874000" />
-      <workItem from="1583463502538" duration="4000" />
-      <workItem from="1583463616939" duration="6924000" />
-      <workItem from="1583475115538" duration="1709000" />
-      <workItem from="1583499644861" duration="28975000" />
-      <workItem from="1583626241410" duration="3308000" />
-      <workItem from="1583633114669" duration="22675000" />
-      <workItem from="1583674402100" duration="19943000" />
-      <workItem from="1583729221986" duration="198000" />
-      <workItem from="1583736161097" duration="885000" />
-      <workItem from="1583738435107" duration="939000" />
-      <workItem from="1583816457495" duration="14262000" />
-      <workItem from="1583833881213" duration="2885000" />
-      <workItem from="1583839364092" duration="18194000" />
-      <workItem from="1584110282823" duration="10861000" />
-      <workItem from="1584168867360" duration="2998000" />
-      <workItem from="1584660170917" duration="4662000" />
-      <workItem from="1584851826265" duration="523000" />
-      <workItem from="1584853808200" duration="11022000" />
-      <workItem from="1584879473980" duration="13071000" />
-      <workItem from="1585042644741" duration="7691000" />
-      <workItem from="1585302619758" duration="722000" />
-      <workItem from="1585545193106" duration="221000" />
-      <workItem from="1585549638452" duration="4648000" />
-      <workItem from="1585793946954" duration="14239000" />
-      <workItem from="1585825929435" duration="10930000" />
-      <workItem from="1585880498295" duration="116000" />
-      <workItem from="1586310561616" duration="620000" />
-      <workItem from="1588055575313" duration="871000" />
-      <workItem from="1588612193920" duration="453000" />
-      <workItem from="1588830057821" duration="2332000" />
-      <workItem from="1588858900677" duration="5322000" />
-      <workItem from="1588864255350" duration="1004000" />
-      <workItem from="1588866726243" duration="158000" />
-      <workItem from="1590037838626" duration="1508000" />
-      <workItem from="1590415235714" duration="270000" />
-      <workItem from="1590509291172" duration="1526000" />
-      <workItem from="1590552366929" duration="36000" />
-      <workItem from="1590650902347" duration="643000" />
-      <workItem from="1590724146031" duration="3280000" />
-      <workItem from="1591516515708" duration="1504000" />
-      <workItem from="1591520819193" duration="1076000" />
-      <workItem from="1592192287758" duration="2343000" />
-      <workItem from="1592230577881" duration="2360000" />
-      <workItem from="1592710555406" duration="42000" />
-      <workItem from="1594318591643" duration="225000" />
-      <workItem from="1594790536761" duration="7000" />
-      <workItem from="1595683714370" duration="229000" />
-      <workItem from="1596095889596" duration="599000" />
-      <workItem from="1596180091164" duration="632000" />
-      <workItem from="1597829859918" duration="4000" />
-      <workItem from="1598419820881" duration="31000" />
-      <workItem from="1598604225401" duration="657000" />
-      <workItem from="1598622776465" duration="63000" />
-      <workItem from="1598632243907" duration="602000" />
-      <workItem from="1599651640895" duration="1964000" />
-      <workItem from="1600156919685" duration="5000" />
-      <workItem from="1600278979215" duration="4000" />
-      <workItem from="1600751561620" duration="6879000" />
-      <workItem from="1600758593576" duration="220000" />
-      <workItem from="1600796081682" duration="1805000" />
-      <workItem from="1600839184545" duration="5221000" />
-      <workItem from="1600846690408" duration="215000" />
-      <workItem from="1600998370488" duration="1533000" />
-      <workItem from="1601196799181" duration="2342000" />
-      <workItem from="1605169395149" duration="2117000" />
-      <workItem from="1605173887805" duration="42000" />
-      <workItem from="1605175081928" duration="1336000" />
-      <workItem from="1605187213218" duration="4263000" />
-      <workItem from="1605240918908" duration="3765000" />
-      <workItem from="1605636866230" duration="650000" />
-      <workItem from="1606281559649" duration="6255000" />
-      <workItem from="1606293768870" duration="3116000" />
-      <workItem from="1606786926368" duration="504000" />
-      <workItem from="1606787496496" duration="9569000" />
-      <workItem from="1606885980556" duration="12079000" />
-      <workItem from="1606905143210" duration="5030000" />
-      <workItem from="1607016260364" duration="64000" />
-      <workItem from="1607016366335" duration="1286000" />
-      <workItem from="1607070546908" duration="706000" />
-      <workItem from="1607309662668" duration="1408000" />
-      <workItem from="1607311203558" duration="7494000" />
-      <workItem from="1607330955192" duration="238000" />
-      <workItem from="1607486077983" duration="6195000" />
-      <workItem from="1607852192668" duration="5426000" />
-      <workItem from="1608017200878" duration="2044000" />
-      <workItem from="1608129841395" duration="3610000" />
-      <workItem from="1608719714416" duration="92000" />
-      <workItem from="1608719869983" duration="1243000" />
-      <workItem from="1608725221101" duration="1768000" />
-      <workItem from="1608735676442" duration="5380000" />
-      <workItem from="1608743565590" duration="2574000" />
-      <workItem from="1608961587691" duration="9771000" />
+      <updated>1675097582725</updated>
+      <workItem from="1675097583759" duration="1124000" />
     </task>
-    <task id="LOCAL-00001" summary="Semi Final">
-      <created>1584892818229</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1584892818229</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Semi Final">
-      <created>1595683750036</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1595683750036</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Semi Final">
-      <created>1600758372602</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1600758372602</updated>
-    </task>
-    <task id="LOCAL-00004" summary="almost there">
-      <created>1600758757919</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1600758757919</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Added Logs">
-      <created>1600844290331</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1600844290331</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Fixed Order numbers">
-      <created>1600846901748</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1600846901748</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Fixed Order numbers">
-      <created>1600998687030</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1600998687030</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Fixed Order numbers">
-      <created>1601256747279</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1601256747279</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Aba Documentation ko kaam baaki">
-      <created>1601257262777</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1601257262777</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Aba Documentation ko kaam baaki">
-      <created>1605173038964</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1605173038964</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Aba Documentation ko kaam baaki">
-      <created>1605188660376</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1605188660376</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Tax And Abbreviated Tax ko kaam">
-      <created>1606287758028</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1606287758028</updated>
-    </task>
-    <task id="LOCAL-00013" summary="printing">
-      <created>1606896312472</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1606896312472</updated>
-    </task>
-    <task id="LOCAL-00014" summary="printing">
-      <created>1607321580910</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1607321580911</updated>
-    </task>
-    <task id="LOCAL-00015" summary="printing">
-      <created>1607321617253</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1607321617253</updated>
-    </task>
-    <task id="LOCAL-00016" summary="printing">
-      <created>1607489851226</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1607489851227</updated>
-    </task>
-    <task id="LOCAL-00017" summary="printing">
-      <created>1607873000766</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1607873000766</updated>
-    </task>
-    <task id="LOCAL-00018" summary="printing">
-      <created>1608019377926</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1608019377926</updated>
-    </task>
-    <task id="LOCAL-00019" summary="printing">
-      <created>1608133363293</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1608133363293</updated>
-    </task>
-    <task id="LOCAL-00020" summary="taxbill">
-      <created>1608133424147</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1608133424147</updated>
-    </task>
-    <task id="LOCAL-00021" summary="taxbill">
-      <created>1608133447941</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1608133447941</updated>
-    </task>
-    <option name="localTasksCounter" value="22" />
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Semi Final" />
-    <MESSAGE value="almost there" />
-    <MESSAGE value="Added Logs" />
-    <MESSAGE value="Fixed Order numbers" />
-    <MESSAGE value="Aba Documentation ko kaam baaki" />
-    <MESSAGE value="Tax And Abbreviated Tax ko kaam" />
-    <MESSAGE value="printing" />
-    <MESSAGE value="taxbill" />
-    <option name="LAST_COMMIT_MESSAGE" value="taxbill" />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/rms$manage.coverage" NAME="manage Coverage Results" MODIFIED="1583500292974" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

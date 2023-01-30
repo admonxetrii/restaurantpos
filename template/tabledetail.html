@@ -20,10 +20,10 @@
                                 <th>Item</th>
                                 <th>Quantity</th>
                                 <th>Remarks</th>
+                                <th>Actions</th>
                                 <th>Printed?</th>
                                 {% if request.user.is_staff %}
                                     <th>Served?</th>
-                                    <th>Actions</th>
                                     <th>Total</th>
                                     <th>Ordered by</th>
                                 {% endif %}
@@ -43,17 +43,36 @@
                                     {% endif %}
                                 </td>
                                 <td>{{o.remarks}}</td>
+                                <td>
+                                    {% if o.printsts == 1 %}
+                                        {% if request.user.is_staff %}
+                                            <a href="{% url 'delitem' o.id %}" onclick="return confirm('Are you sure?');"  style="color: #ff032d;"><button class="btn btn-secondary btn-sm"><i class="fa fa-trash"></i> Remove</button></a>
+                                        {% else %}
+                                            <button class="btn btn-danger btn-sm" disabled><i class="fa fa-trash"></i> Remove</button>
+                                        {% endif %}
+                                    {% else %}
+                                        <a href="{% url 'delitem' o.id %}" ><button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Remove</button></a>
+                                    {% endif %}
+                                </td>
                             {% if o.printsts == 1 %}
                                 <td>
                                 {% if o.servests == 0 %}
-                                    <a href="{% url 'printsts' o.id %}"> <span class="text-success"><i class="fa fa-check"></i> Yes</span></a>
+                                    {% if request.user.is_staff %}
+                                        <a href="{% url 'printsts' o.id %}"> <span class="text-success"><i class="fa fa-check"></i> Yes</span></a>
+                                    {% else %}
+                                        <span class="text-success"><i class="fa fa-check"></i> Yes</span>
+                                    {% endif %}
                                 {% else %}
                                     <span class="text-success"><i class="fa fa-check"></i> Yes</span>
                                 {% endif %}
                                 </td>
                             {% else %}
                                 <td>
-                                    <span style="color: red;"><i class="fa fa-times"></i> No</span>
+                                    {% if request.user.is_staff %}
+                                        <a href="{% url 'unprintsts' o.id %}"> <span class="text-danger"><i class="fa fa-times"></i> No</span></a>
+                                    {% else %}
+                                        <span style="color: red;"><i class="fa fa-times"></i> No</span>
+                                    {% endif %}
                                     <script type="text/javascript">prtsts++;</script>
                                 </td>
                             {% endif %}
@@ -74,13 +93,7 @@
                                             <a href="{% url 'unserveitem' o.id %}"><span class="text-success"><span class="fa fa-check"></span> Served</span></a>
                                         </td>
                                     {% endif %}
-                                <td>
-                                {% if request.user.is_staff %}
-                                    <a href="{% url 'delitem' o.id %}" onclick="return confirm('Are you sure?');"  style="color: #ff032d;"><button class="btn btn-secondary btn-sm"><i class="fa fa-trash"></i> Remove</button></a>
-                                {% else %}
-                                    <button class="btn btn-danger btn-sm" disabled><i class="fa fa-trash"></i> Remove</button>
-                                {% endif %}
-                                </td>
+
                                 <td>
                                     {{o.quantity}} * {{o.menu.price}} = {{o.quantity|mul:o.menu.price}}
                                 </td>
@@ -145,10 +158,10 @@
                     else {
                         if (total<5000){
                             $('#billbtn1').show();
-                            $('#billbtn2').hide();
+                            $('#billbtn2').show();
                         }else{
                             $('#billbtn1').show();
-                            $('#billbtn2').hide();
+                            $('#billbtn2').show();
                         }
                         $('#btnPrint').hide();
                     }

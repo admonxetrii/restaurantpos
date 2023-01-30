@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>message.html</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #a9b7c6;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #e8bf6a;}
+.s3 { color: #bababa;}
+.s4 { color: #a5c261;}
+.s5 { color: #cc7832;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+message.html</font>
+</center></td></tr></table>
+<pre><span class="s0">{% if messages %}</span>
+    <span class="s2">&lt;ul&gt;</span>
+    <span class="s0">{% for m in messages %}</span>
+        <span class="s0">{% if m.tags == &quot;error&quot; %}</span>
+            <span class="s2">&lt;li </span><span class="s3">class</span><span class="s4">=&quot;alert &quot; </span><span class="s3">style</span><span class="s4">=&quot;</span><span class="s3">color</span><span class="s0">: </span><span class="s4">red</span><span class="s5">;</span><span class="s4">&quot;</span><span class="s2">&gt;</span><span class="s0">{{m}}</span><span class="s2">&lt;/li&gt;</span>
+        <span class="s0">{% else %}</span>
+            <span class="s2">&lt;li </span><span class="s3">class</span><span class="s4">=&quot;alert &quot; </span><span class="s3">style</span><span class="s4">=&quot;</span><span class="s3">color</span><span class="s0">: </span><span class="s4">green</span><span class="s5">;</span><span class="s4">&quot;</span><span class="s2">&gt;</span><span class="s0">{{m}}</span><span class="s2">&lt;/li&gt;</span>
+        <span class="s0">{% endif %}</span>
+    <span class="s0">{% endfor %}</span>
+    <span class="s2">&lt;/ul&gt;</span>
+<span class="s0">{% endif %}</span></pre>
+</body>
+</html>

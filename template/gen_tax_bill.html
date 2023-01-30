@@ -50,7 +50,7 @@
                                                     <td class="tableitem"><p class="itemtext">{{o.quantity}}</p></td>
                                                     <td class="tableitem"><p class="itemtext">Rs. <script type="text/javascript">var rate = {{o.menu.price|mul:100|div:113}}; document.write((rate).toFixed(2)); </script>/-</p></td>
                                                     <td class="tableitem"><p class="itemtext">Rs. <script type="text/javascript">var nettots = {{o.quantity|mul:o.menu.price|mul:100|div:113}}; document.write((nettots).toFixed(2)); </script>/-
-                                                        <script type="text/javascript"> var total = (total + {{o.quantity|mul:o.menu.price|mul:100|div:113}}).toFixed(2);  </script>
+                                                        <script type="text/javascript"> total = total+nettots;  </script>
                                                     </p></td>
                                                 </tr>
                                                         <script>count++;</script>
@@ -103,6 +103,13 @@
                                                     <td>VAT (13%)</td>
                                                     <td>Rs. <span id="vat" ></span>/-</td>
                                                 </tr>
+                                                <tr class="tabletitle h5">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>Service Charge (0%)</td>
+                                                    <td>Rs. <span id="srvcChrg" ></span>/-</td>
+                                                </tr>
                                                 <tr class="tabletitle font-weight-bold h4">
                                                     <td></td>
                                                     <td></td>
@@ -141,6 +148,7 @@
                                             <input type="text" name="taxablettl" id="taxablettl" hidden />
                                             <input type="text" name="vatamt" id="vatamt" hidden />
                                             <input type="text" name="disper" value="{{ table.disval }}" hidden />
+                                            <input type="text" name="serviceChargeAmount" id="servcChrge" hidden />
                                             <input type="text" name="grdamnt" id="grdamnt" hidden />
                                             <input type="text" name="prnted" id="prnted" hidden />
                                             <input type="text" name="billnum" value="{{ billno.billid }}{{billno.number}}" hidden />
@@ -220,8 +228,8 @@
                                 <td><p class="itemtext">{{forloop.counter}}</p></td>
                                 <td><p class="itemtext" style="font-weight: bold;">{{o.menu.title}}</p></td>
                                 <td width="40px"><p class="itemtext">{{o.quantity}}</p></td>
-                                <td class="tableitem"><p class="itemtext"><script type="text/javascript">document.write((rate).toFixed(2)); </script></p></td>
-                                <td class="tableitem"><p class="itemtext"><script type="text/javascript">document.write((nettots).toFixed(2)); </script></p></td>
+                                <td class="tableitem"><p class="itemtext">{{o.menu.price|mul:100|div:113|floatformat:2}}</p></td>
+                                <td class="tableitem"><p class="itemtext">{{o.menu.price|mul:o.quantity|mul:100|div:113|floatformat:2}}</p></td>
                             </tr>
                                 {% endfor %}
                             {% if table.title == 'Karaoke' %}
@@ -250,7 +258,7 @@
                             <tr>
                                 <td style="text-align: right;">Discount</td>
                                 <td>=</td>
-                                <td><span id="disamt">0.0</span>%</td>
+                                <td><span id="disamt">0.0</span>% | Rs. <span id="disamtRs">0</span>/-</td>
                             </tr>
                             <tr>
                                 <td style="text-align: right;">Taxable amount</td>
@@ -261,6 +269,11 @@
                                 <td style="text-align: right;">Vat(13%)</td>
                                 <td>=</td>
                                 <td>Rs. <span id="tax"></span>/-</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">Service Charge (0%)</td>
+                                <td>=</td>
+                                <td>Rs. <span id="srvcChrgRs">0</span>/-</td>
                             </tr>
                             <tr>
                                 <td style="text-align: right;"><h3>Grand Total</h3></td>
@@ -326,8 +339,8 @@
                                 <td><p class="itemtext">{{forloop.counter}}</p></td>
                                 <td><p class="itemtext" style="font-weight: bold;">{{o.menu.title}}</p></td>
                                 <td width="40px"><p class="itemtext">{{o.quantity}}</p></td>
-                                <td class="tableitem"><p class="itemtext">{{o.menu.price}}</p></td>
-                                <td class="tableitem"><p class="itemtext">{{o.quantity|mul:o.menu.price}}</p></td>
+                                <td class="tableitem"><p class="itemtext">{{o.menu.price|mul:100|div:113|floatformat:2}}</p></td>
+                                <td class="tableitem"><p class="itemtext">{{o.menu.price|mul:o.quantity|mul:100|div:113|floatformat:2}}</p></td>
                             </tr>
                                 {% endfor %}
                             {% if table.title == 'Karaoke' %}
@@ -356,7 +369,7 @@
                             <tr>
                                 <td style="text-align: right;">Discount</td>
                                 <td>=</td>
-                                <td><span id="disamtpre">0.0</span>%</td>
+                                <td><span id="disamtpre">0.0</span>% | Rs. <span id="disamtRspre">0</span>/-</td>
                             </tr>
                             <tr>
                                 <td style="text-align: right;">Taxable amount</td>
@@ -367,6 +380,11 @@
                                 <td style="text-align: right;">Vat(13%)</td>
                                 <td>=</td>
                                 <td>Rs. <span id="taxpre"></span>/-</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">Service Charge (0%)</td>
+                                <td>=</td>
+                                <td>Rs. <span id="srvcChrgRspre">0</span>/-</td>
                             </tr>
                             <tr>
                                 <td style="text-align: right;"><h3>Grand Total</h3></td>
@@ -481,12 +499,21 @@
     <script>
 
 
-    document.getElementById('totalamt').innerHTML = total;
-    document.getElementById('totalamt1').innerHTML = total;
-    document.getElementById('totalamt1pre').innerHTML = total;
-    var taxableamnt = total-(disc/100)*total;
+    document.getElementById('totalamt').innerHTML = total.toFixed(2);
+    document.getElementById('totalamt1').innerHTML = total.toFixed(2);
+    document.getElementById('totalamt1pre').innerHTML = total.toFixed(2);
+    var disamtRs = (disc/100)*total;
+    var taxableamnt = total-disamtRs;
     var tax = (13/100)*taxableamnt;
-    var grandtotal = taxableamnt + tax;
+    var grandtotalpre = taxableamnt + tax;
+    var serviceChrg = (0*grandtotalpre);
+    var grandtotal = grandtotalpre + serviceChrg;
+    document.getElementById('srvcChrg').innerHTML = serviceChrg.toFixed(2);
+    document.getElementById('srvcChrgRs').innerHTML = serviceChrg.toFixed(2);
+    document.getElementById('srvcChrgRspre').innerHTML = serviceChrg.toFixed(2);
+    document.getElementById('disamtRs').innerText = disamtRs.toFixed(2);
+    document.getElementById('disamtRspre').innerText = disamtRs.toFixed(2);
+
     document.getElementById('taxable').innerHTML = taxableamnt.toFixed(2);
     document.getElementById('taxamt').innerHTML = taxableamnt.toFixed(2);
     document.getElementById('taxamtpre').innerHTML = taxableamnt.toFixed(2);
@@ -649,9 +676,10 @@
             CallPrint('receipt',copy);
         }else {
             document.getElementById('prnted').value = printednumber;
-            document.getElementById('nettotal').value = total;
+            document.getElementById('nettotal').value = total.toFixed(2);
             document.getElementById('taxablettl').value = taxableamnt.toFixed(2);
             document.getElementById('vatamt').value = tax.toFixed(2);
+            document.getElementById('servcChrge').value = serviceChrg.toFixed(2);
             document.getElementById('grdamnt').value = grandtotal.toFixed(2);
         }
     }

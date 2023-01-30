@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>models.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6897bb;}
+.s4 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+models.py</font>
+</center></td></tr></table>
+<pre><span class="s0">from </span><span class="s1">django.db </span><span class="s0">import </span><span class="s1">models</span>
+<span class="s0">from </span><span class="s1">django.core.exceptions </span><span class="s0">import </span><span class="s1">ValidationError</span>
+
+
+<span class="s2"># Create your models here.</span>
+<span class="s0">def </span><span class="s1">mycustomvalidator(value) :</span>
+    <span class="s0">if </span><span class="s1">len(value) &gt; </span><span class="s3">1 </span><span class="s1">:</span>
+        <span class="s0">return True</span>
+    <span class="s0">else </span><span class="s1">:</span>
+        <span class="s0">raise </span><span class="s1">ValidationError(</span><span class="s4">&quot;Must have more than 1 characters.&quot;</span><span class="s1">)</span>
+
+
+<span class="s0">def </span><span class="s1">val2(value) :</span>
+    <span class="s0">if </span><span class="s4">'@' </span><span class="s0">in </span><span class="s1">value </span><span class="s0">or </span><span class="s4">'#' </span><span class="s0">in </span><span class="s1">value </span><span class="s0">or </span><span class="s4">'*' </span><span class="s0">in </span><span class="s1">value :</span>
+        <span class="s0">raise </span><span class="s1">ValidationError(</span><span class="s4">&quot;Title cannot have special charaters.&quot;</span><span class="s1">)</span>
+    <span class="s0">else </span><span class="s1">:</span>
+        <span class="s0">return True</span>
+
+
+<span class="s0">class </span><span class="s1">MenuCategory(models.Model) :</span>
+    <span class="s1">title = models.CharField(max_length=</span><span class="s3">100</span><span class="s0">, </span><span class="s1">unique=</span><span class="s0">True, </span><span class="s1">validators=[mycustomvalidator</span><span class="s0">, </span><span class="s1">val2])</span>
+    <span class="s1">image = models.ImageField(upload_to=</span><span class="s4">'CategoryMenu/'</span><span class="s0">, </span><span class="s1">null=</span><span class="s0">True, </span><span class="s1">blank=</span><span class="s0">True</span><span class="s1">)</span>
+
+    <span class="s0">def </span><span class="s1">__str__(self) :</span>
+        <span class="s0">return </span><span class="s1">self.title</span>
+
+
+<span class="s0">class </span><span class="s1">Menu(models.Model) :</span>
+    <span class="s1">title = models.CharField(max_length=</span><span class="s3">200</span><span class="s0">, </span><span class="s1">validators=[mycustomvalidator</span><span class="s0">, </span><span class="s1">val2])</span>
+    <span class="s1">price = models.IntegerField(null=</span><span class="s0">False, </span><span class="s1">blank=</span><span class="s0">False</span><span class="s1">)</span>
+    <span class="s1">category = models.ForeignKey(MenuCategory</span><span class="s0">, </span><span class="s1">on_delete=models.CASCADE)</span>
+
+    <span class="s0">def </span><span class="s1">__str__(self) :</span>
+        <span class="s0">return </span><span class="s1">self.title</span>
+
+    <span class="s0">class </span><span class="s1">Meta :</span>
+        <span class="s1">db_table = </span><span class="s4">&quot;menu&quot;</span>
+
+
+<span class="s0">class </span><span class="s1">Table(models.Model):</span>
+    <span class="s1">title = models.CharField(max_length=</span><span class="s3">100</span><span class="s0">, </span><span class="s1">unique=</span><span class="s0">True, </span><span class="s1">validators=[mycustomvalidator</span><span class="s0">, </span><span class="s1">val2])</span>
+    <span class="s1">occupied = models.IntegerField(null=</span><span class="s0">True,</span><span class="s1">blank=</span><span class="s0">True</span><span class="s1">)</span>
+
+    <span class="s0">def </span><span class="s1">__str__(self) :</span>
+        <span class="s0">return </span><span class="s1">self.title</span>
+
+
+<span class="s0">class </span><span class="s1">Order(models.Model) :</span>
+    <span class="s1">order_date = models.DateField(auto_now=</span><span class="s0">True</span><span class="s1">)</span>
+    <span class="s1">table = models.ForeignKey(Table</span><span class="s0">, </span><span class="s1">on_delete=models.CASCADE)</span>
+    <span class="s1">menu = models.ForeignKey(Menu</span><span class="s0">, </span><span class="s1">on_delete=models.CASCADE)</span>
+    <span class="s1">quantity = models.IntegerField(null=</span><span class="s0">False,</span><span class="s1">blank=</span><span class="s0">False</span><span class="s1">)</span>
+
+<span class="s0">class </span><span class="s1">Bill(models.Model):</span>
+    <span class="s1">bill_date = models.DateField(auto_now=</span><span class="s0">True</span><span class="s1">)</span>
+    <span class="s1">table = models.ForeignKey(Table</span><span class="s0">, </span><span class="s1">on_delete=models.CASCADE)</span>
+    <span class="s1">total = models.IntegerField(null=</span><span class="s0">False,</span><span class="s1">blank=</span><span class="s0">False</span><span class="s1">)</span>
+
+
+<span class="s0">class </span><span class="s1">Inventory(models.Model) :</span>
+    <span class="s1">title = models.CharField(max_length=</span><span class="s3">200</span><span class="s0">, </span><span class="s1">validators=[mycustomvalidator</span><span class="s0">, </span><span class="s1">val2])</span>
+    <span class="s1">quantity = models.IntegerField(null=</span><span class="s0">False, </span><span class="s1">blank=</span><span class="s0">False</span><span class="s1">)</span>
+
+    <span class="s0">def </span><span class="s1">__str__(self) :</span>
+        <span class="s0">return </span><span class="s1">self.title</span>
+
+
+<span class="s0">class </span><span class="s1">MenuInventory(models.Model) :</span>
+    <span class="s1">menu = models.ForeignKey(Menu</span><span class="s0">, </span><span class="s1">on_delete=models.CASCADE)</span>
+    <span class="s1">inventory = models.ForeignKey(Inventory</span><span class="s0">, </span><span class="s1">on_delete=models.CASCADE)</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<html>
+<head>
+<title>base.html</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #e8bf6a;}
+.s1 { color: #bababa;}
+.s2 { color: #a9b7c6;}
+.s3 { color: #a9b7c6;}
+.s4 { color: #a5c261;}
+.s5 { color: #808080;}
+.s6 { color: #6897bb;}
+.s7 { color: #cc7832;}
+.s8 { color: #6d9cbe;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+base.html</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;!DOCTYPE </span><span class="s1">html</span><span class="s0">&gt;</span>
+<span class="s3">{% load static %}</span>
+<span class="s0">&lt;html&gt;</span>
+
+<span class="s0">&lt;head&gt;</span>
+    <span class="s0">&lt;meta </span><span class="s1">charset</span><span class="s4">=&quot;utf-8&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;meta </span><span class="s1">name</span><span class="s4">=&quot;viewport&quot; </span><span class="s1">content</span><span class="s4">=&quot;width=device-width, initial-scale=1.0, shrink-to-fit=no&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;title&gt;</span><span class="s3">{% block 'title' %}{% endblock %} - Restaurant Management System</span><span class="s0">&lt;/title&gt;</span>
+    <span class="s0">&lt;meta </span><span class="s1">name</span><span class="s4">=&quot;description&quot; </span><span class="s1">content</span><span class="s4">=&quot;This is a Point on sale system that is used to keep track of activities that is being held in a restaurant&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;link </span><span class="s1">rel</span><span class="s4">=&quot;stylesheet&quot; </span><span class="s1">href</span><span class="s4">=&quot;{% static 'assets/bootstrap/css/bootstrap.min.css' %}&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;link </span><span class="s1">rel</span><span class="s4">=&quot;stylesheet&quot; </span><span class="s1">href</span><span class="s4">=&quot;https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;link </span><span class="s1">rel</span><span class="s4">=&quot;stylesheet&quot; </span><span class="s1">href</span><span class="s4">=&quot;{% static 'assets/fonts/fontawesome-all.min.css' %}&quot;</span><span class="s0">&gt;</span>
+<span class="s0">&lt;/head&gt;</span>
+
+<span class="s0">&lt;body </span><span class="s1">id</span><span class="s4">=&quot;page-top&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;div </span><span class="s1">id</span><span class="s4">=&quot;wrapper&quot;</span><span class="s0">&gt;</span>
+
+<span class="s5">&lt;!--       main navigation bar--&gt;</span>
+        <span class="s0">&lt;nav </span><span class="s1">class</span><span class="s4">=&quot;navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0&quot;</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s4">=&quot;container-fluid d-flex flex-column p-0&quot;</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;a </span><span class="s1">class</span><span class="s4">=&quot;navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0&quot; </span><span class="s1">href</span><span class="s4">=&quot;#&quot;</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;div </span><span class="s1">class</span><span class="s4">=&quot;sidebar-brand-icon rotate-n-15&quot;</span><span class="s0">&gt;&lt;i </span><span class="s1">class</span><span class="s4">=&quot;fas fa-laugh-wink&quot;</span><span class="s0">&gt;&lt;/i&gt;&lt;/div&gt;</span>
+                    <span class="s0">&lt;div </span><span class="s1">class</span><span class="s4">=&quot;sidebar-brand-text mx-3&quot;</span><span class="s0">&gt;&lt;span </span><span class="s1">style</span><span class="s4">=&quot;</span><span class="s1">width</span><span class="s3">: </span><span class="s6">0</span><span class="s4">px</span><span class="s7">;</span><span class="s4">&quot;</span><span class="s0">&gt;</span><span class="s3">Tropical rest</span><span class="s0">&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="s0">&lt;/a&gt;</span>
+                <span class="s0">&lt;hr </span><span class="s1">class</span><span class="s4">=&quot;sidebar-divider my-0&quot;</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;ul </span><span class="s1">class</span><span class="s4">=&quot;nav navbar-nav text-light&quot; </span><span class="s1">id</span><span class="s4">=&quot;accordionSidebar&quot;</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;li </span><span class="s1">class</span><span class="s4">=&quot;nav-item&quot; </span><span class="s1">role</span><span class="s4">=&quot;presentation&quot;</span><span class="s0">&gt;&lt;a </span><span class="s1">class</span><span class="s4">=&quot;nav-link {% if request.path == '/dashboard/' %} active {% endif %}&quot; </span><span class="s1">href</span><span class="s4">=&quot;{% url 'dashboard' %}&quot;</span><span class="s0">&gt;&lt;i </span><span class="s1">class</span><span class="s4">=&quot;fas fa-tachometer-alt&quot;</span><span class="s0">&gt;&lt;/i&gt;&lt;span&gt;</span><span class="s3">Dashboard</span><span class="s0">&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;</span>
+                    <span class="s0">&lt;li </span><span class="s1">class</span><span class="s4">=&quot;nav-item&quot; </span><span class="s1">role</span><span class="s4">=&quot;presentation&quot;</span><span class="s0">&gt;&lt;a </span><span class="s1">class</span><span class="s4">=&quot;nav-link {% if request.path == '/profile/' %} active {% endif %}&quot; </span><span class="s1">href</span><span class="s4">=&quot;{% url 'profile' %}&quot;</span><span class="s0">&gt;&lt;i </span><span class="s1">class</span><span class="s4">=&quot;fas fa-user&quot;</span><span class="s0">&gt;&lt;/i&gt;&lt;span&gt;</span><span class="s3">Profile</span><span class="s0">&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;</span>
+                    <span class="s0">&lt;li </span><span class="s1">class</span><span class="s4">=&quot;nav-item&quot; </span><span class="s1">role</span><span class="s4">=&quot;presentation&quot;</span><span class="s0">&gt;&lt;a </span><span class="s1">class</span><span class="s4">=&quot;nav-link {% if request.path == '/table/' %} active {% endif %}&quot; </span><span class="s1">href</span><span class="s4">=&quot;{% url 'table' %}&quot;</span><span class="s0">&gt;&lt;i </span><span class="s1">class</span><span class="s4">=&quot;fas fa-table&quot;</span><span class="s0">&gt;&lt;/i&gt;&lt;span&gt;</span><span class="s3">Table</span><span class="s0">&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;</span>
+<span class="s5">&lt;!--                    &lt;li class=&quot;nav-item&quot; role=&quot;presentation&quot;&gt;&lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;far fa-user-circle&quot;&gt;&lt;/i&gt;&lt;span&gt;Login&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;--&gt;</span>
+<span class="s5">&lt;!--                    &lt;li class=&quot;nav-item&quot; role=&quot;presentation&quot;&gt;&lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;fas fa-user-circle&quot;&gt;&lt;/i&gt;&lt;span&gt;Register&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;--&gt;</span>
+<span class="s5">&lt;!--                    &lt;li class=&quot;nav-item&quot; role=&quot;presentation&quot;&gt;&lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;fas fa-key&quot;&gt;&lt;/i&gt;&lt;span&gt;Forgotten Password&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;--&gt;</span>
+<span class="s5">&lt;!--                    &lt;li class=&quot;nav-item&quot; role=&quot;presentation&quot;&gt;&lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;fas fa-exclamation-circle&quot;&gt;&lt;/i&gt;&lt;span&gt;Page Not Found&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;--&gt;</span>
+                    <span class="s0">&lt;li </span><span class="s1">class</span><span class="s4">=&quot;nav-item&quot; </span><span class="s1">role</span><span class="s4">=&quot;presentation&quot;</span><span class="s0">&gt;&lt;a </span><span class="s1">class</span><span class="s4">=&quot;nav-link {% if request.path == '/report/' %} active {% endif %}&quot; </span><span class="s1">href</span><span class="s4">=&quot;{% url 'report' %}&quot;</span><span class="s0">&gt;&lt;i </span><span class="s1">class</span><span class="s4">=&quot;fas fa-calculator&quot;</span><span class="s0">&gt;&lt;/i&gt;&lt;span&gt;</span><span class="s3">Reports</span><span class="s0">&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;</span>
+                <span class="s0">&lt;/ul&gt;</span>
+                <span class="s0">&lt;div </span><span class="s1">class</span><span class="s4">=&quot;text-center d-none d-md-inline&quot;</span><span class="s0">&gt;&lt;button </span><span class="s1">class</span><span class="s4">=&quot;btn rounded-circle border-0&quot; </span><span class="s1">id</span><span class="s4">=&quot;sidebarToggle&quot; </span><span class="s1">type</span><span class="s4">=&quot;button&quot;</span><span class="s0">&gt;&lt;/button&gt;&lt;/div&gt;</span>
+            <span class="s0">&lt;/div&gt;</span>
+        <span class="s0">&lt;/nav&gt;</span>
+<span class="s5">&lt;!--       end of side bar menu--&gt;</span>
+
+
+
+
+
+        <span class="s0">&lt;div </span><span class="s1">class</span><span class="s4">=&quot;d-flex flex-column&quot; </span><span class="s1">id</span><span class="s4">=&quot;content-wrapper&quot;</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">id</span><span class="s4">=&quot;content&quot;</span><span class="s0">&gt;</span>
+
+
+
+
+<span class="s5">&lt;!--            top bar menu--&gt;</span>
+                <span class="s0">&lt;nav </span><span class="s1">class</span><span class="s4">=&quot;navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top&quot;</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;div </span><span class="s1">class</span><span class="s4">=&quot;container-fluid&quot;</span><span class="s0">&gt;&lt;button </span><span class="s1">class</span><span class="s4">=&quot;btn btn-link d-md-none rounded-circle mr-3&quot; </span><span class="s1">id</span><span class="s4">=&quot;sidebarToggleTop&quot; </span><span class="s1">type</span><span class="s4">=&quot;button&quot;</span><span class="s0">&gt;&lt;i </span><span class="s1">class</span><span class="s4">=&quot;fas fa-bars&quot;</span><span class="s0">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+
+<span class="s5">&lt;!--                    search bar--&gt;</span>
+<span class="s5">&lt;!--</span>
+                        <span class="s5">&lt;form class=&quot;form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search&quot;&gt; 
+                            &lt;div class=&quot;input-group&quot;&gt;&lt;input class=&quot;bg-light form-control border-0 small&quot; type=&quot;text&quot; placeholder=&quot;Search for ...&quot;&gt; 
+                                &lt;div class=&quot;input-group-append&quot;&gt;&lt;button class=&quot;btn btn-primary py-0&quot; type=&quot;button&quot;&gt;&lt;i class=&quot;fas fa-search&quot;&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt; 
+                            &lt;/div&gt; 
+                        &lt;/form&gt; 
+ 
+--&gt;</span>
+<span class="s5">&lt;!--                      end of search bar--&gt;</span>
+
+
+
+
+
+
+
+
+<span class="s5">&lt;!--                    top bar menu            --&gt;</span>
+                 <span class="s0">&lt;ul </span><span class="s1">class</span><span class="s4">=&quot;nav navbar-nav flex-nowrap ml-auto&quot;</span><span class="s0">&gt;</span>
+
+
+
+<span class="s5">&lt;!--</span>
+                               <span class="s5">&lt;li class=&quot;nav-Restaurant dropdown d-sm-none no-arrow&quot;&gt;&lt;a class=&quot;dropdown-toggle nav-link&quot; data-toggle=&quot;dropdown&quot; aria-expanded=&quot;false&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;fas fa-search&quot;&gt;&lt;/i&gt;&lt;/a&gt; 
+                                &lt;div class=&quot;dropdown-menu dropdown-menu-right p-3 animated--grow-in&quot; role=&quot;menu&quot; aria-labelledby=&quot;searchDropdown&quot;&gt; 
+                                    &lt;form class=&quot;form-inline mr-auto navbar-search w-100&quot;&gt; 
+                                        &lt;div class=&quot;input-group&quot;&gt;&lt;input class=&quot;bg-light form-control border-0 small&quot; type=&quot;text&quot; placeholder=&quot;Search for ...&quot;&gt; 
+                                            &lt;div class=&quot;input-group-append&quot;&gt;&lt;button class=&quot;btn btn-primary py-0&quot; type=&quot;button&quot;&gt;&lt;i class=&quot;fas fa-search&quot;&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt; 
+                                        &lt;/div&gt; 
+                                    &lt;/form&gt; 
+                                &lt;/div&gt; 
+                            &lt;/li&gt; 
+--&gt;</span>
+
+
+
+<span class="s5">&lt;!--                               alert box ko dropdown menu--&gt;</span>
+<span class="s5">&lt;!--                            &lt;li class=&quot;nav-Restaurant dropdown no-arrow mx-1&quot; role=&quot;presentation&quot;&gt;--&gt;</span>
+
+<span class="s5">&lt;!--                                &lt;li class=&quot;nav-Restaurant dropdown no-arrow&quot;&gt;&lt;a class=&quot;dropdown-toggle nav-link&quot; data-toggle=&quot;dropdown&quot; aria-expanded=&quot;false&quot; href=&quot;#&quot;&gt;&lt;span class=&quot;badge badge-danger badge-counter&quot;&gt;3+&lt;/span&gt;&lt;i class=&quot;fas fa-bell fa-fw&quot;&gt;&lt;/i&gt;&lt;/a&gt;--&gt;</span>
+<span class="s5">&lt;!--                                    &lt;div class=&quot;dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated&amp;#45;&amp;#45;grow-in&quot;--&gt;</span>
+<span class="s5">&lt;!--                                        role=&quot;menu&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                        &lt;h6 class=&quot;dropdown-header&quot;&gt;alerts center&lt;/h6&gt;--&gt;</span>
+<span class="s5">&lt;!--                                        &lt;a class=&quot;d-flex align-items-center dropdown-Restaurant&quot; href=&quot;#&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;div class=&quot;mr-3&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;div class=&quot;bg-primary icon-circle&quot;&gt;&lt;i class=&quot;fas fa-file-alt text-white&quot;&gt;&lt;/i&gt;&lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;div&gt;&lt;span class=&quot;small text-gray-500&quot;&gt;December 12, 2019&lt;/span&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;p&gt;A new monthly report is ready to download!&lt;/p&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                        &lt;/a&gt;--&gt;</span>
+<span class="s5">&lt;!--                                        &lt;a class=&quot;d-flex align-items-center dropdown-Restaurant&quot; href=&quot;#&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;div class=&quot;mr-3&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;div class=&quot;bg-success icon-circle&quot;&gt;&lt;i class=&quot;fas fa-donate text-white&quot;&gt;&lt;/i&gt;&lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;div&gt;&lt;span class=&quot;small text-gray-500&quot;&gt;December 7, 2019&lt;/span&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;p&gt;$290.29 has been deposited into your account!&lt;/p&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                        &lt;/a&gt;--&gt;</span>
+<span class="s5">&lt;!--                                        &lt;a class=&quot;d-flex align-items-center dropdown-Restaurant&quot; href=&quot;#&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;div class=&quot;mr-3&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;div class=&quot;bg-warning icon-circle&quot;&gt;&lt;i class=&quot;fas fa-exclamation-triangle text-white&quot;&gt;&lt;/i&gt;&lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;div&gt;&lt;span class=&quot;small text-gray-500&quot;&gt;December 2, 2019&lt;/span&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;p&gt;Spending Alert: We've noticed unusually high spending for your account.&lt;/p&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                        &lt;/a&gt;&lt;a class=&quot;text-center dropdown-Restaurant small text-gray-500&quot; href=&quot;#&quot;&gt;Show All Alerts&lt;/a&gt;--&gt;</span>
+<span class="s5">&lt;!--                                    &lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                &lt;/li&gt;--&gt;</span>
+
+<span class="s5">&lt;!--                            &lt;/li&gt;--&gt;</span>
+<span class="s5">&lt;!--&amp;lt;!&amp;ndash;                                end of alert box ko dropdown menu&amp;ndash;&amp;gt;--&gt;</span>
+
+
+<span class="s5">&lt;!--&amp;lt;!&amp;ndash;                            message box ko dropdown menu&amp;ndash;&amp;gt;--&gt;</span>
+<span class="s5">&lt;!--                            &lt;li class=&quot;nav-Restaurant dropdown no-arrow mx-1&quot; role=&quot;presentation&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                &lt;li class=&quot;nav-Restaurant dropdown no-arrow&quot;&gt;&lt;a class=&quot;dropdown-toggle nav-link&quot; data-toggle=&quot;dropdown&quot; aria-expanded=&quot;false&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;fas fa-envelope fa-fw&quot;&gt;&lt;/i&gt;&lt;span class=&quot;badge badge-danger badge-counter&quot;&gt;7&lt;/span&gt;&lt;/a&gt;--&gt;</span>
+<span class="s5">&lt;!--                                    &lt;div class=&quot;dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated&amp;#45;&amp;#45;grow-in&quot;--&gt;</span>
+<span class="s5">&lt;!--                                        role=&quot;menu&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                        &lt;h6 class=&quot;dropdown-header&quot;&gt;alerts center&lt;/h6&gt;--&gt;</span>
+<span class="s5">&lt;!--                                        &lt;a class=&quot;d-flex align-items-center dropdown-Restaurant&quot; href=&quot;#&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;div class=&quot;dropdown-list-image mr-3&quot;&gt;&lt;img class=&quot;rounded-circle&quot; src=&quot;assets/img/avatars/avatar4.jpeg&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;div class=&quot;bg-success status-indicator&quot;&gt;&lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;div class=&quot;font-weight-bold&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;div class=&quot;text-truncate&quot;&gt;&lt;span&gt;Hi there! I am wondering if you can help me with a problem I've been having.&lt;/span&gt;&lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;p class=&quot;small text-gray-500 mb-0&quot;&gt;Emily Fowler - 58m&lt;/p&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                        &lt;/a&gt;--&gt;</span>
+<span class="s5">&lt;!--                                        &lt;a class=&quot;d-flex align-items-center dropdown-Restaurant&quot; href=&quot;#&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;div class=&quot;dropdown-list-image mr-3&quot;&gt;&lt;img class=&quot;rounded-circle&quot; src=&quot;assets/img/avatars/avatar2.jpeg&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;div class=&quot;status-indicator&quot;&gt;&lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;div class=&quot;font-weight-bold&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;div class=&quot;text-truncate&quot;&gt;&lt;span&gt;I have the photos that you ordered last month!&lt;/span&gt;&lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;p class=&quot;small text-gray-500 mb-0&quot;&gt;Jae Chun - 1d&lt;/p&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                        &lt;/a&gt;--&gt;</span>
+<span class="s5">&lt;!--                                        &lt;a class=&quot;d-flex align-items-center dropdown-Restaurant&quot; href=&quot;#&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;div class=&quot;dropdown-list-image mr-3&quot;&gt;&lt;img class=&quot;rounded-circle&quot; src=&quot;assets/img/avatars/avatar3.jpeg&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;div class=&quot;bg-warning status-indicator&quot;&gt;&lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;div class=&quot;font-weight-bold&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;div class=&quot;text-truncate&quot;&gt;&lt;span&gt;Last month's report looks great, I am very happy with the progress so far, keep up the good work!&lt;/span&gt;&lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;p class=&quot;small text-gray-500 mb-0&quot;&gt;Morgan Alvarez - 2d&lt;/p&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                        &lt;/a&gt;--&gt;</span>
+<span class="s5">&lt;!--                                        &lt;a class=&quot;d-flex align-items-center dropdown-Restaurant&quot; href=&quot;#&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;div class=&quot;dropdown-list-image mr-3&quot;&gt;&lt;img class=&quot;rounded-circle&quot; src=&quot;assets/img/avatars/avatar5.jpeg&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;div class=&quot;bg-success status-indicator&quot;&gt;&lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;div class=&quot;font-weight-bold&quot;&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;div class=&quot;text-truncate&quot;&gt;&lt;span&gt;Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...&lt;/span&gt;&lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                                &lt;p class=&quot;small text-gray-500 mb-0&quot;&gt;Chicken the Dog · 2w&lt;/p&gt;--&gt;</span>
+<span class="s5">&lt;!--                                            &lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                        &lt;/a&gt;&lt;a class=&quot;text-center dropdown-Restaurant small text-gray-500&quot; href=&quot;#&quot;&gt;Show All Alerts&lt;/a&gt;&lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                                &lt;/li&gt;--&gt;</span>
+<span class="s5">&lt;!--                                &lt;div class=&quot;shadow dropdown-list dropdown-menu dropdown-menu-right&quot; aria-labelledby=&quot;alertsDropdown&quot;&gt;&lt;/div&gt;--&gt;</span>
+<span class="s5">&lt;!--                            &lt;/li&gt;--&gt;</span>
+<span class="s5">&lt;!--                            end of message box ko dropdown menu--&gt;</span>
+
+
+                            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s4">=&quot;d-none d-sm-block topbar-divider&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+
+
+<span class="s5">&lt;!--                            profile logo ko dropdown menu--&gt;</span>
+                            <span class="s0">&lt;li </span><span class="s1">class</span><span class="s4">=&quot;nav-item dropdown no-arrow&quot; </span><span class="s1">role</span><span class="s4">=&quot;presentation&quot;</span><span class="s0">&gt;</span>
+                                <span class="s0">&lt;li </span><span class="s1">class</span><span class="s4">=&quot;nav-item dropdown no-arrow&quot;</span><span class="s0">&gt;&lt;a </span><span class="s1">class</span><span class="s4">=&quot;dropdown-toggle nav-link&quot; </span><span class="s1">data-toggle</span><span class="s4">=&quot;dropdown&quot; </span><span class="s1">aria-expanded</span><span class="s4">=&quot;false&quot; </span><span class="s1">href</span><span class="s4">=&quot;#&quot;</span><span class="s0">&gt;&lt;span </span><span class="s1">class</span><span class="s4">=&quot;d-none d-lg-inline mr-2 text-gray-600 small&quot;</span><span class="s0">&gt;</span><span class="s3">{{user.first_name}} {{user.last_name}}</span><span class="s0">&lt;/span&gt;&lt;img </span><span class="s1">class</span><span class="s4">=&quot;border rounded-circle img-profile&quot; </span><span class="s1">src</span><span class="s4">=&quot;{% static 'assets/img/basic/image5.JPG' %}&quot;</span><span class="s0">&gt;&lt;/a&gt;</span>
+                                    <span class="s0">&lt;div </span><span class="s1">class</span><span class="s4">=&quot;dropdown-menu shadow dropdown-menu-right animated--grow-in&quot; </span><span class="s1">role</span><span class="s4">=&quot;menu&quot;</span><span class="s0">&gt;</span>
+                                            <span class="s0">&lt;a </span><span class="s1">class</span><span class="s4">=&quot;dropdown-item&quot; </span><span class="s1">role</span><span class="s4">=&quot;presentation&quot; </span><span class="s1">href</span><span class="s4">=&quot;{% url 'profile' %}&quot;</span><span class="s0">&gt;&lt;i </span><span class="s1">class</span><span class="s4">=&quot;fas fa-user fa-sm fa-fw mr-2 text-gray-400&quot;</span><span class="s0">&gt;&lt;/i&gt;</span><span class="s8">&amp;nbsp;</span><span class="s3">Profile</span><span class="s0">&lt;/a&gt;</span>
+                                            <span class="s0">&lt;a </span><span class="s1">class</span><span class="s4">=&quot;dropdown-item&quot; </span><span class="s1">role</span><span class="s4">=&quot;presentation&quot; </span><span class="s1">href</span><span class="s4">=&quot;#&quot;</span><span class="s0">&gt;&lt;i </span><span class="s1">class</span><span class="s4">=&quot;fas fa-cogs fa-sm fa-fw mr-2 text-gray-400&quot;</span><span class="s0">&gt;&lt;/i&gt;</span><span class="s8">&amp;nbsp;</span><span class="s3">Settings</span><span class="s0">&lt;/a&gt;</span>
+<span class="s5">&lt;!--                                            &lt;a class=&quot;dropdown-Restaurant&quot; role=&quot;presentation&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;fas fa-list fa-sm fa-fw mr-2 text-gray-400&quot;&gt;&lt;/i&gt;&amp;nbsp;Activity log&lt;/a&gt;--&gt;</span>
+                                            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s4">=&quot;dropdown-divider&quot;</span><span class="s0">&gt;&lt;/div&gt;&lt;a </span><span class="s1">class</span><span class="s4">=&quot;dropdown-item&quot; </span><span class="s1">role</span><span class="s4">=&quot;presentation&quot; </span><span class="s1">href</span><span class="s4">=&quot;{% url 'signout' %}&quot;</span><span class="s0">&gt;&lt;i </span><span class="s1">class</span><span class="s4">=&quot;fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400&quot;</span><span class="s0">&gt;&lt;/i&gt;</span><span class="s8">&amp;nbsp;</span><span class="s3">Logout</span><span class="s0">&lt;/a&gt;&lt;/div&gt;</span>
+                                <span class="s0">&lt;/li&gt;</span>
+                            <span class="s0">&lt;/li&gt;</span>
+<span class="s5">&lt;!--                            end of profile logo ko dropdown menu--&gt;</span>
+                    <span class="s0">&lt;/ul&gt;</span>
+
+
+                <span class="s0">&lt;/div&gt;</span>
+            <span class="s0">&lt;/nav&gt;</span>
+
+
+<span class="s5">&lt;!--        body        --&gt;</span>
+
+            <span class="s3">{% block 'body' %}</span>
+
+
+            <span class="s3">{% endblock %}</span>
+
+<span class="s5">&lt;!--        end body--&gt;</span>
+
+            <span class="s0">&lt;/div&gt;</span>
+
+
+<span class="s5">&lt;!--            footer--&gt;</span>
+        <span class="s0">&lt;footer </span><span class="s1">class</span><span class="s4">=&quot;bg-white sticky-footer&quot;</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s4">=&quot;container my-auto&quot;</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;div </span><span class="s1">class</span><span class="s4">=&quot;text-center my-auto copyright&quot;</span><span class="s0">&gt;&lt;span&gt;</span><span class="s3">Copyright © Restaurant Management System 2019</span><span class="s0">&lt;/span&gt;&lt;/div&gt;</span>
+            <span class="s0">&lt;/div&gt;</span>
+        <span class="s0">&lt;/footer&gt;</span>
+    <span class="s0">&lt;/div&gt;&lt;a </span><span class="s1">class</span><span class="s4">=&quot;border rounded d-inline scroll-to-top&quot; </span><span class="s1">href</span><span class="s4">=&quot;#page-top&quot;</span><span class="s0">&gt;&lt;i </span><span class="s1">class</span><span class="s4">=&quot;fas fa-angle-up&quot;</span><span class="s0">&gt;&lt;/i&gt;&lt;/a&gt;&lt;/div&gt;</span>
+
+<span class="s5">&lt;!--    end of footer--&gt;</span>
+
+
+
+
+
+
+
+    <span class="s0">&lt;script </span><span class="s1">src</span><span class="s4">=&quot;{% static 'assets/js/jquery.min.js' %}&quot;</span><span class="s0">&gt;&lt;/script&gt;</span>
+    <span class="s0">&lt;script </span><span class="s1">src</span><span class="s4">=&quot;{% static 'assets/bootstrap/js/bootstrap.min.js' %}&quot;</span><span class="s0">&gt;&lt;/script&gt;</span>
+    <span class="s0">&lt;script </span><span class="s1">src</span><span class="s4">=&quot;{% static 'assets/js/chart.min.js' %}&quot;</span><span class="s0">&gt;&lt;/script&gt;</span>
+    <span class="s0">&lt;script </span><span class="s1">src</span><span class="s4">=&quot;https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js&quot;</span><span class="s0">&gt;&lt;/script&gt;</span>
+    <span class="s0">&lt;script </span><span class="s1">src</span><span class="s4">=&quot;{% static 'assets/js/script.min.js' %}&quot;</span><span class="s0">&gt;&lt;/script&gt;</span>
+<span class="s0">&lt;/body&gt;</span>
+
+<span class="s0">&lt;/html&gt;</span></pre>
+</body>
+</html>

@@ -65,16 +65,16 @@
                         <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="{% static 'assets/images/logo.png' %}" alt="homepage" class="dark-logo"  height="45px"/>
+{#                            <img src="{% static 'assets/images/logo.png' %}" alt="homepage" class="dark-logo"  height="45px"/>#}
                             <!-- Light Logo icon -->
-                            <img src="{% static 'assets/images/logo.png' %}" alt="homepage" class="light-logo" height="45px" />
+{#                            <img src="{% static 'assets/images/logo.png' %}" alt="homepage" class="light-logo" height="45px" />#}
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text --><span>
                         <!-- dark Logo text -->
-                         <img src="{% static 'assets/images/logo-text.png' %}" alt="homepage" class="dark-logo" />
+                         <img src="{% static 'assets/images/logo-text-orange.png' %}" width="150px" alt="homepage" class="dark-logo" />
                          <!-- Light Logo text -->
-                         <img src="{% static 'assets/images/logo-text.png' %}" class="light-logo" alt="homepage" />
+                         <img src="{% static 'assets/images/logo-text-orange.png' %}" width="150px" class="light-logo" alt="homepage" />
                         </span> </a>
                 </div>
                 <!-- ============================================================== -->
@@ -100,6 +100,11 @@
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
+                        <li class="nav-item">
+                            <a class="nav-link text-danger waves-effect waves-dark" href="{% url 'addorder' %}">
+                                <i class="fa fa-cart-plus"></i> <small>Order</small>
+                            </a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-danger" style="font-size: small">{{ user.first_name }} {{ user.last_name }} </span>
                                 {% if request.user.profilepic.image %}
@@ -239,7 +244,7 @@
         <footer class="footer">
             <div class="row">
                 <div class="col-md-4 text-left"  >
-                    <a href="#" class="text-danger">Help </a> - <a target="_blank" href="http://pycemontech.com.np" class="text-danger">About Us</a>
+                    <a href="http://192.168.0.103:9163/setup" target="_blank" class="text-danger">Print Steup </a> - <a target="_blank" href="http://pycemontech.com.np" class="text-danger">About Us</a>
                 </div>
                 <div class="col-md-4 text-center">
                     © 2020 Tropical Rest - Powered by <a href="https://nishamwagle.com.np/" target="_blank" class="text-danger">Nisham Wagle</a>
@@ -253,7 +258,7 @@
         <!-- ============================================================== -->
         <!-- End footer -->
         <!-- ============================================================== -->
-    </div>
+    </span>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->

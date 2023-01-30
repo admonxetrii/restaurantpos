@@ -20,7 +20,7 @@ def sales(request):
 @login_required(login_url='signin')
 def restrologs(request):
     if request.user.is_superuser:
-        logs = RestoLogs.objects.all().order_by('-datentime')
+        logs = RestoLogs.objects.all().order_by('-datentime')[:1000]
         context = {
             'logs': logs
         }
@@ -42,7 +42,7 @@ def unserveditems(request):
 @login_required(login_url='signin')
 def report(request):
     if request.user.is_staff:
-        bill = Bill.objects.all().order_by('-bill_date', '-bill_time')
+        bill = Bill.objects.all().order_by('-bill_date', '-bill_time')[:200]
         context = {
             'bill': bill
         }
@@ -53,7 +53,7 @@ def report(request):
 @login_required(login_url='signin')
 def serveditem(request):
     if request.user.is_staff:
-        item = TotalServedItem.objects.all().order_by('-date', '-quantity')
+        item = TotalServedItem.objects.all().order_by('-date', '-quantity')[:200]
         context = {
             'item': item
         }
@@ -499,13 +499,17 @@ def releaseTable(request, id):
         nt = request.POST['nettotal']
         d = request.POST['disper']
         prnt = request.POST['prnted']
+        srvc = request.POST['serviceChargeAmount']
         paymt = request.POST['paymet']
         tt = request.POST['taxablettl']
         vt = request.POST['vatamt']
+        if srvc == '':
+            srvc = 0*int(nt)
+            print(srvc)
         gt = request.POST['grdamnt']
         b = request.POST['billnum']
         bill = Bill(fiscalyrs=fiscal, billnum=b, bill_date=date, table=tablename, amnt=nt, discount=d, taxable_amnt=tt,
-                    tax_amnt=vt, total_amnt=gt, billprt=1, billactive=1, billuser=request.user,
+                    tax_amnt=vt, service_amnt=0, total_amnt=gt, billprt=1, billactive=1, billuser=request.user,
                     is_realtime=True, payment_method=paymt)
         bill.save()
     except MultiValueDictKeyError as e:
@@ -548,7 +552,8 @@ def releaseTable(request, id):
     logs.activity = "Generated Bill no: #TRP" + str(billnumber)
     logs.save()
     messages.add_message(request, messages.SUCCESS, "Table " + table.title + " Successfully released!!")
-    resp = sendToCBMSfromBill(request, billnumber)
+    # resp = sendToCBMSfromBill(request, billnumber)
+    resp = 0
     billid = Bill.objects.get(billnum=billnumber)
     sync = BillSync(bill_id=billid.id, sync_ird=resp)
     sync.save()
@@ -577,19 +582,20 @@ def deletefromtable(request, id):
     id1 = do.table.id
     date = datetime.today().date()
     todaytotalitem = TotalServedItem.objects.filter(date=date)
-    if todaytotalitem:
-        flag = 0
-        for t in todaytotalitem:
-            if t.menu.id == do.menu.id:
-                flag = 1
-                t.quantity = t.quantity - do.quantity
-                t.save()
-                if t.quantity <= 0:
-                    t.delete()
-        if flag == 0:
+    if do.servests == 1:
+        if todaytotalitem:
+            flag = 0
+            for t in todaytotalitem:
+                if t.menu.id == do.menu.id:
+                    flag = 1
+                    t.quantity = t.quantity - do.quantity
+                    t.save()
+                    if t.quantity <= 0:
+                        t.delete()
+            if flag == 0:
+                messages.add_message(request, messages.ERROR, "Nothing is served today")
+        else:
             messages.add_message(request, messages.ERROR, "Nothing is served today")
-    else:
-        messages.add_message(request, messages.ERROR, "Nothing is served today")
     do.delete()
     logs = RestoLogs()
     logs.datentime = datetime.now()
@@ -607,7 +613,6 @@ def serveitem(request, id):
     id1 = do.table.id
     do.servests = 1
     do.save()
-    print(do.quantity)
     date = datetime.today().date()
     todaytotalitem = TotalServedItem.objects.filter(date=date)
     if todaytotalitem:
@@ -632,6 +637,7 @@ def serveitem(request, id):
     logs.save()
     messages.add_message(request, messages.SUCCESS, "Item served successfully")
     return redirect('/table-order/' + str(id1))
+
 
 @login_required(login_url='signin')
 def unserveitem(request, id):
@@ -664,6 +670,7 @@ def unserveitem(request, id):
     messages.add_message(request, messages.ERROR, "Item unserved successfully")
     return redirect('/table-order/' + str(id1))
 
+
 @login_required(login_url='signin')
 def unprint(request, id):
     do = Order.objects.get(pk=id)
@@ -674,6 +681,21 @@ def unprint(request, id):
     logs.datentime = datetime.now()
     logs.account = request.user
     logs.activity = "Unprinted item \"" + Menu.objects.get(
+        id=do.menu.id).title + "\" of Table no: " + Table.objects.get(
+        id=id1).title
+    logs.save()
+    return redirect('/table-order/' + str(id1)) 
+
+@ login_required(login_url='signin')
+def unprintsts(request, id):
+    do = Order.objects.get(pk=id)
+    id1 = do.table.id
+    do.printsts = 1
+    do.save()
+    logs = RestoLogs()
+    logs.datentime = datetime.now()
+    logs.account = request.user
+    logs.activity = "Printed item fastly \"" + Menu.objects.get(
         id=do.menu.id).title + "\" of Table no: " + Table.objects.get(
         id=id1).title
     logs.save()
@@ -1038,6 +1060,20 @@ def additemstotable(request, id):
     logs.save()
     messages.add_message(request, messages.SUCCESS, "Your order has been placed.")
     return redirect('/table-order/' + str(id))
+
+
+def addorder(request):
+    if request.method == 'GET':
+        table = Table.objects.filter(reserved=0)
+        menu = Menu.objects.all()
+        context = {
+            'table': table,
+            'menu': menu
+        }
+        return render(request, 'addtotable.html', context)
+    if request.method == 'POST':
+        id = int(request.POST['table'])
+        return additemstotable(request, id)
 
 
 def mergeTable(request):
